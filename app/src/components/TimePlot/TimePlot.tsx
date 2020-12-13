@@ -34,12 +34,14 @@ class TimePlot extends Component<Props> {
     };
 
     render(): JSX.Element {
+        this.plot && this.plot.update(this.props.values);
+
         return (
-            <div style={{width: '100%'}}>
+            <div style={{display: 'flex', width: '100%'}}>
                 <div ref={this.divRef} style={{'display': 'flex', 'flexDirection': 'column', 'height': '280px'}} />
             </div>
     );
     };
-}
+};
 
 export default TimePlot;
