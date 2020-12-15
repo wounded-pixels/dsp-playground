@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import TimePlot from './components/TimePlot/TimePlot';
-
+import CurveControls from './components/CurveControls/CurveControls';
 import SineCurve from './model/SineCurve';
 import { addSamples } from './util/samples';
 
-import Slider from '@material-ui/core/Slider';
+import {CurveParameters} from './model/types';
 
 import './App.scss';
-
-type CurveParameters = {
-    amplitude: number;
-};
 
 type Props = {};
 
@@ -24,13 +20,24 @@ class App extends Component<Props, State> {
             {
                 amplitude: 1,
                 frequency: 1,
+                phase: 0,
+            },
+            {
+                amplitude: 0.5,
+                frequency: 2,
+                phase: 0,
+            },
+            {
+                amplitude: 0.25,
+                frequency: 4,
+                phase: 0,
             }
         ]
     };
 
-    onChangeCurveParameter = (curveNumber: number, parameterName: 'amplitude' | 'frequency', value: number) => {
+    onChangeCurveParameter = (curveNumber: number, parameterName: 'amplitude' | 'frequency' | 'phase', value: number) => {
         const state = this.state;
-        state.curveParameters[0][parameterName] = value;
+        state.curveParameters[curveNumber][parameterName] = value;
         this.setState(state);
     };
 
@@ -38,14 +45,14 @@ class App extends Component<Props, State> {
         const samplingRate = 400;
         const tEnd = 5;
 
-        const {amplitude, frequency} = this.state.curveParameters[0];
-        const slow = new SineCurve(amplitude, frequency)
+        const {curveParameters} = this.state;
+        const slow = new SineCurve(curveParameters[0])
             .sample(0, tEnd, samplingRate);
 
-        const fast = new SineCurve(0.5, 2)
+        const fast = new SineCurve(curveParameters[1])
             .sample(0, tEnd, samplingRate);
 
-        const faster = new SineCurve(0.25, 4)
+        const faster = new SineCurve(curveParameters[2])
             .sample(0, tEnd, samplingRate);
 
         const combined = addSamples(slow, fast, faster);
@@ -53,26 +60,11 @@ class App extends Component<Props, State> {
 
         return (
             <div className="App">
-                <Slider
-                    value={this.state.curveParameters[0].amplitude}
-                    min={0}
-                    max={3}
-                    step={0.1}
-                    onChange={(_evt, value: number | number[]) => {
-                        this.onChangeCurveParameter(0, 'amplitude', value as number);
-                    }}
-                />
-                <Slider
-                    value={this.state.curveParameters[0].frequency}
-                    min={0}
-                    max={3}
-                    step={0.1}
-                    onChange={(_evt, value: number | number[]) => {
-                        this.onChangeCurveParameter(0, 'frequency', value as number);
-                    }}
-                />
+                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
                 <TimePlot values={slow}/>
+                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
                 <TimePlot values={fast}/>
+                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]}/>
                 <TimePlot values={faster}/>
                 <TimePlot values={combined}/>
             </div>
