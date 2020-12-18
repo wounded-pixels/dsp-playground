@@ -61,12 +61,12 @@ class App extends Component<Props, State> {
         return (
             <div className="App">
                 <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
-                <TimePlot values={slow}/>
+                <TimePlot minY={-3} maxY={5} values={slow}/>
                 <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
-                <TimePlot values={fast}/>
+                <TimePlot minY={-3} maxY={5} values={fast}/>
                 <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]}/>
-                <TimePlot values={faster}/>
-                <TimePlot values={combined}/>
+                <TimePlot minY={-3} maxY={5} values={faster}/>
+                <TimePlot minY={-3} maxY={5} values={combined}/>
             </div>
         );
     };

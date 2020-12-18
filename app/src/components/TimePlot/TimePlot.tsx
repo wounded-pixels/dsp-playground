@@ -5,6 +5,8 @@ import TimeValue from '../../model/TimeValue';
 
 interface Props {
     values: TimeValue[];
+    minY?: number;
+    maxY?: number;
 }
 
 class TimePlot extends Component<Props> {
@@ -15,8 +17,8 @@ class TimePlot extends Component<Props> {
         const { values } = this.props;
         const tStart = values[0].time;
         const tEnd = values[values.length-1].time;
-        const minY = Math.min(...values.map(v => v.value));
-        const maxY = Math.max(...values.map(v => v.value));
+        const minY = this.props.minY || Math.min(...values.map(v => v.value));
+        const maxY = this.props.maxY || Math.max(...values.map(v => v.value));
         const padding = (maxY - minY) * 0.1
 
         if (this.divRef && this.divRef.current) {
