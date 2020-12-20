@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import { ScatterPlot } from '@wounded-pixels/eda';
 import TimeValue from '../../model/TimeValue';
 
+import './TimePlot.scss';
+
 interface Props {
     values: TimeValue[];
     minY?: number;
@@ -14,22 +16,22 @@ class TimePlot extends Component<Props> {
     private plot: any;
 
     componentDidMount() {
-        const { values } = this.props;
+        const {values} = this.props;
         const tStart = values[0].time;
-        const tEnd = values[values.length-1].time;
+        const tEnd = values[values.length - 1].time;
         const minY = this.props.minY || Math.min(...values.map(v => v.value));
         const maxY = this.props.maxY || Math.max(...values.map(v => v.value));
         const padding = (maxY - minY) * 0.1
 
         if (this.divRef && this.divRef.current) {
             this.plot = new ScatterPlot(this.divRef.current)
-                .id(d => d.time)
-                .radius(0.3)
-                .fill('black')
-                .stroke('none')
-                .domain(tStart,tEnd)
-                .range(minY-padding, maxY+padding)
-                .position(d => d.time, d => d.value);
+              .id(d => d.time)
+              .radius(0.3)
+              .fill('black')
+              .stroke('none')
+              .domain(tStart, tEnd)
+              .range(minY - padding, maxY + padding)
+              .position(d => d.time, d => d.value);
 
             this.plot.update(values);
         }
@@ -39,10 +41,9 @@ class TimePlot extends Component<Props> {
         this.plot && this.plot.update(this.props.values);
 
         return (
-            <div style={{display: 'flex', width: '100%'}}>
-                <div ref={this.divRef} style={{'display': 'flex', 'flexDirection': 'column', 'height': '280px'}} />
-            </div>
-    );
+          <div className="TimePlot" ref={this.divRef}>
+          </div>
+        );
     };
 };
 

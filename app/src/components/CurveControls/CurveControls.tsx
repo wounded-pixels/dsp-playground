@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 
 import {CurveParameters} from '../../model/types';
 
+import './CurveControl.scss';
+
 interface Props {
     curveNumber: number;
     curveParameters: CurveParameters;
@@ -15,7 +17,7 @@ class CurveControls extends Component<Props> {
     render(): JSX.Element {
         const { amplitude, frequency, phase } = this.props.curveParameters;
         return (
-                <div style={{display: 'flex', width: '100%'}}>
+                <div className="CurveControl">
                     <div style={{display: 'flex', width: '100%'}} >
                         <Typography>{amplitude} Sin(2 Pi {frequency} + {phase})</Typography>
                     </div>
