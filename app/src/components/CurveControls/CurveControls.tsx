@@ -38,7 +38,7 @@ class CurveControls extends Component<Props> {
                         <Slider
                             value={frequency}
                             min={0}
-                            max={3}
+                            max={10}
                             step={0.1}
                             onChange={(_evt, value: number | number[]) => {
                                 this.props.onChange(this.props.curveNumber, 'frequency', value as number);

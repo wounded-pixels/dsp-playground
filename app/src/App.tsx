@@ -7,6 +7,7 @@ import { addSamples } from './util/samples';
 import {CurveParameters} from './model/types';
 
 import './App.scss';
+import Typography from '@material-ui/core/Typography';
 
 type Props = {};
 
@@ -18,18 +19,18 @@ class App extends Component<Props, State> {
     state = {
         curveParameters: [
             {
-                amplitude: 1,
+                amplitude: 2,
                 frequency: 1,
                 phase: 0,
             },
             {
-                amplitude: 0.5,
-                frequency: 2,
+                amplitude: 1,
+                frequency: 4,
                 phase: 0,
             },
             {
-                amplitude: 0.25,
-                frequency: 4,
+                amplitude: 0.5,
+                frequency: 8,
                 phase: 0,
             }
         ]
@@ -43,7 +44,7 @@ class App extends Component<Props, State> {
 
     render(): JSX.Element {
         const samplingRate = 400;
-        const tEnd = 5;
+        const tEnd = 2;
 
         const {curveParameters} = this.state;
         const slow = new SineCurve(curveParameters[0])
@@ -66,6 +67,7 @@ class App extends Component<Props, State> {
                 <TimePlot minY={-3} maxY={5} values={fast}/>
                 <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]}/>
                 <TimePlot minY={-3} maxY={5} values={faster}/>
+                <Typography>Added Together</Typography>
                 <TimePlot minY={-3} maxY={5} values={combined}/>
             </div>
         );
