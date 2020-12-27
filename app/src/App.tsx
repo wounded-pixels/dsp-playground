@@ -65,7 +65,7 @@ class App extends Component<Props, State> {
                 <TimePlot minY={-3} maxY={5} values={slow}/>
                 <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
                 <TimePlot minY={-3} maxY={5} values={fast}/>
-                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]}/>
+                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]} includePhase={true}/>
                 <TimePlot minY={-3} maxY={5} values={faster}/>
                 <Typography>Added Together</Typography>
                 <TimePlot minY={-3} maxY={5} values={combined}/>

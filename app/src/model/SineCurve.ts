@@ -13,7 +13,7 @@ class SineCurve {
         const step = 1 / samplingRate;
         const pairs: TimeValue[] = [];
         for (let time = tStart; time <= tEnd; time += step) {
-            const pair = new TimeValue(time, amplitude * Math.sin(time * frequency * 2 * Math.PI + phase));
+            const pair = new TimeValue(time, amplitude * Math.sin((time * frequency + phase) * 2 * Math.PI));
             pairs.push(pair);
         }
 
