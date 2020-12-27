@@ -61,14 +61,24 @@ class App extends Component<Props, State> {
 
         return (
             <div className="App">
-                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
-                <TimePlot minY={-3} maxY={5} values={slow}/>
-                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
-                <TimePlot minY={-3} maxY={5} values={fast}/>
-                <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]} includePhase={true}/>
-                <TimePlot minY={-3} maxY={5} values={faster}/>
-                <Typography>Added Together</Typography>
-                <TimePlot minY={-3} maxY={5} values={combined}/>
+                <div className="topic">
+                    <div className="row">
+                        <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
+                        <TimePlot minY={-3} maxY={5} values={slow}/>
+                    </div>
+                    <div className="row">
+                        <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
+                        <TimePlot minY={-3} maxY={5} values={fast}/>
+                    </div>
+                    <div className="row">
+                        <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]} />
+                        <TimePlot minY={-3} maxY={5} values={faster}/>
+                    </div>
+                    <div className="row">
+                        <div>Added Together</div>
+                        <TimePlot minY={-3} maxY={5} values={combined}/>
+                    </div>
+                </div>
             </div>
         );
     };

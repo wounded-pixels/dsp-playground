@@ -27,13 +27,12 @@ class TimePlot extends Component<Props> {
             this.plot = new ScatterPlot(this.divRef.current)
               .id(d => d.time)
               .xAxisLabel('time')
-              .yAxisLabel('amplitude')
               .radius(0.3)
               .fill('black')
               .stroke('none')
               .domain(tStart, tEnd)
               .range(minY - padding, maxY + padding)
-              .aspectRatio(2)
+              .aspectRatio(3)
               .position(d => d.time, d => d.value);
 
             this.plot.update(values);

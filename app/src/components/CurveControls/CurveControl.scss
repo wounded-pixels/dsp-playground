@@ -1,12 +1,8 @@
 .CurveControl {
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-grow: 0;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 400px;
-
-  p.MuiTypography-root {
-    margin: 0 10px 0 0;
-  }
 }

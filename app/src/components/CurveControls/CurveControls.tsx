@@ -21,12 +21,12 @@ class CurveControls extends Component<Props> {
         const { curveNumber, curveParameters, includePhase } = this.props;
 
         const equation = includePhase && phase !== 0 ?
-            (<Typography>{amplitude} Sin(({frequency} time + {phase}) 2 &pi;)</Typography>) :
-            (<Typography>{amplitude} Sin({frequency} time 2 &pi;)</Typography>);
+            (<Typography>{amplitude} Sin(({frequency} t + {phase}) 2 &pi;)</Typography>) :
+            (<Typography>{amplitude} Sin({frequency} t 2 &pi;)</Typography>);
 
         const createFloatInput = (attribute: 'amplitude' | 'frequency' | 'phase', min: number, max: number, step:number) => {
           return (
-              <div style={{display: 'flex', width: '100%'}}>
+              <div>
                   <FormHelperText>{attribute}</FormHelperText>
                   <Input
                       value={curveParameters[attribute]}
@@ -45,16 +45,13 @@ class CurveControls extends Component<Props> {
         };
 
         const amplitudeInput = createFloatInput('amplitude', -4, 4, 0.1);
-        const frequencyInput = createFloatInput('frequency', 0, 10, 0.2);
+        const frequencyInput = createFloatInput('frequency', 0, 10, 0.1);
         const phaseInput = includePhase ?
             createFloatInput('phase', -1, 1, 0.1) :
             null;
 
         return (
             <div className="CurveControl">
-                <div style={{display: 'flex', width: '100%'}} >
-                    {equation}
-                </div>
                 {amplitudeInput}
                 {frequencyInput}
                 {phaseInput}
@@ -62,6 +59,4 @@ class CurveControls extends Component<Props> {
         );
     };
 };
-export default CurveControls;
-
-
+export default CurveControls
