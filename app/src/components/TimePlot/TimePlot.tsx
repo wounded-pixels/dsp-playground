@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
 import { ScatterPlot } from '@wounded-pixels/eda';
-import TimeValue from '../../model/TimeValue';
 
 import './TimePlot.scss';
+import {TimeValue} from '../../model/types';
 
 interface Props {
     values: TimeValue[];

@@ -3,3 +3,8 @@ export type CurveParameters = {
     frequency: number;
     phase: number;
 };
+
+export type TimeValue = {
+    time: number;
+    value: number;
+};
