@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import Typography from '@material-ui/core/Typography';
 
 import {CurveParameters} from '../../model/types';
 
@@ -17,12 +16,7 @@ interface Props {
 
 class CurveControls extends Component<Props> {
     render(): JSX.Element {
-        const { amplitude, frequency, phase } = this.props.curveParameters;
         const { curveNumber, curveParameters, includePhase } = this.props;
-
-        const equation = includePhase && phase !== 0 ?
-            (<Typography>{amplitude} Sin(({frequency} t + {phase}) 2 &pi;)</Typography>) :
-            (<Typography>{amplitude} Sin({frequency} t 2 &pi;)</Typography>);
 
         const createFloatInput = (attribute: 'amplitude' | 'frequency' | 'phase', min: number, max: number, step:number) => {
           return (
@@ -58,5 +52,6 @@ class CurveControls extends Component<Props> {
             </div>
         );
     };
-};
+}
+
 export default CurveControls

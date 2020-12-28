@@ -1,10 +1,6 @@
 # dsp-playground
 
 ## First
-* simplify parameter editor
-* try hook style
-  * better padding on label
-  * smaller spinners
 * Move equation into chart? or independent?
 * tie equation to inputs
 
