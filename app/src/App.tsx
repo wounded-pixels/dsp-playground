@@ -7,7 +7,6 @@ import { addSamples } from './util/samples';
 import {CurveParameters} from './model/types';
 
 import './App.scss';
-import Typography from '@material-ui/core/Typography';
 
 type Props = {};
 
@@ -19,8 +18,8 @@ class App extends Component<Props, State> {
     state = {
         curveParameters: [
             {
-                amplitude: 2,
-                frequency: 1,
+                amplitude: 3,
+                frequency: 2,
                 phase: 0,
             },
             {
@@ -30,7 +29,7 @@ class App extends Component<Props, State> {
             },
             {
                 amplitude: 0.5,
-                frequency: 8,
+                frequency: 9,
                 phase: 0,
             }
         ]
@@ -74,9 +73,8 @@ class App extends Component<Props, State> {
                         <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]} />
                         <TimePlot minY={-3} maxY={5} values={faster}/>
                     </div>
-                    <div className="row">
-                        <div>Added Together</div>
-                        <TimePlot minY={-3} maxY={5} values={combined}/>
+                    <div className="column">
+                        <TimePlot minY={-3} maxY={5} values={combined} plotTitle="All Together" />
                     </div>
                 </div>
             </div>
