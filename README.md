@@ -1,11 +1,16 @@
 # dsp-playground
 
 ## Switch to canvas
+* pass size
 * responsive resize?
-* lines
-* labels
+* path instead of points!
+* labels - all done but yAxis label
 
 ## Today
+* pretty up 
+  * spacing
+  * background
+  * top branding
 * router and navigation
 * top pane and branding
 

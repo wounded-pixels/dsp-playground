@@ -88,6 +88,7 @@ class SimpleAddition extends Component<Props, State> {
 
         const combined = addSamples(slow, fast, faster);
 
+        const amplitude = 5;
 
         return (
             <div id="SimpleAddition" className="topic">
@@ -102,18 +103,18 @@ class SimpleAddition extends Component<Props, State> {
                 </div>
                 <div className="row">
                     <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
-                    <TimePlot minY={-5} maxY={5} values={slow}/>
+                    <TimePlot minY={-amplitude} maxY={amplitude} values={slow}/>
                 </div>
                 <div className="row">
                     <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
-                    <TimePlot minY={-5} maxY={5} values={fast}/>
+                    <TimePlot minY={-amplitude} maxY={amplitude} values={fast}/>
                 </div>
                 <div className="row">
                     <CurveControls onChange={this.onChangeCurveParameter} curveNumber={2} curveParameters={this.state.curveParameters[2]} />
-                    <TimePlot minY={-5} maxY={5} values={faster}/>
+                    <TimePlot minY={-amplitude} maxY={amplitude} values={faster}/>
                 </div>
                 <div className="column">
-                    <TimePlot minY={-3} maxY={5} values={combined} plotTitle="All Together" />
+                    <TimePlot minY={-amplitude} maxY={amplitude} values={combined} plotTitle="All Together" />
                 </div>
             </div>
         );
