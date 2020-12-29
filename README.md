@@ -5,12 +5,13 @@
 * responsive resize?
 
 ## Today
+* router and navigation
 * pretty up 
   * spacing
   * background
   * top branding
-* router and navigation
-* top pane and branding
+* deploy to GH
+* test on iPad
 * can whole widget be resized? Expandable div with scaling? some way to let them flow naturally from reading to shallow play to immersive play?
 * Zen mode?
 
@@ -32,14 +33,18 @@
 * Terminology for freq and time domains
 * Sines, Cosines and the Unit Circle
 * From angles to time
-* 
-
-
+* Reverse the Addition - Frequency filters
+  * Limitations - beats
+* Convolution in general with a kernel editor
+  * filters, smoothing, derivatives, oh my
+* AM, FM - not just sine on carrier, morse code on carrier!
+* Sampling rate and Nyquist rate
+  * simple example of aliasing
+  * detail loss from composite
 
 
 ## Soonish
 * eda should allow no y label and use the space
-* gh pages deployment
 * Move equation into chart? or independent?
 * tie equation to inputs
   
