@@ -15,7 +15,7 @@ export class PointPlot {
     private scaleY: number = 1;
     private topPadding: number = 15;
     private bottomPadding: number = 33;
-    private leftPadding: number = 20;
+    private leftPadding: number = 30;
     private rightPadding: number = 0;
     private textHeight: number = 14;
     private xAxisLabelValue: string = '';
@@ -102,14 +102,31 @@ export class PointPlot {
         xTickValues.forEach(this.drawVerticalLine);
         yTickValues.forEach(this.drawHorizontalLine);
 
+        this.ctx.strokeStyle = 'black';
         this.ctx.fillStyle = 'black';
-        values.forEach(this.plotPoint);
+        this.plotPoints(values);
 
         this.ctx.font = '12px sans-serif';
+        this.ctx.textBaseline = 'bottom';
         xTickValues.forEach(this.drawXTickLabel);
         yTickValues.forEach(this.drawYTickLabel);
-        this.ctx.fillText(this.plotTitleValue, this.canvas.width * 0.25, this.topPadding - 3, this.canvas.width * 0.7)
-        this.ctx.fillText(this.xAxisLabelValue, this.canvas.width * 0.25, this.canvas.height - 4, this.canvas.width * 0.7)
+
+        this.ctx.fillText(
+            this.plotTitleValue,
+            this.canvas.width * 0.25,
+            this.topPadding - 3,
+            this.canvas.width * 0.7);
+
+        this.ctx.fillText(
+            this.xAxisLabelValue,
+            this.canvas.width * 0.25,
+            this.canvas.height - 4,
+            this.canvas.width * 0.7);
+
+        this.drawVerticalText(
+            this.textHeight * 1.05,
+            this.topPadding + this.calculatePlotHeight()*0.75,
+            this.yAxisLabelValue);
     }
 
     drawXTickLabel = (xValue: number) => {
@@ -117,7 +134,15 @@ export class PointPlot {
     }
 
     drawYTickLabel = (yValue: number) => {
-        this.ctx.fillText(yValue.toString().padStart(2, ' '), 2, this.translateY(yValue) + this.textHeight/3);
+        this.ctx.fillText(yValue.toString().padStart(2, ' '), this.textHeight, this.translateY(yValue) + this.textHeight/3);
+    }
+
+    drawVerticalText(xPosition: number, yPosition: number, text: string) {
+        this.ctx.save();
+        this.ctx.translate(xPosition, yPosition);
+        this.ctx.rotate(-Math.PI/2);
+        this.ctx.fillText(text, 0, 0);
+        this.ctx.restore();
     }
 
     drawVerticalLine = (xValue: number) => {
@@ -134,10 +159,23 @@ export class PointPlot {
         this.ctx.stroke();
     }
 
-    plotPoint = (value: any) => {
-        const xPosition = this.xProducer(value);
-        const yPosition = this.yProducer(value);
-        this.ctx.fillRect(this.translateX(xPosition), this.translateY(yPosition), 1, 1);
+    plotPoints = (values: any[]) => {
+        const initialX = this.xProducer(values[0]);
+        const initialY = this.yProducer(values[0]);
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(
+            this.translateX(initialX),
+            this.translateY(initialY)
+        );
+
+        for (let index = 1; index < values.length; index++) {
+            const rawX = this.xProducer(values[index]);
+            const rawY = this.yProducer(values[index]);
+            this.ctx.lineTo(this.translateX(rawX), this.translateY(rawY));
+        }
+
+        this.ctx.stroke();
     }
 
     private translateX(xPosition: number) {
