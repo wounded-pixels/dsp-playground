@@ -1,11 +1,16 @@
 # dsp-playground
 
-## First
-* Move equation into chart? or independent?
-* tie equation to inputs
+## Switch to canvas
+* pass size
+* responsive resize?
+* path instead of points!
+* labels - all done but yAxis label
 
 ## Today
-* style main page with whitespace
+* pretty up 
+  * spacing
+  * background
+  * top branding
 * router and navigation
 * top pane and branding
 
@@ -14,6 +19,8 @@
 * eda should allow no y label and use the space
 * gh pages deployment
 * explore material ui
+* Move equation into chart? or independent?
+* tie equation to inputs
   
 ## Someday
 * graphic to tie unit circle to strip chart
