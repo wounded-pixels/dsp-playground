@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "homepage": "http://woundedpixels.github.io/dsp-playground",
+  "homepage": "https://woundedpixels.github.io/dsp-playground",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
