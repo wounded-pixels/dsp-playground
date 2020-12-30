@@ -8,27 +8,22 @@
 * pretty up 
   * background
   * top branding
+  * footer
   * navigation via Topics
 * Convert a sample to audio
   * also on iPad?
-* why bother?
-  * smooth signals are boring. Boring to look at. Boring to hear
-  * complicated signals are the building blocks for
-    * electronic music
-    * sending data over radios
-    * radar
-  * the real world is analog - radio waves from here to Mars or your phone to your Bluetooth headphones. Sound waves
-  * adding sine waves allows us to manipulate the analog world
 
 ## Refactoring before / on next page
 * some helper functions should be util components. 
   * example links
   * hints
+  * key ideas
   * ???
+* export from directories
 
 ## Navigation and Chunking
 * start page should be sticky - maybe the add sines?
-  * Just start in the middle with fun stuff!
+  * Just start in the middle with fun stuff!!
 * No classic site map nav bar!
 * simple Top Nav:
   * site and app branding on left 

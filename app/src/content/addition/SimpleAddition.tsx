@@ -136,6 +136,16 @@ class SimpleAddition extends Component<Props, State> {
                     What other frequency combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
                     {buildHint('Focus on the ratio of the frequencies')}
                 </div>
+                <div className="sub-title">Why Bother?</div>
+                <div className="context">
+                    Our world may be more digital every day, but the real world is analog - radio waves travel from here
+                    to Mars or from your phone to your Bluetooth headphones. Sound waves travel from your speakers to your ears.
+
+                    <div>
+                        <div className="key-idea">For data to travel through the air or through a wire it must be encoded with fancy combinations of
+                            sine waves!</div>
+                    </div>
+                </div>
             </div>
         );
     };
