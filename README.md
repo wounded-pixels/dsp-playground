@@ -1,17 +1,17 @@
 # dsp-playground
 
-## Switch to canvas
-* responsive resize?
-
-## Today
-* router and navigation
+## Soon
+* deploy to GH
+* test on iPad
+* one route
+* test on GH
 * pretty up 
   * background
   * top branding
-* deploy to GH
-* test on iPad
-* can whole widget be resized? Expandable div with scaling? some way to let them flow naturally from reading to shallow play to immersive play?
-* Zen mode?
+  * navigation via Topics
+* Convert a sample to audio
+  * also on iPad?
+
 
 ## Refactoring before / on next page
 * some helper functions should be util components. 
@@ -47,11 +47,15 @@
   * detail loss from composite
 
 
-## Someday
+## Features
 * graphic to tie unit circle to strip chart
   * slider to increase angle 
   * triangle and dot on unit circle
   * sin curve along angle with dot
   * dotted and solid lines
   * same for cosine?
+  
+## Someday
 * Move PointPlot into EDA
+* can whole widget be resized? Expandable div with scaling? some way to let them flow naturally from reading to shallow play to immersive play?
+* Zen mode?
