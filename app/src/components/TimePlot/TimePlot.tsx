@@ -6,6 +6,8 @@ import {PointPlot} from '../canvas/PointPlot';
 
 interface Props {
     values: TimeValue[];
+    width: number;
+    height: number;
     minY?: number;
     maxY?: number;
     plotTitle?: string;
@@ -16,7 +18,7 @@ class TimePlot extends Component<Props> {
     private plot: any;
 
     componentDidMount() {
-        const {values} = this.props;
+        const {values, width, height} = this.props;
         const plotTitle = this.props.plotTitle || '';
         const tStart = values[0].time;
         const tEnd = values[values.length - 1].time;
@@ -24,9 +26,8 @@ class TimePlot extends Component<Props> {
         const maxY = this.props.maxY || Math.max(...values.map(v => v.value));
 
         if (this.divRef && this.divRef.current) {
-            this.plot = new PointPlot(this.divRef.current)
+            this.plot = new PointPlot(this.divRef.current, width, height)
               .plotTitle(plotTitle)
-              .yAxisLabel('amplitude')
               .xAxisLabel('time')
               .radius(0.3)
               .fill('black')

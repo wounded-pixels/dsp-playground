@@ -20,7 +20,7 @@ class CurveControls extends Component<Props> {
 
         const createFloatInput = (attribute: 'amplitude' | 'frequency' | 'phase', min: number, max: number, step:number) => {
           return (
-              <div>
+              <div className="float-input">
                   <FormHelperText>{attribute}</FormHelperText>
                   <Input
                       value={curveParameters[attribute]}
@@ -39,7 +39,7 @@ class CurveControls extends Component<Props> {
         };
 
         const amplitudeInput = createFloatInput('amplitude', -4, 4, 0.1);
-        const frequencyInput = createFloatInput('frequency', 0, 10, 0.1);
+        const frequencyInput = createFloatInput('frequency', 0, 20, 0.1);
         const phaseInput = includePhase ?
             createFloatInput('phase', -1, 1, 0.1) :
             null;

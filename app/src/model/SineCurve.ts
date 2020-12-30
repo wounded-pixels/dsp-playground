@@ -8,7 +8,9 @@ class SineCurve {
     }
 
     sample(tStart: number, tEnd: number, samplingRate: number) : TimeValue[] {
-        const {amplitude, frequency, phase} = this.curveParameters;
+        const {amplitude, frequency} = this.curveParameters;
+        const phase = this.curveParameters.phase || 0;
+
         const step = 1 / samplingRate;
         const pairs: TimeValue[] = [];
         for (let time = tStart; time <= tEnd; time += step) {

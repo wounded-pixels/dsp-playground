@@ -1,19 +1,23 @@
 # dsp-playground
 
 ## Switch to canvas
-* pass size
 * responsive resize?
 
 ## Today
 * router and navigation
 * pretty up 
-  * spacing
   * background
   * top branding
 * deploy to GH
 * test on iPad
 * can whole widget be resized? Expandable div with scaling? some way to let them flow naturally from reading to shallow play to immersive play?
 * Zen mode?
+
+## Refactoring before / on next page
+* some helper functions should be util components. 
+  * example links
+  * hints
+  * ???
 
 ## Navigation and Chunking
 * start page should be sticky - maybe the add sines?
@@ -43,15 +47,11 @@
   * detail loss from composite
 
 
-## Soonish
-* eda should allow no y label and use the space
-* Move equation into chart? or independent?
-* tie equation to inputs
-  
 ## Someday
 * graphic to tie unit circle to strip chart
   * slider to increase angle 
   * triangle and dot on unit circle
   * sin curve along angle with dot
   * dotted and solid lines
-  * maybe same for cos?
+  * same for cosine?
+* Move PointPlot into EDA

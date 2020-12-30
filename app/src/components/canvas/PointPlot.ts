@@ -21,11 +21,11 @@ export class PointPlot {
     private xAxisLabelValue: string = '';
     private yAxisLabelValue: string = '';
 
-    constructor(parent: HTMLElement) {
+    constructor(parent: HTMLElement, width: number, height: number) {
         this.parent = parent;
         this.canvas = document.createElement('canvas');
-        this.canvas.width = 400;
-        this.canvas.height = 150;
+        this.canvas.width = width;
+        this.canvas.height = height;
 
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
@@ -90,7 +90,7 @@ export class PointPlot {
     update(values: any[]) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.fillStyle = 'lightgrey';
+        this.ctx.fillStyle = '#d0d0d0';
         this.ctx.fillRect(
             this.translateX(this.minX), this.translateY(this.maxY),
             this.calculatePlotWidth(), this.calculatePlotHeight()
@@ -119,9 +119,9 @@ export class PointPlot {
 
         this.ctx.fillText(
             this.xAxisLabelValue,
-            this.canvas.width * 0.25,
+            this.canvas.width * 0.5,
             this.canvas.height - 4,
-            this.canvas.width * 0.7);
+            this.canvas.width * 0.5);
 
         this.drawVerticalText(
             this.textHeight * 1.05,
@@ -130,7 +130,7 @@ export class PointPlot {
     }
 
     drawXTickLabel = (xValue: number) => {
-        this.ctx.fillText(''+xValue, this.translateX(xValue) - 3, this.topPadding + this.calculatePlotHeight() + this.textHeight);
+        this.ctx.fillText(''+xValue, this.translateX(xValue) - 3, this.topPadding + this.calculatePlotHeight() + this.textHeight + 3);
     }
 
     drawYTickLabel = (yValue: number) => {
