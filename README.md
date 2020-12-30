@@ -11,7 +11,14 @@
   * navigation via Topics
 * Convert a sample to audio
   * also on iPad?
-
+* why bother?
+  * smooth signals are boring. Boring to look at. Boring to hear
+  * complicated signals are the building blocks for
+    * electronic music
+    * sending data over radios
+    * radar
+  * the real world is analog - radio waves from here to Mars or your phone to your Bluetooth headphones. Sound waves
+  * adding sine waves allows us to manipulate the analog world
 
 ## Refactoring before / on next page
 * some helper functions should be util components. 
