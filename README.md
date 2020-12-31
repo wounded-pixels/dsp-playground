@@ -1,25 +1,34 @@
 # dsp-playground
 
 ## Soon
-* deploy to GH
-* test on iPad
+* fix on iPad
+  * spinner should be touchable
+  * strange line on phone
 * one route
 * test on GH
 * pretty up 
   * background
   * top branding
   * footer
+  * differentiate internal scenario control links from routing links
   * navigation via Topics
 * Convert a sample to audio
   * also on iPad?
 
 ## Refactoring before / on next page
+* consolidate components X
+* absolute paths
 * some helper functions should be util components. 
   * example links
   * hints
   * key ideas
   * ???
 * export from directories
+
+## Hygiene
+* prettier
+* jest and storybook for components
+* snapshots for components
 
 ## Navigation and Chunking
 * start page should be sticky - maybe the add sines?

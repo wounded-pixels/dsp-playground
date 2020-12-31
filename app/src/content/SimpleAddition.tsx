@@ -2,15 +2,15 @@ import {cloneDeep} from 'lodash';
 
 import React, { Component, CSSProperties } from 'react';
 
-import {IconButton, Link, Tooltip } from '@material-ui/core';
-import {ContactSupport} from '@material-ui/icons';
+import {Link} from '@material-ui/core';
 
-import TimePlot from '../../components/TimePlot/TimePlot';
-import CurveControls from '../../components/CurveControls/CurveControls';
-import SineCurve from '../../model/SineCurve';
-import { addSamples } from '../../util/samples';
+import CurveControls from 'components/CurveControls';
+import SineCurve from 'model/SineCurve';
+import TimePlot from 'components/TimePlot';
+import { addSamples } from 'util/samples';
 
-import {CurveParameters} from '../../model/types';
+import {CurveParameters} from 'model/types';
+import {Hint} from '../components/stateless-helpers';
 
 type Props = {};
 
@@ -35,19 +35,12 @@ const beatParameters: CurveParameters[] = [
 
 const examples: { [index: string] : CurveParameters[] }  = { jaggedParameters, beatParameters, flatParameters };
 
-const buildHint = (hintText: string) => {
-    return (
-        <Tooltip title={hintText}>
-            <IconButton aria-label="hint">
-                <ContactSupport/>
-            </IconButton>
-        </Tooltip>
-    );
-};
-
 class SimpleAddition extends Component<Props, State> {
     state = {
-        curveParameters: cloneDeep(jaggedParameters)
+        curveParameters: [
+            {amplitude: 1, frequency: 1},
+            {amplitude: 1, frequency: 2},
+        ] as CurveParameters[]
     };
 
     onChangeCurveParameter = (curveNumber: number, parameterName: 'amplitude' | 'frequency' | 'phase', value: number) => {
@@ -56,8 +49,8 @@ class SimpleAddition extends Component<Props, State> {
         this.setState(state);
     };
 
-    buildExampleLink = (index: string, text: string) => {
-        return <Link onClick={() => this.onExample(index)}>{' '+text}</Link>;
+    buildExampleLink = (key: string, text: string) => {
+        return <Link onClick={() => this.onExample(key)}>{' '+text}</Link>;
     };
 
     onExample = (rawKey: string) => {
@@ -68,7 +61,6 @@ class SimpleAddition extends Component<Props, State> {
             this.setState({curveParameters: cloneDeep(jaggedParameters)});
         }
     };
-
 
     render(): JSX.Element {
         const samplingRate = 600;
@@ -128,14 +120,12 @@ class SimpleAddition extends Component<Props, State> {
                     <TimePlot width={500} height={2 * timePlotHeight} minY={-2*amplitude} maxY={2*amplitude} values={combined} />
                 </div>
                 <div className="sub-title">Things to Try</div>
-                <div className="context">
+                <Hint text="Focus on the difference between the two frequencies">
                     Can you see a pattern with beats? Specifically, can you make the {this.buildExampleLink('beat', 'beat')} slower?
-                    {buildHint('Focus on the difference between the two frequencies')}
-                </div>
-                <div className="context">
-                    What other frequency combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
-                    {buildHint('Focus on the ratio of the frequencies')}
-                </div>
+                </Hint>
+                <Hint text="Focus on the ratio of the frequencies and the ratio of the amplitudes">
+                    What other combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
+                </Hint>
                 <div className="sub-title">Why Bother?</div>
                 <div className="context">
                     Our world may be more digital every day, but the real world is analog - radio waves travel from here
@@ -150,5 +140,4 @@ class SimpleAddition extends Component<Props, State> {
         );
     };
 }
-
 export default SimpleAddition;

@@ -1,4 +1,4 @@
-import {TimeValue} from '../model/types';
+import {TimeValue} from 'model/types';
 
 export const addSamples = (...samples: TimeValue[][]) : TimeValue[] => {
     const sum: TimeValue[] = [];

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 import './TimePlot.scss';
-import {TimeValue} from '../../model/types';
-import {PointPlot} from '../canvas/PointPlot';
+import {TimeValue} from 'model/types';
+import {PointPlot} from 'canvas-components/PointPlot';
 
 interface Props {
     values: TimeValue[];

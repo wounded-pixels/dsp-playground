@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import SimpleAddition from "./content/addition/SimpleAddition";
+import SimpleAddition from "content/SimpleAddition";
 
 import './App.scss';
 

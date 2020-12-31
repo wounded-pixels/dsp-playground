@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import {CurveParameters} from '../../model/types';
+import {CurveParameters} from 'model/types';
 
 import './CurveControl.scss';
 
