@@ -15,15 +15,7 @@
 * Convert a sample to audio
   * also on iPad?
 
-## Refactoring before / on next page
-* consolidate components X
-* absolute paths
-* some helper functions should be util components. 
-  * example links
-  * hints
-  * key ideas
-  * ???
-* export from directories
+## Refactoring 
 
 ## Hygiene
 * prettier

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, CSSProperties } from 'react';
 
-import {IconButton, Tooltip } from '@material-ui/core';
+import {IconButton, Link, Tooltip} from '@material-ui/core';
 import {ContactSupport} from '@material-ui/icons';
 
 type HintProps = {text: string};
@@ -107,3 +107,17 @@ export const Visualization: FunctionComponent<VisualizationProps> = ({children})
     );
 };
 
+type ScenarioLinkProps = {
+    index: string,
+    onClick: (index: string) => void;
+};
+export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({index, onClick, children}) => {
+    return (
+      <span>
+          &nbsp;
+          <Link onClick={() => {
+              onClick(index)
+          }} > {children} </Link>
+      </span>
+    );
+};

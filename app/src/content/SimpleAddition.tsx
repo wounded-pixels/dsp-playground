@@ -2,15 +2,13 @@ import {cloneDeep} from 'lodash';
 
 import React, { Component } from 'react';
 
-import {Link} from '@material-ui/core';
-
 import CurveControls from 'components/CurveControls';
 import SineCurve from 'model/SineCurve';
 import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {CurveParameters} from 'model/types';
-import {Context, Hint, KeyIdea, Row, Symbol, Topic, Visualization} from '../components/stateless-helpers';
+import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from '../components/stateless-helpers';
 
 type Props = {};
 
@@ -49,10 +47,6 @@ class SimpleAddition extends Component<Props, State> {
         this.setState(state);
     };
 
-    buildExampleLink = (key: string, text: string) => {
-        return <Link onClick={() => this.onExample(key)}>{' '+text}</Link>;
-    };
-
     onExample = (rawKey: string) => {
         const key = rawKey + 'Parameters';
         if (examples[key]) {
@@ -86,14 +80,22 @@ class SimpleAddition extends Component<Props, State> {
                     <ul>
                     <li>
                         A combination of two smooth curves can be
-                        {this.buildExampleLink('jagged', 'surprisingly jagged')} </li>
+                        <ScenarioLink index="jagged" onClick={this.onExample}>
+                          surprisingly jagged
+                        </ScenarioLink>
+                    </li>
                     <li>
                         A mixture of curves with similar frequencies produces a
-                        {this.buildExampleLink('beat', 'wave of waves')} or beat
+                        <ScenarioLink index="beat" onClick={this.onExample}>
+                          wave of waves
+                        </ScenarioLink>
+                        or beat
                     </li>
                     <li>
                         It is even easy to get a curve with a
-                        {this.buildExampleLink('flat', 'flattened top and bottom')}
+                        <ScenarioLink index="flat" onClick={this.onExample}>
+                          flattened top and bottom
+                        </ScenarioLink>
                     </li>
                     </ul>
                     What strange patterns can you create?
@@ -119,10 +121,14 @@ class SimpleAddition extends Component<Props, State> {
                 <Context>
                   <h3>Things to Try</h3>
                   <Hint text="Focus on the difference between the two frequencies">
-                      Can you see a pattern with beats? Specifically, can you make the {this.buildExampleLink('beat', 'beat')} slower?
+                    Can you see a pattern with beats? Specifically, can you make the
+                    <ScenarioLink index="beat" onClick={this.onExample}> beat </ScenarioLink> slower
                   </Hint>
                   <Hint text="Focus on the ratio of the frequencies and the ratio of the amplitudes">
-                      What other combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
+                    What other combinations cause
+                    <ScenarioLink index="flat" onClick={this.onExample}>
+                      flat tops and bottoms
+                    </ScenarioLink>
                   </Hint>
                   <h3>Why Bother?</h3>
                   <div>
