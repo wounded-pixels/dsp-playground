@@ -10,7 +10,7 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {CurveParameters} from 'model/types';
-import {Hint} from '../components/stateless-helpers';
+import {Hint, KeyIdea, Row} from '../components/stateless-helpers';
 
 type Props = {};
 
@@ -86,10 +86,10 @@ class SimpleAddition extends Component<Props, State> {
 
         return (
             <div id="SimpleAddition" className="topic">
-                <div className="title">Addition of Sine Curves</div>
+                <h2>Addition of Sine Curves</h2>
                 <div className="context">
                     Adding sine curves is pretty simple, but it can produce some very strange results:
-                    <ul className="examples">
+                    <ul>
                     <li>
                         A combination of two smooth curves can be
                         {this.buildExampleLink('jagged', 'surprisingly jagged')} </li>
@@ -104,37 +104,36 @@ class SimpleAddition extends Component<Props, State> {
                     </ul>
                     What strange patterns can you create?
                 </div>
-                <div className="row">
+                <Row>
                     <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
                     <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={firstSamples}/>
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <span style={symbolStyles}>+</span>
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
                     <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={secondSamples}/>
-                </div>
-                <div className="row">
+                </Row>
+                <Row>
                     <div style={symbolStyles}>=</div>
                     <TimePlot width={500} height={2 * timePlotHeight} minY={-2*amplitude} maxY={2*amplitude} values={combined} />
-                </div>
-                <div className="sub-title">Things to Try</div>
+                </Row>
+                <h3>Things to Try</h3>
                 <Hint text="Focus on the difference between the two frequencies">
                     Can you see a pattern with beats? Specifically, can you make the {this.buildExampleLink('beat', 'beat')} slower?
                 </Hint>
                 <Hint text="Focus on the ratio of the frequencies and the ratio of the amplitudes">
                     What other combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
                 </Hint>
-                <div className="sub-title">Why Bother?</div>
+                <h3>Why Bother?</h3>
                 <div className="context">
                     Our world may be more digital every day, but the real world is analog - radio waves travel from here
                     to Mars or from your phone to your Bluetooth headphones. Sound waves travel from your speakers to your ears.
 
-                    <div>
-                        <div className="key-idea">For data to travel through the air or through a wire it must be encoded with fancy combinations of
-                            sine waves!</div>
-                    </div>
+                    <KeyIdea>
+                        When data travels through the air or through a wire it is usually encoded with fancy combinations of sine waves!
+                    </KeyIdea>
                 </div>
             </div>
         );

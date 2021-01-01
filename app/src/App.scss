@@ -1,5 +1,4 @@
 .App {
-  background: #f7f7f7;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -11,18 +10,11 @@
     display: flex;
     flex-grow: 2;
     flex-direction: column;
-    width: 80%;
+    width: 85%;
 
-    div.title {
+    h1, h2, h3, h4 {
       text-align: left;
-      font-size: larger;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    div.sub-title {
-      text-align: left;
-      font-weight: bold;
+      margin: 5px 0 5px 0;
     }
 
     div.context {
@@ -30,13 +22,7 @@
       text-align: left;
     }
 
-    div.key-idea {
-      background: #f6ebb0;
-      margin: 10px 0;
-      padding: 10px 2px;
-    }
-
-    ul.examples li {
+    ul li {
       padding-bottom: 4px;
     }
   }

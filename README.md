@@ -70,3 +70,9 @@
 * Move PointPlot into EDA
 * can whole widget be resized? Expandable div with scaling? some way to let them flow naturally from reading to shallow play to immersive play?
 * Zen mode?
+
+## deployment
+* make repo private?
+* AWS Amplify? GAE?
+* cache and cache busting?
+
