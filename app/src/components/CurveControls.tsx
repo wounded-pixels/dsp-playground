@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
-import Input from '@material-ui/core/Input';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import {FormHelperText, Input} from '@material-ui/core';
 
 import {CurveParameters} from 'model/types';
 

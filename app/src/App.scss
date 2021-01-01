@@ -19,5 +19,15 @@
   a {
     cursor: pointer;
   }
+
+  input[type=number] {
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+  }
 }
 
