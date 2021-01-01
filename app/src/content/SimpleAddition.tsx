@@ -1,6 +1,6 @@
 import {cloneDeep} from 'lodash';
 
-import React, { Component, CSSProperties } from 'react';
+import React, { Component } from 'react';
 
 import {Link} from '@material-ui/core';
 
@@ -10,7 +10,7 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {CurveParameters} from 'model/types';
-import {Hint, KeyIdea, Row} from '../components/stateless-helpers';
+import {Context, Hint, KeyIdea, Row, Symbol, Topic, Visualization} from '../components/stateless-helpers';
 
 type Props = {};
 
@@ -78,16 +78,10 @@ class SimpleAddition extends Component<Props, State> {
         const amplitude = 5;
         const timePlotHeight = 150;
 
-        const symbolStyles: CSSProperties = {
-            fontWeight: 'bold',
-            fontSize: '32px',
-            width: '150px',
-        }
-
         return (
-            <div id="SimpleAddition" className="topic">
+            <Topic>
                 <h2>Addition of Sine Curves</h2>
-                <div className="context">
+                <Context>
                     Adding sine curves is pretty simple, but it can produce some very strange results:
                     <ul>
                     <li>
@@ -95,7 +89,7 @@ class SimpleAddition extends Component<Props, State> {
                         {this.buildExampleLink('jagged', 'surprisingly jagged')} </li>
                     <li>
                         A mixture of curves with similar frequencies produces a
-                        {this.buildExampleLink('beat', 'wave of waves or beat')}
+                        {this.buildExampleLink('beat', 'wave of waves')} or beat
                     </li>
                     <li>
                         It is even easy to get a curve with a
@@ -103,39 +97,43 @@ class SimpleAddition extends Component<Props, State> {
                     </li>
                     </ul>
                     What strange patterns can you create?
-                </div>
-                <Row>
-                    <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
-                    <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={firstSamples}/>
-                </Row>
-                <Row>
-                    <span style={symbolStyles}>+</span>
-                </Row>
-                <Row>
-                    <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
-                    <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={secondSamples}/>
-                </Row>
-                <Row>
-                    <div style={symbolStyles}>=</div>
-                    <TimePlot width={500} height={2 * timePlotHeight} minY={-2*amplitude} maxY={2*amplitude} values={combined} />
-                </Row>
-                <h3>Things to Try</h3>
-                <Hint text="Focus on the difference between the two frequencies">
-                    Can you see a pattern with beats? Specifically, can you make the {this.buildExampleLink('beat', 'beat')} slower?
-                </Hint>
-                <Hint text="Focus on the ratio of the frequencies and the ratio of the amplitudes">
-                    What other combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
-                </Hint>
-                <h3>Why Bother?</h3>
-                <div className="context">
-                    Our world may be more digital every day, but the real world is analog - radio waves travel from here
-                    to Mars or from your phone to your Bluetooth headphones. Sound waves travel from your speakers to your ears.
-
-                    <KeyIdea>
+                </Context>
+                <Visualization>
+                  <Row>
+                      <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
+                      <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={firstSamples}/>
+                  </Row>
+                  <Row>
+                      <Symbol>+</Symbol>
+                      <Symbol>&nbsp;</Symbol>
+                  </Row>
+                  <Row>
+                      <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
+                      <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={secondSamples}/>
+                  </Row>
+                  <Row>
+                      <Symbol>=</Symbol>
+                      <TimePlot width={500} height={2 * timePlotHeight} minY={-2*amplitude} maxY={2*amplitude} values={combined} />
+                  </Row>
+                </Visualization>
+                <Context>
+                  <h3>Things to Try</h3>
+                  <Hint text="Focus on the difference between the two frequencies">
+                      Can you see a pattern with beats? Specifically, can you make the {this.buildExampleLink('beat', 'beat')} slower?
+                  </Hint>
+                  <Hint text="Focus on the ratio of the frequencies and the ratio of the amplitudes">
+                      What other combinations cause {this.buildExampleLink('flat','flat tops and bottoms')}?
+                  </Hint>
+                  <h3>Why Bother?</h3>
+                  <div>
+                      Our world may be more digital every day, but the real world is analog - radio waves travel from here
+                      to Mars or from your phone to your Bluetooth headphones. Sound waves travel from your speakers to your ears.
+                  </div>
+                  <KeyIdea>
                         When data travels through the air or through a wire it is usually encoded with fancy combinations of sine waves!
-                    </KeyIdea>
-                </div>
-            </div>
+                  </KeyIdea>
+                </Context>
+            </Topic>
         );
     };
 }

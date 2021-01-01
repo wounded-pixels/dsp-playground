@@ -6,34 +6,14 @@
   justify-content: center;
   margin-top: 10px;
 
-  div.topic {
-    display: flex;
-    flex-grow: 2;
-    flex-direction: column;
-    width: 85%;
 
-    h1, h2, h3, h4 {
-      text-align: left;
-      margin: 5px 0 5px 0;
-    }
-
-    div.context {
-      padding-top: 5px;
-      text-align: left;
-    }
-
-    ul li {
-      padding-bottom: 4px;
-    }
+  h1, h2, h3, h4 {
+    text-align: left;
+    margin: 5px 0 5px 0;
   }
 
-  div.row {
-    width: 100%;
-    display: flex;
-    flex-grow: 2;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  ul li {
+    padding-bottom: 4px;
   }
 
   a {

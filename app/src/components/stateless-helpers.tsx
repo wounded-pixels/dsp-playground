@@ -1,11 +1,11 @@
-import React, { SFC, CSSProperties } from 'react';
+import React, { FunctionComponent, CSSProperties } from 'react';
 
-import {Icon, IconButton, Tooltip } from '@material-ui/core';
-import {ContactSupport, Info} from '@material-ui/icons';
+import {IconButton, Tooltip } from '@material-ui/core';
+import {ContactSupport} from '@material-ui/icons';
 
 type HintProps = {text: string};
-const hintStyles: CSSProperties = {textAlign: 'left'};
-export const Hint: SFC<HintProps> = ({text, children}) => {
+const hintStyles: CSSProperties = {};
+export const Hint: FunctionComponent<HintProps> = ({text, children}) => {
     return (
         <div style={hintStyles}>
             {children}
@@ -23,9 +23,8 @@ const keyIdeaStyles: CSSProperties = {
     background: '#f6ebb0',
     margin: '10px 0',
     padding: '10px 10px',
-    textAlign: 'left',
 };
-export const KeyIdea: SFC<KeyIdeaProps> = ({children}) => {
+export const KeyIdea: FunctionComponent<KeyIdeaProps> = ({children}) => {
     return (
         <div style={keyIdeaStyles}>
             {children}
@@ -40,13 +39,71 @@ const rowStyles: CSSProperties = {
     flexDirection: 'row',
     flexGrow: 2,
     justifyContent: 'center',
-    textAlign: 'left',
     width: '100%',
 };
-export const Row: SFC<RowProps> = ({children}) => {
+export const Row: FunctionComponent<RowProps> = ({children}) => {
     return (
         <div style={rowStyles}>
             {children}
         </div>
     );
 };
+
+type ContextProps = {};
+const contextStyles: CSSProperties = {
+    paddingTop: '5px',
+};
+export const Context: FunctionComponent<ContextProps> = ({children}) => {
+    return (
+    <div style={contextStyles}>
+    {children}
+    </div>
+    );
+};
+
+type TopicProps = {};
+const topicStyles: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 2,
+    textAlign: 'left',
+    width: '85%',
+};
+export const Topic: FunctionComponent<TopicProps> = ({children}) => {
+    return (
+      <div style={topicStyles}>
+          {children}
+      </div>
+    );
+};
+
+type SymbolProps = {};
+const symbolStyles: CSSProperties = {
+    display: 'flex',
+    fontSize: '32px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    justifyContent: 'center',
+    width: '150px',
+    height: '32px',
+};
+export const Symbol: FunctionComponent<SymbolProps> = ({children}) => {
+    return (
+      <div style={symbolStyles}>
+          {children}
+      </div>
+    );
+};
+
+type VisualizationProps = {};
+const visualizationStyles: CSSProperties = {
+    padding: '10px 10px',
+};
+export const Visualization: FunctionComponent<VisualizationProps> = ({children}) => {
+    return (
+      <div style={visualizationStyles}>
+          {children}
+      </div>
+    );
+};
+
