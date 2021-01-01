@@ -136,8 +136,20 @@ class SimpleAddition extends Component<Props, State> {
                       to Mars or from your phone to your Bluetooth headphones. Sound waves travel from your speakers to your ears.
                   </div>
                   <KeyIdea>
-                        When data travels through the air or through a wire it is usually encoded with fancy combinations of sine waves!
+                      When data travels through air, wires, fiber optic cables or the vacuum of space
+                      it is usually encoded with fancy combinations of sine waves!
                   </KeyIdea>
+                  <div>
+                      Many academic and professional pursuits build on these concepts:
+                      <ul>
+                          <li>Acoustics</li>
+                          <li>Electronic music</li>
+                          <li>Electrical Engineering</li>
+                          <li>Radios and Software Defined Radios</li>
+                          <li>Radar systems</li>
+                      </ul>
+
+                  </div>
                 </Context>
             </Topic>
         );

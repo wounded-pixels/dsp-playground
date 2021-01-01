@@ -22,7 +22,7 @@ type KeyIdeaProps = {};
 const keyIdeaStyles: CSSProperties = {
     background: '#f6ebb0',
     margin: '10px 0',
-    padding: '10px 10px',
+    padding: '5px 0',
 };
 export const KeyIdea: FunctionComponent<KeyIdeaProps> = ({children}) => {
     return (
