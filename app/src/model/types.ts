@@ -8,3 +8,8 @@ export type TimeValue = {
     time: number;
     value: number;
 };
+
+export type LabeledPath = {
+    label: string;
+    path: string;
+}

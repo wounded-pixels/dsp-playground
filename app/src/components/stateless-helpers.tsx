@@ -51,7 +51,7 @@ export const Row: FunctionComponent<RowProps> = ({children}) => {
 
 type ContextProps = {};
 const contextStyles: CSSProperties = {
-    paddingTop: '5px',
+    paddingTop: '2px',
 };
 export const Context: FunctionComponent<ContextProps> = ({children}) => {
     return (
@@ -66,6 +66,7 @@ const topicStyles: CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 2,
+    paddingTop: '10px',
     textAlign: 'left',
     width: '85%',
 };
@@ -121,3 +122,5 @@ export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({index, onCli
       </span>
     );
 };
+
+

@@ -1,0 +1,16 @@
+.TopNav {
+  display: flex;
+  font-size: 0.8rem;
+  font-weight: bold;
+  justify-content: space-between;
+  text-align: center;
+  width: 95%;
+
+  div.right-nav-link a {
+    margin-left: 10px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

@@ -8,7 +8,8 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {CurveParameters} from 'model/types';
-import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from '../components/stateless-helpers';
+import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from 'components/stateless-helpers';
+import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -148,7 +149,6 @@ class SimpleAddition extends Component<Props, State> {
                           <li>Radios and Software Defined Radios</li>
                           <li>Radar systems</li>
                       </ul>
-
                   </div>
                 </Context>
             </Topic>
