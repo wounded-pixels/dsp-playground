@@ -4,14 +4,11 @@
 * fix on iPad
   * spinner should be touchable
   * strange line on phone
-* one route
-* test on GH
 * pretty up 
   * background
   * top branding
   * footer
   * differentiate internal scenario control links from routing links
-  * navigation via Topics
 * Convert a sample to audio
   * also on iPad?
 

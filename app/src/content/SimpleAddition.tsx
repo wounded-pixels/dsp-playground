@@ -2,12 +2,12 @@ import {cloneDeep} from 'lodash';
 
 import React, { Component } from 'react';
 
-import CurveControls from 'components/CurveControls';
+import CurveControl from 'components/CurveControl';
 import SineCurve from 'model/SineCurve';
 import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
-import {CurveParameters} from 'model/types';
+import {CurveParameters, Sample} from 'model/types';
 import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from 'components/stateless-helpers';
 import { Link } from 'react-router-dom';
 
@@ -62,13 +62,13 @@ class SimpleAddition extends Component<Props, State> {
         const tEnd = 5;
 
         const {curveParameters} = this.state;
-        const firstSamples = new SineCurve(curveParameters[0])
+        const firstSample: Sample = new SineCurve(curveParameters[0])
             .sample(0, tEnd, samplingRate);
 
-        const secondSamples = new SineCurve(curveParameters[1])
+        const secondSample: Sample = new SineCurve(curveParameters[1])
             .sample(0, tEnd, samplingRate);
 
-        const combined = addSamples(firstSamples, secondSamples);
+        const combined: Sample = addSamples(firstSample, secondSample);
 
         const amplitude = 5;
         const timePlotHeight = 150;
@@ -103,16 +103,16 @@ class SimpleAddition extends Component<Props, State> {
                 </Context>
                 <Visualization>
                   <Row>
-                      <CurveControls onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
-                      <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={firstSamples}/>
+                      <CurveControl onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={this.state.curveParameters[0]}/>
+                      <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={firstSample}/>
                   </Row>
                   <Row>
                       <Symbol>+</Symbol>
                       <Symbol>&nbsp;</Symbol>
                   </Row>
                   <Row>
-                      <CurveControls onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
-                      <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={secondSamples}/>
+                      <CurveControl onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
+                      <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={secondSample}/>
                   </Row>
                   <Row>
                       <Symbol>=</Symbol>

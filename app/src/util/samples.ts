@@ -1,6 +1,6 @@
-import {TimeValue} from 'model/types';
+import {Sample, TimeValue} from 'model/types';
 
-export const addSamples = (...samples: TimeValue[][]) : TimeValue[] => {
+export const addSamples = (...samples: Sample[]) : Sample => {
     const sum: TimeValue[] = [];
 
     for (let col_index=0; col_index < samples[0].length; col_index++) {

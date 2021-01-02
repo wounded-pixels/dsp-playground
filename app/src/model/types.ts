@@ -9,6 +9,8 @@ export type TimeValue = {
     value: number;
 };
 
+export type Sample = TimeValue[];
+
 export type LabeledPath = {
     label: string;
     path: string;

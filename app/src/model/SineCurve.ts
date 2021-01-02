@@ -1,4 +1,4 @@
-import {CurveParameters, TimeValue} from './types';
+import {CurveParameters, Sample, TimeValue} from './types';
 
 class SineCurve {
     private readonly curveParameters: CurveParameters;
@@ -7,7 +7,7 @@ class SineCurve {
         this.curveParameters = curveParameters;
     }
 
-    sample(tStart: number, tEnd: number, samplingRate: number) : TimeValue[] {
+    sample(tStart: number, tEnd: number, samplingRate: number) : Sample {
         const {amplitude, frequency} = this.curveParameters;
         const phase = this.curveParameters.phase || 0;
 

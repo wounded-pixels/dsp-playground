@@ -13,7 +13,7 @@ interface Props {
     onChange: (curveNumber: number, parameterName: 'amplitude' | 'frequency' | 'phase', value: number) => void;
 }
 
-class CurveControls extends Component<Props> {
+class CurveControl extends Component<Props> {
     render(): JSX.Element {
         const { curveNumber, curveParameters, includePhase } = this.props;
 
@@ -53,4 +53,4 @@ class CurveControls extends Component<Props> {
     };
 }
 
-export default CurveControls
+export default CurveControl

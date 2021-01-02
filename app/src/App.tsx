@@ -13,6 +13,7 @@ import './App.scss';
 import TopNav from 'components/TopNav';
 import {LabeledPath} from 'model/types';
 import Topics from 'content/Topics';
+import SumOfManySines from './content/SumOfManySines';
 
 type Props = {};
 
@@ -36,6 +37,9 @@ class App extends Component<Props, State> {
                     <Switch>
                         <Route path="/add-sines">
                             <SimpleAddition />
+                        </Route>
+                        <Route path="/sum-many-sines">
+                            <SumOfManySines />
                         </Route>
                         <Route path="/about">
                             <About />

@@ -22,6 +22,10 @@ const Topics: FunctionComponent<Props> = () => {
                 Simple combinations of the humble sine curve yield many strange and useful curves.
                 Let's start by specifying the amplitude and frequency of two curves and adding them together.
             </Context>
+            <h3><Link to="/sum-many-sines">Sum of Many Sines</Link></h3>
+            <Context>
+                We can get interesting shapes by adding two sines together. What mischief can we create with twenty?
+            </Context>
         </Topic>
     );
 };
