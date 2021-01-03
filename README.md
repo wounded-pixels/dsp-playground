@@ -1,5 +1,11 @@
 # dsp-playground
 
+## Now
+* Freq controller
+* Bridge to and from topics
+* Presets freq 14, 15, 16 at 1,3,-4 or something to get flattened beats
+
+
 ## Soon
 * fix on iPad
   * spinner should be touchable

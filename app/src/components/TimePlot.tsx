@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './TimePlot.scss';
-import {Sample, TimeValue} from 'model/types';
+import {Sample} from 'model/types';
 import {PointPlot} from 'canvas-components/PointPlot';
 
 interface Props {
