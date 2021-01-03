@@ -78,6 +78,8 @@ class SimpleAddition extends Component<Props, State> {
                 <h2>Addition of Sine Curves</h2>
                 <Context>
                     Adding sine curves is pretty simple, but it can produce some very strange results:
+                    The inputs below allow you to control the amplitude and frequency of two sine curves.
+                    Their sum is shown at the bottom.
                     <ul>
                     <li>
                         A combination of two smooth curves can be
@@ -150,6 +152,14 @@ class SimpleAddition extends Component<Props, State> {
                           <li>Radar systems</li>
                       </ul>
                   </div>
+                </Context>
+                <Context>
+                    <h3>Next Steps</h3>
+                    <div>
+                        If adding two sine curves produce interesting results then we clearly have to try
+                        more. Many many more. So, we need a way to quickly control the amplitudes of
+                        <Link to="/sum-many-sines"> many sines</Link>.
+                    </div>
                 </Context>
             </Topic>
         );
