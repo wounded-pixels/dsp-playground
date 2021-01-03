@@ -1,14 +1,17 @@
 # dsp-playground
 
 ## Now
-* Freq controller
-* Bridge to and from topics
-* Presets freq 14, 15, 16 at 1,3,-4 or something to get flattened beats
+* taller freq control
+* show changing freq and amplitude
+* goals - show curve on plot and let them match it
+  * transparent blue and yellow? too cute?
 
 
 ## Soon
+* switch to css grid?
 * fix on iPad
   * spinner should be touchable
+  * hints look terrible and dont work on ipad
   * strange line on phone
 * pretty up 
   * background
