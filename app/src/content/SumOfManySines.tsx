@@ -7,8 +7,7 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {Sample, TimeValue} from 'model/types';
-import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from 'components/stateless-helpers';
-import { Link } from 'react-router-dom';
+import {Context, Row, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
 import FrequencyDomainControl from '../components/FrequencyDomainControl';
 
 type Props = {};

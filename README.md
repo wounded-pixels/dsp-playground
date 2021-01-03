@@ -14,6 +14,8 @@
   * spinner should be touchable
   * hints look terrible and dont work on ipad
   * strange line on phone
+* fixes
+  * h scrollbar on freq domain
 * pretty up 
   * background
   * top branding
