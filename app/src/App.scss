@@ -29,5 +29,9 @@
   input[type=number]::-webkit-outer-spin-button {
     opacity: 1;
   }
+
+  svg {
+    user-select: none;
+  }
 }
 

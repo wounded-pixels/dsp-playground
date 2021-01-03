@@ -69,9 +69,17 @@ class FrequencyDomainControl extends Component<Props> {
         });
 
         const knobs = amplitudes.map((amplitude: number, index: number) => {
-            const onMove = (evt: React.DragEvent | React.MouseEvent) => {
+            const onMove = (evt: React.MouseEvent) => {
                 const newAmplitude = amplitudes[index] + step * Math.sign(-evt.movementY);
                 onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
+            };
+
+            const onTouch = (evt: React.TouchEvent) => {
+                if (evt.touches.length > 1) {
+                    const deltaY = evt.touches[evt.touches.length-1].clientY - evt.touches[0].clientY;
+                    const newAmplitude = amplitudes[index] + step * Math.sign(-deltaY);
+                    onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
+                }
             };
 
             return (
@@ -89,8 +97,8 @@ class FrequencyDomainControl extends Component<Props> {
                         y={this.calculateKnobY(amplitude) - knobDimensions.height /2 }
                         width={knobDimensions.width}
                         height={knobDimensions.height}
-                        onDrag={onMove}
                         onMouseMove={onMove}
+                        onTouchMove={onTouch}
                     />
                 </g>
             );

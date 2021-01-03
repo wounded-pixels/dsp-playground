@@ -16,6 +16,8 @@
   * strange line on phone
 * fixes
   * h scrollbar on freq domain
+  * improve knob drag
+  * page refresh is wonky - path is wrong 
 * pretty up 
   * background
   * top branding
