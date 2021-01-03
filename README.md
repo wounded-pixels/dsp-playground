@@ -2,7 +2,8 @@
 
 ## Now
 * taller freq control
-* show changing freq and amplitude
+  * redo as draggable svg!!
+  * show changing freq and amplitude
 * goals - show curve on plot and let them match it
   * transparent blue and yellow? too cute?
 
