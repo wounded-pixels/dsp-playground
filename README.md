@@ -4,6 +4,8 @@
 * taller freq control
   * redo as draggable svg!!
   * show changing freq and amplitude
+  * drag start and end on knob with drag on channel if index matches?
+  
 * goals - show curve on plot and let them match it
   * transparent blue and yellow? too cute?
 
