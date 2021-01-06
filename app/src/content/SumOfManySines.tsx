@@ -34,7 +34,8 @@ const examples: { [index: string] : number[]} = {
 
 class SumOfManySines extends Component<Props, State> {
     state = {
-      amplitudes: cloneDeep(justOneFrequencies)
+        amplitudes: cloneDeep(justOneFrequencies),
+        logMessage: '',
     };
 
     onExample = (rawKey: string) => {
@@ -117,7 +118,8 @@ class SumOfManySines extends Component<Props, State> {
                         <FrequencyDomainControl
                           amplitudes={this.state.amplitudes}
                           maxAmplitude={controlAmplitude}
-                          onChange={this.onChange}/>
+                          onChange={this.onChange}
+                        />
                     </Row>
                 </Visualization>
             </Topic>

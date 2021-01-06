@@ -1,9 +1,11 @@
 .FrequencyDomainControl {
+  background: white;
   display: flex;
   flex-grow: 2;
   flex-direction: column;
   margin-top: 20px;
   min-width: 600px;
+  user-select: none;
 
   svg {
     rect.knob {
@@ -14,8 +16,15 @@
     }
 
     rect.channel {
+      cursor: pointer;
       fill: #efefef;
       stroke: #555454;
+    }
+
+    rect.channel-background {
+      cursor: pointer;
+      fill: white;
+      stroke: none;
     }
   }
 }

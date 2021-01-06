@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './FrequencyDomainControl.scss';
-import {clamp} from "../util/math-hacks";
+import {clamp, snap} from '../util/math-hacks';
 
 interface Props {
     amplitudes: number[];
@@ -35,6 +35,9 @@ const calculateKnobX = (index: number) => {
 
 
 class FrequencyDomainControl extends Component<Props> {
+    private svgRef: any = React.createRef();
+    private activeDragIndex: number = -1;
+
     calculateKnobY = (value: number) => {
         const scale = (height - padding.top - padding.bottom) / (2 * this.props.maxAmplitude);
         const minY = -this.props.maxAmplitude;
@@ -42,8 +45,33 @@ class FrequencyDomainControl extends Component<Props> {
         return height - padding.bottom - rawY;
     };
 
+    convertToPlotY = (eventY: number) => {
+        const CTM = this.svgRef.current.getScreenCTM();
+        return (eventY - CTM.f) / CTM.d;
+    };
+
+    onChange = (index: number, newY: number, evt: any) => {
+        if (this.activeDragIndex === index) {
+            evt.preventDefault();
+            const {amplitudes, maxAmplitude} = this.props;
+            const deltaY = newY - this.calculateKnobY(amplitudes[index]);
+            const newAmplitude = snap(amplitudes[index] + step * Math.sign(-deltaY), 1);
+            this.props.onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
+        }
+    };
+
+    startDrag = (index: number, evt: any) => {
+        evt.preventDefault();
+        this.activeDragIndex = index;
+    };
+
+    stopDrag = (evt: any) => {
+        evt.preventDefault();
+        this.activeDragIndex = -1;
+    }
+
     render(): JSX.Element {
-        const {amplitudes, maxAmplitude, onChange} = this.props;
+        const {amplitudes, maxAmplitude} = this.props;
 
         const bottomLabel = (
           <text
@@ -70,26 +98,42 @@ class FrequencyDomainControl extends Component<Props> {
 
         const knobs = amplitudes.map((amplitude: number, index: number) => {
             const onMove = (evt: React.MouseEvent) => {
-                const newAmplitude = amplitudes[index] + step * Math.sign(-evt.movementY);
-                onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
+                const convertedY = this.convertToPlotY(evt.clientY);
+                this.onChange(index, convertedY, evt);
             };
 
             const onTouch = (evt: React.TouchEvent) => {
-                if (evt.touches.length > 1) {
-                    const deltaY = evt.touches[evt.touches.length-1].clientY - evt.touches[0].clientY;
-                    const newAmplitude = amplitudes[index] + step * Math.sign(-deltaY);
-                    onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
-                }
+                const convertedY = this.convertToPlotY(evt.touches[0].clientY);
+                this.onChange(index, convertedY, evt);
             };
 
             return (
                 <g key={index}>
+                    <rect
+                        className="channel-background"
+                        x={calculateKnobX(index)}
+                        y={this.calculateKnobY(maxAmplitude)}
+                        width={knobDimensions.width}
+                        height={this.calculateKnobY(-maxAmplitude) - this.calculateKnobY(maxAmplitude)}
+                        onMouseMove={onMove}
+                        onMouseDown={(evt) => this.startDrag(index, evt)}
+                        onMouseUp = {(evt) => this.stopDrag(evt)}
+                        onTouchStart = {(evt) => this.startDrag(index, evt)}
+                        onTouchEnd = {(evt) => this.stopDrag(evt)}
+                        onTouchMove={onTouch}
+                    />
                     <rect
                         className="channel"
                         x={calculateKnobX(index) + knobDimensions.width*0.4}
                         y={this.calculateKnobY(maxAmplitude)}
                         width={0.2 * knobDimensions.width}
                         height={this.calculateKnobY(-maxAmplitude) - this.calculateKnobY(maxAmplitude)}
+                        onMouseMove={onMove}
+                        onMouseDown={(evt) => this.startDrag(index, evt)}
+                        onMouseUp = {(evt) => this.stopDrag(evt)}
+                        onTouchStart = {(evt) => this.startDrag(index, evt)}
+                        onTouchEnd = {(evt) => this.stopDrag(evt)}
+                        onTouchMove={onTouch}
                     />
                     <rect
                         className="knob"
@@ -98,6 +142,10 @@ class FrequencyDomainControl extends Component<Props> {
                         width={knobDimensions.width}
                         height={knobDimensions.height}
                         onMouseMove={onMove}
+                        onMouseDown={(evt) => this.startDrag(index, evt)}
+                        onMouseUp = {(evt) => this.stopDrag(evt)}
+                        onTouchStart = {(evt) => this.startDrag(index, evt)}
+                        onTouchEnd = {(evt) => this.stopDrag(evt)}
                         onTouchMove={onTouch}
                     />
                 </g>
@@ -108,7 +156,9 @@ class FrequencyDomainControl extends Component<Props> {
 
         return (
             <div className="FrequencyDomainControl">
-                <svg viewBox={viewBox}>
+                <svg
+                    ref={this.svgRef}
+                    viewBox={viewBox}>
                     {bottomLabel}
                     {amplitudeLabels}
                     {knobs}

@@ -10,3 +10,7 @@ export function clamp(value: number, min: number, max: number) {
     return value;
 }
 
+export function snap(value: number, digits: number) {
+    const multiplier = 10 ** digits;
+    return Math.round(value*multiplier) / multiplier;
+}
