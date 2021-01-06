@@ -7,8 +7,7 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {Sample, TimeValue} from 'model/types';
-import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from 'components/stateless-helpers';
-import { Link } from 'react-router-dom';
+import {Context, Row, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
 import FrequencyDomainControl from '../components/FrequencyDomainControl';
 
 type Props = {};
@@ -35,7 +34,8 @@ const examples: { [index: string] : number[]} = {
 
 class SumOfManySines extends Component<Props, State> {
     state = {
-      amplitudes: cloneDeep(justOneFrequencies)
+        amplitudes: cloneDeep(justOneFrequencies),
+        logMessage: '',
     };
 
     onExample = (rawKey: string) => {
@@ -118,7 +118,8 @@ class SumOfManySines extends Component<Props, State> {
                         <FrequencyDomainControl
                           amplitudes={this.state.amplitudes}
                           maxAmplitude={controlAmplitude}
-                          onChange={this.onChange}/>
+                          onChange={this.onChange}
+                        />
                     </Row>
                 </Visualization>
             </Topic>

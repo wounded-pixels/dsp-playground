@@ -1,58 +1,31 @@
 .FrequencyDomainControl {
+  background: white;
   display: flex;
   flex-grow: 2;
   flex-direction: column;
   margin-top: 20px;
+  min-width: 600px;
+  user-select: none;
 
-  .top {
-    display: flex;
-    flex-direction: row;
-
-    .frequency-labels {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: space-between;
-
-      span {
-        display: flex;
-        justify-content: space-between;
-      }
+  svg {
+    rect.knob {
+      cursor: pointer;
+      fill: #a5a3a3;
+      stroke: black;
+      rx: 4;
     }
 
-    .frequency-sliders {
-      display: flex;
-      flex-direction: row;
-      margin-left: -75px;
-
-      .slider-wrapper {
-        align-items: center;
-        display: flex;
-        width: 30px;
-        height: 150px;
-        padding: 0;
-
-        input {
-          align-items: center;
-          display: flex;
-          width: 150px;
-          height: 30px;
-          margin: 0;
-          transform-origin: 75px 0px;
-          transform: rotate(-90deg);
-        }
-      }
+    rect.channel {
+      cursor: pointer;
+      fill: #efefef;
+      stroke: #555454;
     }
-  }
 
-  .bottom {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-
-    .frequency-label {
-      display: flex;
-      min-width: 200px;
+    rect.channel-background {
+      cursor: pointer;
+      fill: white;
+      stroke: none;
     }
   }
 }
+
