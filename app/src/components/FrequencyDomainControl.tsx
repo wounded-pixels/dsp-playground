@@ -3,11 +3,15 @@ import React, {Component} from 'react';
 import './FrequencyDomainControl.scss';
 import {clamp, snap} from '../util/math-hacks';
 
-interface Props {
+type Props = {
     amplitudes: number[];
     maxAmplitude: number;
     onChange: (frequencyIndex: number, value: number) => void;
-}
+};
+
+type State = {
+    activeDragIndex: number;
+};;
 
 const width = 600;
 const height = 300;
@@ -36,7 +40,10 @@ const calculateKnobX = (index: number) => {
 
 class FrequencyDomainControl extends Component<Props> {
     private svgRef: any = React.createRef();
-    private activeDragIndex: number = -1;
+
+    state = {
+        activeDragIndex: -1,
+    };
 
     calculateKnobY = (value: number) => {
         const scale = (height - padding.top - padding.bottom) / (2 * this.props.maxAmplitude);
@@ -51,7 +58,7 @@ class FrequencyDomainControl extends Component<Props> {
     };
 
     onChange = (index: number, newY: number, evt: any) => {
-        if (this.activeDragIndex === index) {
+        if (this.state.activeDragIndex === index) {
             evt.preventDefault();
             const {amplitudes, maxAmplitude} = this.props;
             const deltaY = newY - this.calculateKnobY(amplitudes[index]);
@@ -62,12 +69,12 @@ class FrequencyDomainControl extends Component<Props> {
 
     startDrag = (index: number, evt: any) => {
         evt.preventDefault();
-        this.activeDragIndex = index;
+        this.setState({activeDragIndex: index});
     };
 
     stopDrag = (evt: any) => {
         evt.preventDefault();
-        this.activeDragIndex = -1;
+        this.setState({activeDragIndex: -1});
     }
 
     render(): JSX.Element {
@@ -153,6 +160,18 @@ class FrequencyDomainControl extends Component<Props> {
         });
 
         const viewBox = `0 0 ${width} ${height}`;
+        const changeDescriptionPosition = this.state.activeDragIndex < 10 ?
+            {'right': '10px'} :
+            {'left': '10px'};
+
+        const {activeDragIndex} = this.state;
+
+        const activeChangeDescription = activeDragIndex >= 0 ? (
+            <div className="active-change-description">
+                <div>{activeDragIndex + 1} Hz</div>
+                <div>{this.props.amplitudes[activeDragIndex]}</div>
+            </div>
+        ) : null;
 
         return (
             <div className="FrequencyDomainControl">
@@ -163,6 +182,7 @@ class FrequencyDomainControl extends Component<Props> {
                     {amplitudeLabels}
                     {knobs}
                 </svg>
+                {activeChangeDescription}
             </div>
         );
     };
