@@ -23,7 +23,7 @@ const padding = {
     left: 30,
 };
 
-const step = 0.1;
+const step = 0.08;
 
 const knobAllocation = (width - padding.left - padding.right) / 20;
 const knobDimensions = {
@@ -40,6 +40,7 @@ const calculateKnobX = (index: number) => {
 
 class FrequencyDomainControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
+    private previousY: number = -1;
 
     state = {
         activeDragIndex: -1,
@@ -54,7 +55,7 @@ class FrequencyDomainControl extends Component<Props, State> {
 
     calculateTooltipX = (frequencyIndex: number) => {
       const baseX = calculateKnobX(frequencyIndex);
-      const offset = frequencyIndex < 10 ? knobDimensions.width + 12 : -70;
+      const offset = frequencyIndex < 10 ? knobDimensions.width + 32 : -70;
       return baseX + offset;
     };
 
@@ -67,7 +68,8 @@ class FrequencyDomainControl extends Component<Props, State> {
         if (this.state.activeDragIndex === index) {
             evt.preventDefault();
             const {amplitudes, maxAmplitude} = this.props;
-            const deltaY = newY - this.calculateKnobY(amplitudes[index]);
+            const deltaY = newY - this.previousY;
+            this.previousY = newY;
             const newAmplitude = snap(amplitudes[index] + step * Math.sign(-deltaY), 1);
             this.props.onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
         }
