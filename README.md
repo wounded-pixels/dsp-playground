@@ -19,6 +19,7 @@
 * fixes
   * h scrollbar on freq domain
   * improve knob drag
+  * improve change tooltip
   * page refresh is wonky - path is wrong 
 * pretty up 
   * background

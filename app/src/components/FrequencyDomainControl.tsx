@@ -11,7 +11,7 @@ type Props = {
 
 type State = {
     activeDragIndex: number;
-};;
+};
 
 const width = 600;
 const height = 300;
@@ -38,7 +38,7 @@ const calculateKnobX = (index: number) => {
 };
 
 
-class FrequencyDomainControl extends Component<Props> {
+class FrequencyDomainControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
 
     state = {
@@ -50,6 +50,12 @@ class FrequencyDomainControl extends Component<Props> {
         const minY = -this.props.maxAmplitude;
         const rawY = (value - minY) * scale;
         return height - padding.bottom - rawY;
+    };
+
+    calculateTooltipX = (frequencyIndex: number) => {
+      const baseX = calculateKnobX(frequencyIndex);
+      const offset = frequencyIndex < 10 ? knobDimensions.width + 12 : -70;
+      return baseX + offset;
     };
 
     convertToPlotY = (eventY: number) => {
@@ -160,17 +166,30 @@ class FrequencyDomainControl extends Component<Props> {
         });
 
         const viewBox = `0 0 ${width} ${height}`;
-        const changeDescriptionPosition = this.state.activeDragIndex < 10 ?
-            {'right': '10px'} :
-            {'left': '10px'};
-
         const {activeDragIndex} = this.state;
 
         const activeChangeDescription = activeDragIndex >= 0 ? (
-            <div className="active-change-description">
-                <div>{activeDragIndex + 1} Hz</div>
-                <div>{this.props.amplitudes[activeDragIndex]}</div>
-            </div>
+            <g>
+                <rect
+                    className="active-change-description"
+                    x={this.calculateTooltipX(activeDragIndex)}
+                    y={this.calculateKnobY(this.props.amplitudes[activeDragIndex])}
+                    width={60}
+                    height={50}
+                    />
+                <text
+                    x={this.calculateTooltipX(activeDragIndex) + 10}
+                    y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 20}
+                    className="active-change-description">
+                    {activeDragIndex + 1} Hz
+                </text>
+                <text
+                    x={this.calculateTooltipX(activeDragIndex) + 10}
+                    y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 40}
+                    className="active-change-description">
+                    {this.props.amplitudes[activeDragIndex]}
+                </text>
+            </g>
         ) : null;
 
         return (
@@ -181,8 +200,8 @@ class FrequencyDomainControl extends Component<Props> {
                     {bottomLabel}
                     {amplitudeLabels}
                     {knobs}
+                    {activeChangeDescription}
                 </svg>
-                {activeChangeDescription}
             </div>
         );
     };
