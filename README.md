@@ -2,9 +2,11 @@
 
 ## Now
 * taller freq control
-  * redo as draggable svg!!
-  * show changing freq and amplitude
-  * drag start and end on knob with drag on channel if index matches?
+  * redo as draggable svg!! X
+  * show changing freq and amplitude X
+  * drag start and end on knob with drag on channel if index matches X
+  *  fix screen scroll on ipad
+  * refactor as generic   no amplitude
   
 * goals - show curve on plot and let them match it
   * transparent blue and yellow? too cute?
