@@ -1,12 +1,11 @@
 # dsp-playground
 
 ## deployed at
-
 https://dsp-playground.woundedpixels.com/
 
 
 ## Now
-* clean up
+* clean up - footer, sizes, 
 
 
 ## Next up
@@ -91,6 +90,11 @@ More on sum of many sines
 * make repo private?
 * AWS Amplify? GAE?
 * cache and cache busting?
+
+## lessons learned
+* do dns first
+* copy CNAME next to index or it will be overwritten on deployment
+
 
 
 
