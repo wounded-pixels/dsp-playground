@@ -1,7 +1,12 @@
 # dsp-playground
 
+## deployed at
+
+https://dsp-playground.woundedpixels.com/
+
+
 ## Now
-* Deploy to wounded pixels
+* clean up
 
 
 ## Next up
@@ -86,4 +91,7 @@ More on sum of many sines
 * make repo private?
 * AWS Amplify? GAE?
 * cache and cache busting?
+
+
+
 
