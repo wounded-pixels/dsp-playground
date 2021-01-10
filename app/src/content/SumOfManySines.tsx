@@ -7,7 +7,7 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {Sample, TimeValue} from 'model/types';
-import {Context, Row, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
+import {Context, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
 import FrequencyDomainControl from '../components/FrequencyDomainControl';
 
 type Props = {};
@@ -54,7 +54,7 @@ class SumOfManySines extends Component<Props, State> {
     };
 
     render(): JSX.Element {
-        const plotAmplitude = 8;
+        const plotAmplitude = 10;
         const controlAmplitude = 4;
         const samplingRate = 600;
         const tEnd = 5;
@@ -111,16 +111,16 @@ class SumOfManySines extends Component<Props, State> {
                     </ul>
                 </Context>
                 <Visualization>
-                    <Row>
-                        <TimePlot values={combined} width={600} height={200} minY={-plotAmplitude} maxY={plotAmplitude}/>
-                    </Row>
-                    <Row>
+                    <div>
+                        <TimePlot values={combined} width={800} height={400} minY={-plotAmplitude} maxY={plotAmplitude}/>
+                    </div>
+                    <div>
                         <FrequencyDomainControl
                           amplitudes={this.state.amplitudes}
                           maxAmplitude={controlAmplitude}
                           onChange={this.onChange}
                         />
-                    </Row>
+                    </div>
                 </Visualization>
             </Topic>
         );

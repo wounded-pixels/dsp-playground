@@ -13,11 +13,11 @@ type State = {
     activeDragIndex: number;
 };
 
-const width = 600;
+const width = 800;
 const height = 300;
 
 const padding = {
-    top: 10,
+    top: 15,
     right: 0,
     bottom: 50,
     left: 30,
@@ -93,7 +93,7 @@ class FrequencyDomainControl extends Component<Props, State> {
           <text
             className="bottom-label"
             x={0.4 * width}
-            y={height - 0.5 * padding.bottom}
+            y={height - 0.35 * padding.bottom}
             >
               frequencies from 1 to 20 Hz
           </text>
@@ -104,8 +104,8 @@ class FrequencyDomainControl extends Component<Props, State> {
              <text
                  key={index}
                  className="amplitude-label"
-                 x={2}
-                 y={this.calculateKnobY(value) + 6}
+                 x={8}
+                 y={this.calculateKnobY(value) + 8}
              >
                  {value}
              </text>

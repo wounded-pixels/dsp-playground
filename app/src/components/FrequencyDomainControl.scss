@@ -1,11 +1,12 @@
 .FrequencyDomainControl {
-  background: white;
+  background: #d0d0d0;
   display: flex;
   flex-grow: 2;
   flex-direction: column;
   margin-top: 20px;
-  min-width: 600px;
+  width: 800px;
   user-select: none;
+  justify-content: flex-start;
 
   text.active-change-description {
   }
@@ -30,7 +31,7 @@
 
     rect.channel-background {
       cursor: pointer;
-      fill: white;
+      fill: #d0d0d0;
       stroke: none;
     }
   }

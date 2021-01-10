@@ -55,18 +55,6 @@ export class PointPlot {
         return this;
     }
 
-    radius(number: number) {
-        return this;
-    }
-
-    fill(black: string) {
-       return this;
-    }
-
-    stroke(none: string) {
-        return this;
-    }
-
     domain(minX: any, maxX: any) {
         this.minX = minX;
         this.maxX = maxX;
@@ -87,6 +75,18 @@ export class PointPlot {
         return this;
     }
 
+    calculateYTicks(min: number, max: number) {
+        const adjustedMin = Math.round(min / 4) * 4;
+        const adjustedMax = Math.round(max / 4) * 4;
+
+        const ticks = [];
+        for (let tick = adjustedMin; tick <= adjustedMax; tick = tick + 4) {
+            ticks.push(tick);
+        }
+
+        return ticks;
+    }
+
     update(values: any[]) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -98,7 +98,7 @@ export class PointPlot {
 
         this.ctx.strokeStyle = 'white';
         const xTickValues = calculateDefaultTicks(this.minX, this.maxX);
-        const yTickValues = calculateDefaultTicks(this.minY, this.maxY)
+        const yTickValues = this.calculateYTicks(this.minY, this.maxY)
         xTickValues.forEach(this.drawVerticalLine);
         yTickValues.forEach(this.drawHorizontalLine);
 
@@ -106,7 +106,7 @@ export class PointPlot {
         this.ctx.fillStyle = 'black';
         this.plotPoints(values);
 
-        this.ctx.font = '12px sans-serif';
+        this.ctx.font = 'bold 18px sans-serif';
         this.ctx.textBaseline = 'bottom';
         xTickValues.forEach(this.drawXTickLabel);
         yTickValues.forEach(this.drawYTickLabel);
@@ -130,11 +130,11 @@ export class PointPlot {
     }
 
     drawXTickLabel = (xValue: number) => {
-        this.ctx.fillText(''+xValue, this.translateX(xValue) - 3, this.topPadding + this.calculatePlotHeight() + this.textHeight + 3);
+        this.ctx.fillText(''+xValue, this.translateX(xValue) - 5, this.topPadding + this.calculatePlotHeight() + this.textHeight + 8);
     }
 
     drawYTickLabel = (yValue: number) => {
-        this.ctx.fillText(yValue.toString().padStart(2, ' '), this.textHeight, this.translateY(yValue) + this.textHeight/3);
+        this.ctx.fillText(yValue.toString().padStart(2, ' '), this.textHeight - 8, this.translateY(yValue) + this.textHeight/2);
     }
 
     drawVerticalText(xPosition: number, yPosition: number, text: string) {

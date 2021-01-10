@@ -29,9 +29,6 @@ class TimePlot extends Component<Props> {
             this.plot = new PointPlot(this.divRef.current, width, height)
               .plotTitle(plotTitle)
               .xAxisLabel('time')
-              .radius(0.3)
-              .fill('black')
-              .stroke('none')
               .domain(tStart, tEnd)
               .range(minY, maxY)
               .position(d => d.time, d => d.value);
