@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    BrowserRouter as Router,
+    HashRouter,
     Switch,
     Route,
 } from 'react-router-dom';
@@ -32,7 +32,7 @@ class App extends Component<Props, State> {
     render(): JSX.Element {
         return (
             <div className="App">
-                <Router>
+                <HashRouter basename="/">
                     <TopNav {...navProps} />
                     <Switch>
                         <Route path="/add-sines">
@@ -51,10 +51,7 @@ class App extends Component<Props, State> {
                             <Topics />
                         </Route>
                     </Switch>
-                </Router>
-
-
-
+                </HashRouter>
             </div>
         );
     };
