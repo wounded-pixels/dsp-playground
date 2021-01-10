@@ -1,13 +1,12 @@
 # dsp-playground
 
 ## Now
-* taller freq control
-  * redo as draggable svg!! X
-  * show changing freq and amplitude X
-  * drag start and end on knob with drag on channel if index matches X
-  *  fix screen scroll on ipad
-  * refactor as generic   no amplitude
-  
+* Deploy to wounded pixels
+
+
+## Next up
+More on sum of many sines
+* verbiage and connections to previous topic, next topic
 * goals - show curve on plot and let them match it
   * transparent blue and yellow? too cute?
 
@@ -37,6 +36,10 @@
 * prettier
 * jest and storybook for components
 * snapshots for components
+
+## Extractions
+* refactor equalizer control as generic   no amplitude
+  * to where? new project? doesn't really fit bindings
 
 ## Navigation and Chunking
 * start page should be sticky - maybe the add sines?
