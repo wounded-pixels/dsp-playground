@@ -33,7 +33,7 @@ class App extends Component<Props, State> {
         return (
             <div className="App">
                 <HashRouter basename="/">
-                    <TopNav {...navProps} />
+                    <TopNav {...navProps} centerText=""/>
                     <Switch>
                         <Route path="/add-sines">
                             <SimpleAddition />
@@ -51,6 +51,8 @@ class App extends Component<Props, State> {
                             <Topics />
                         </Route>
                     </Switch>
+
+                    <TopNav {...navProps} centerText="&copy; 2021 - WoundedPixels.com" />
                 </HashRouter>
             </div>
         );

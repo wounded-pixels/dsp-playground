@@ -1,11 +1,11 @@
 .App {
-  text-align: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   margin-top: 10px;
-
+  text-align: center;
+  min-height: 98vh;
 
   h1, h2, h3, h4 {
     text-align: left;
@@ -17,7 +17,12 @@
   }
 
   a {
+    color: #0366d6;
     cursor: pointer;
+  }
+
+  a:active {
+    color: #01438d;
   }
 
   input[type=number] {

@@ -1,20 +1,27 @@
 .TopNav {
-  border-bottom: #555454 1px solid;
   display: flex;
   font-size: 0.8rem;
   font-weight: bold;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 10px 0 5px 0;
   text-align: center;
   width: 95%;
 
-  div.right-nav-link a {
-    margin-left: 10px;
+  .left-nav-link, .right-nav-link, .center-text {
+    display: flex;
   }
+
+  .center-text {
+    margin-top: 12px;
+    font-size: 0.7rem;
+    font-weight: lighter;
+  }
+
 
   a {
     color: #0366d6;
     font-size: 1rem;
+    margin: 0 5px;
     padding: 5px 5px;
     text-decoration: none;
   }
@@ -24,3 +31,4 @@
     border-radius: 6px;
   }
 }
+
