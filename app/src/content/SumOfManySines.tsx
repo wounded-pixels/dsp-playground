@@ -7,8 +7,9 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {Sample, TimeValue} from 'model/types';
-import {Context, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
+import {Context, Hint, KeyIdea, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
 import FrequencyDomainControl from '../components/FrequencyDomainControl';
+import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -18,7 +19,7 @@ type State = {
 
 const clearFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 const justOneFrequencies = [0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
-const sharpFrequencies =  [0, 0, 4, 0, 0, 2, 0, 0, 1, 0, 0, 0.5, 0, 0, 0, 0, 0, 0, 0, 0];
+const spikyFrequencies =  [0, 0, 1, 0, 0, 1, 0, 0, 1.5, 0, 0, 2, 0, 0, 1, 0, 0, 3, 0, 0];
 const oldBeatFrequencies = [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 const flatBeatFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, -4, 0 ,0, 0, 0];
 const alternatingBeatFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, -1, 0 ,0, 0];
@@ -28,7 +29,7 @@ const examples: { [index: string] : number[]} = {
     clearFrequencies,
     flatBeatFrequencies,
     justOneFrequencies,
-    sharpFrequencies,
+    spikyFrequencies,
     oldBeatFrequencies
 };
 
@@ -72,14 +73,15 @@ class SumOfManySines extends Component<Props, State> {
                     Each slider allows you to change the amplitude of a sine at that frequency.
                     <ul>
                         <li>
-                            The
-                            <ScenarioLink index="justOne" onClick={this.onExample}> simplest example</ScenarioLink>
-                            is a single non-zero amplitude
+                            The simplest example
+                            <ScenarioLink index="justOne" onClick={this.onExample}>
+                                is a single non-zero amplitude
+                            </ScenarioLink>
                         </li>
                         <li>
                             A mixture of frequencies at regular intervals produces a
-                            <ScenarioLink index="sharp" onClick={this.onExample}>
-                                very sharp curve
+                            <ScenarioLink index="spiky" onClick={this.onExample}>
+                                very spiky curve
                             </ScenarioLink>
                         </li>
                         <li>
@@ -122,6 +124,23 @@ class SumOfManySines extends Component<Props, State> {
                         />
                     </div>
                 </Visualization>
+                <Context>
+                    <h3>Things to Try</h3>
+                    A harmonic series is made up of sine curves whose frequencies are integer multiples of a fundamental frequency.
+                    <Hint text="Focus on the fundamental frequency">
+                        Can you make a harmonic series that repeats 4 times a second? Or 5?
+                    </Hint>
+                    <h3>Why Bother?</h3>
+                    <div>
+                        As we discussed in the previous page on the <Link to="/add-sines">addition of sine curves</Link>,
+                        creating complicated curves from simple sines allows us to communicate in the real world.
+                    </div>
+                    <KeyIdea>
+                        Any periodic function can be represented by the sum of sine curves, provided you use enough of them.
+                        Fourier analysis is the branch of mathematics that is dedicated to the tricky bit of calculating
+                        the right amplitudes
+                    </KeyIdea>
+                </Context>
             </Topic>
         );
     };
