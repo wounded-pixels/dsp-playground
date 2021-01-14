@@ -5,7 +5,8 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## Now
-* clean up - footer, sizes, 
+* clean up - footer, sizes, X
+* route change should also scroll to top
 
 
 ## Next up
