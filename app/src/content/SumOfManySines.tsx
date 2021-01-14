@@ -23,6 +23,7 @@ const spikyFrequencies =  [0, 0, 1, 0, 0, 1, 0, 0, 1.5, 0, 0, 2, 0, 0, 1, 0, 0, 
 const oldBeatFrequencies = [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 const flatBeatFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, -4, 0 ,0, 0, 0];
 const alternatingBeatFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, -1, 0 ,0, 0];
+const twoFourSixFrequencies = [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 
 const examples: { [index: string] : number[]} = {
     alternatingBeatFrequencies,
@@ -30,6 +31,7 @@ const examples: { [index: string] : number[]} = {
     flatBeatFrequencies,
     justOneFrequencies,
     spikyFrequencies,
+    twoFourSixFrequencies,
     oldBeatFrequencies
 };
 
@@ -127,7 +129,10 @@ class SumOfManySines extends Component<Props, State> {
                 <Context>
                     <h3>Things to Try</h3>
                     A harmonic series is made up of sine curves whose frequencies are integer multiples of a fundamental frequency.
-                    <Hint text="Focus on the fundamental frequency">
+                    Such as
+                        <ScenarioLink index="twoFourSix" onClick={this.onExample}>two, four and six</ScenarioLink> in
+                        which the first frequency, two Hz, is the fundamental frequency.
+                        <Hint text="Focus on the fundamental frequency">
                         Can you make a harmonic series that repeats 4 times a second? Or 5?
                     </Hint>
                     <h3>Why Bother?</h3>
