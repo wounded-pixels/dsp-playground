@@ -8,6 +8,16 @@ https://dsp-playground.woundedpixels.com/
 * clean up - footer, sizes, X
 * route change should also scroll to top
 
+### Unit circle
+* unit circle widget - circle with knob on perimeter, lines for cos, sine, and arrow to point. Colors
+* copy time plot to angle plot
+  * pass either cos or sin, current angle in radians, deg or radians as display
+  * don't even try to make it generic
+  * show full curve in light grey
+  * show curve to angle
+* sine plot and cos plot with color tie in with unit circle
+* fix labels on angle plot - fractions of pi
+* explanation
 
 ## Next up
 More on sum of many sines

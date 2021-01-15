@@ -7,7 +7,7 @@ const Topics: FunctionComponent<Props> = () => {
     return (
         <Topic>
             <h2>Topics</h2>
-            <h3>Coming Soon - Sine, Cosine and the Unit Circle</h3>
+            <h3><Link to="/unit-circle">Sine, Cosine and the Unit Circle</Link></h3>
             <Context>
                 DSP depends on sine waves and you need to understand the unit circle in order to understand sine waves.
                 This visualization shows how the height and width of the triangle in the unit circle map to the sine and cosine curves.
