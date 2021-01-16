@@ -43,10 +43,10 @@ class FrequencyDomainControl extends Component<Props, State> {
         activeDragIndex: -1,
     };
 
-    calculateKnobY = (value: number) => {
+    calculateKnobY = (amplitudeValue: number) => {
         const scale = (height - padding.top - padding.bottom) / (2 * this.props.maxAmplitude);
         const minAmplitude = -this.props.maxAmplitude;
-        const rawY = (value - minAmplitude) * scale;
+        const rawY = (amplitudeValue - minAmplitude) * scale;
         return height - padding.bottom - rawY;
     };
 

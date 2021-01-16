@@ -3,13 +3,14 @@ import React, {Component} from 'react';
 import './AnglePlot.scss';
 import {PointPlot} from 'canvas-components/PointPlot';
 
-interface Props {
+type Props = {
     width: number;
     height: number;
     piRatio: number;
     yFunction: (angle: number) => number;
     plotTitle?: string;
-}
+};
+
 const stepSize = 0.01;
 
 const allValues: {piRatio: number}[] = [];

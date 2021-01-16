@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 
 import {Context, Row, Topic, Visualization} from 'components/stateless-helpers';
 import AnglePlot from '../components/AnglePlot';
+import UnitCircleControl from "../components/UnitCircleControl";
 
 type Props = {};
 
 type State = {};
+const plotWidth = 500;
 const plotHeight = 150;
+const controlSide = 150;
 
 class UnitCircleAndCurves extends Component<Props, State> {
     state = {
@@ -25,11 +28,15 @@ class UnitCircleAndCurves extends Component<Props, State> {
                 </Context>
                 <Visualization>
                     <Row>
-                        <AnglePlot width={500} height={plotHeight} piRatio={this.state.piRatio} yFunction={Math.sin}/>
+                        <AnglePlot width={plotWidth} height={plotHeight} piRatio={this.state.piRatio} yFunction={Math.sin}/>
                     </Row>
                     <Row>
-                        <AnglePlot width={500} height={plotHeight} piRatio={this.state.piRatio} yFunction={Math.cos}/>
+                        <AnglePlot width={plotWidth} height={plotHeight} piRatio={this.state.piRatio} yFunction={Math.cos}/>
                     </Row>
+                    <Row>
+                        <UnitCircleControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio}/>
+                    </Row>
+
                 </Visualization>
                 <Context>
                 </Context>

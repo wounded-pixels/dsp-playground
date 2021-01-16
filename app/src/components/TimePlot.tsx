@@ -4,14 +4,14 @@ import './TimePlot.scss';
 import {Sample} from 'model/types';
 import {PointPlot} from 'canvas-components/PointPlot';
 
-interface Props {
+type Props = {
     values: Sample;
     width: number;
     height: number;
     minY?: number;
     maxY?: number;
     plotTitle?: string;
-}
+};
 
 class TimePlot extends Component<Props> {
     private divRef: any = React.createRef();

@@ -6,12 +6,12 @@ import {CurveParameters} from 'model/types';
 
 import './CurveControl.scss';
 
-interface Props {
+type Props = {
     curveNumber: number;
     curveParameters: CurveParameters;
     includePhase?: boolean | undefined;
     onChange: (curveNumber: number, parameterName: 'amplitude' | 'frequency' | 'phase', value: number) => void;
-}
+};
 
 class CurveControl extends Component<Props> {
     render(): JSX.Element {
