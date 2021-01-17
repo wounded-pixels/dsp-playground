@@ -22,10 +22,16 @@
   }
 
   path.horizontal-line {
-    stroke: black;
+    stroke: blue;
   }
 
   path.vertical-line {
+    stroke: orange;
+  }
+
+  circle.knob {
+    fill: #a5a3a3;
     stroke: black;
+    stroke-width: 0.5;
   }
 }

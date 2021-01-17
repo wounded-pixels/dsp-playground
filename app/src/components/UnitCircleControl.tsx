@@ -1,33 +1,96 @@
 import React, {Component} from 'react';
 
 import './UnitCircleControl.scss';
+import {snap} from "../util/math-hacks";
 
 type Props = {
     onChange: (piRatio: number) => void;
     piRatio: number;
 };
 
-const sideLength = 100;
+type State = {
+  activeDrag: boolean;
+};
+
+const sideLength = 150;
 const padding = 10;
 
-class UnitCircleControl extends Component<Props> {
+const domainMinimum = -1;
+const rangeMinimum = -1;
+const domainHeight = 2;
+const domainWidth = 2;
+const adjustedSvgHeight = sideLength - 2 * padding;
+const adjustedSvgWidth = sideLength - 2 * padding;
+
+const clampPiRatio = (raw: number): number =>  {
+ return raw < 0 ?
+    raw + 2 :
+    raw;
+};
+
+class UnitCircleControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
 
+    state = {
+        activeDrag: false,
+    };
+
     calculateSvgX(domainX: number): number {
-        const domainWidth = 2;
-        const adjustedSvgWidth = sideLength - 2 * padding;
-        return padding + (domainX + 1) * adjustedSvgWidth / domainWidth;
+        return padding + (domainX - domainMinimum) * adjustedSvgWidth / domainWidth;
+    };
+
+    calculateDomainX(eventX: number): number {
+        const CTM = this.svgRef.current.getScreenCTM();
+        const svgX = (eventX - CTM.e) / CTM.a;
+        const adjustedSvgX = svgX - padding;
+        return domainMinimum + adjustedSvgX * domainWidth / adjustedSvgWidth;
     };
 
     calculateSvgY(domainY: number): number {
-      const domainHeight = 2;
-      const adjustedSvgHeight = sideLength - 2 * padding;
-      const rawSvgY = (domainY + 1) * adjustedSvgHeight / domainHeight;
-      return padding + adjustedSvgHeight - rawSvgY;
+        const rawSvgY = (domainY - rangeMinimum) * adjustedSvgHeight / domainHeight;
+        return padding + adjustedSvgHeight - rawSvgY;
     };
 
+    calculateDomainY(eventY: number): number {
+        const CTM = this.svgRef.current.getScreenCTM();
+        const svgY = (eventY - CTM.f) / CTM.d;
+        const svgUp = adjustedSvgHeight - svgY;
+        return rangeMinimum + svgUp * domainHeight / adjustedSvgHeight;
+    };
+
+    onChange = (newSvgX: number, newSvgY: number, evt: any) => {
+        if (this.state.activeDrag) {
+            evt.preventDefault();
+
+            const newDomainX = this.calculateDomainX(newSvgX);
+            const newDomainY = this.calculateDomainY(newSvgY);
+
+            const newAngle = Math.atan2(newDomainY, newDomainX);
+            const piRatio = snap(newAngle / Math.PI, 2);
+            this.props.onChange(clampPiRatio(piRatio));
+        }
+    };
+
+    onMove = (evt: React.MouseEvent) => {
+        this.onChange(evt.clientX, evt.clientY, evt);
+    };
+
+    onTouch = (evt: React.TouchEvent) => {
+        this.onChange(evt.touches[0].clientX, evt.touches[0].clientY, evt);
+    };
+
+    startDrag = (evt: any) => {
+        evt.preventDefault();
+        this.setState({activeDrag: true});
+    };
+
+    stopDrag = (evt: any) => {
+        evt.preventDefault();
+        this.setState({activeDrag: false});
+    }
+
     render(): JSX.Element {
-        const { onChange, piRatio } = this.props;
+        const { piRatio } = this.props;
 
         const viewBox = `0 0 ${sideLength} ${sideLength}`;
 
@@ -44,12 +107,13 @@ class UnitCircleControl extends Component<Props> {
                 className="background-circle"
                 cx={centerX}
                 cy={centerY}
-                r={svgRadius}/>
-        );
+                r={svgRadius}
+                />
+    );
 
 
         const horizontalLine = (
-          <path
+            <path
               className="horizontal-line"
               d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${centerY}`}
           />
@@ -62,20 +126,39 @@ class UnitCircleControl extends Component<Props> {
             />
         );
         const foregroundArc = null;
-        const vector = null;
-        const knob = null;
         const activeChangeDescription = null;
+
+        const knob = (
+            <circle
+                className="knob"
+                cx={horizontalLineEnd}
+                cy={verticalLineEnd}
+                r={2}
+                onMouseMove={this.onMove}
+                onMouseDown={this.startDrag}
+                onMouseUp = {this.stopDrag}
+                onTouchStart = {this.startDrag}
+                onTouchEnd = {this.stopDrag}
+                onTouchMove={this.onTouch}
+            />
+    );
 
         return (
             <div className="UnitCircleControl">
                 <svg
                     ref={this.svgRef}
-                    viewBox={viewBox}>
+                    viewBox={viewBox}
+                    onMouseMove={this.onMove}
+                    onMouseDown={this.startDrag}
+                    onMouseUp = {this.stopDrag}
+                    onTouchStart = {this.startDrag}
+                    onTouchEnd = {this.stopDrag}
+                    onTouchMove={this.onTouch}
+                >
                     {backgroundCircle}
                     {foregroundArc}
                     {horizontalLine}
                     {verticalLine}
-                    {vector}
                     {knob}
                     {activeChangeDescription}
                 </svg>

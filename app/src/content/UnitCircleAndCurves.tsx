@@ -9,7 +9,6 @@ type Props = {};
 type State = {};
 const plotWidth = 500;
 const plotHeight = 150;
-const controlSide = 150;
 
 class UnitCircleAndCurves extends Component<Props, State> {
     state = {

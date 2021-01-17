@@ -28,7 +28,6 @@ const knobDimensions = {
     width: knobAllocation * 0.6,
     height: 10,
     margin: knobAllocation * 0.2,
-    hitBox: 5,
 };
 
 const calculateKnobX = (index: number) => {
