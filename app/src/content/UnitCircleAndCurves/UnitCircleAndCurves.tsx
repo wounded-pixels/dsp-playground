@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import {Context, Row, Topic, Visualization} from 'components/stateless-helpers';
-import AnglePlot from '../components/AnglePlot';
-import UnitCircleControl from "../components/UnitCircleControl";
+import UnitCircleControl from './UnitCircleControl';
+import CurveControl from './CurveControl';
 
 type Props = {};
 
@@ -22,18 +22,16 @@ class UnitCircleAndCurves extends Component<Props, State> {
     render(): JSX.Element {
         return (
             <Topic>
-                <h2>Addition of Sine Curves</h2>
+                <h2>Sine, Cosine, and the Unit Circle</h2>
                 <Context>
                 </Context>
                 <Visualization>
                     <Row>
-                        <AnglePlot width={plotWidth} height={plotHeight} piRatio={this.state.piRatio} yFunction={Math.sin}/>
-                    </Row>
-                    <Row>
-                        <AnglePlot width={plotWidth} height={plotHeight} piRatio={this.state.piRatio} yFunction={Math.cos}/>
-                    </Row>
-                    <Row>
+                        <CurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.sin}/>
                         <UnitCircleControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio}/>
+                    </Row>
+                    <Row>
+                        <CurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.cos}/>
                     </Row>
 
                 </Visualization>

@@ -17,6 +17,7 @@ https://dsp-playground.woundedpixels.com/
   * show curve to angle
 * sine plot and cos plot with color tie in with unit circle
 * fix labels on angle plot - fractions of pi
+* green arc around perimeter to match green along horizontal axis of curve plots
 * explanation
 
 ## Next up

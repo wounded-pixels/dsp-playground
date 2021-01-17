@@ -1,34 +1,43 @@
 import React, {Component} from 'react';
 
-import './UnitCircleControl.scss';
-import {snap} from "../util/math-hacks";
+import './CurveControl.scss';
+import {snap} from 'util/math-hacks';
 
 type Props = {
+    yFunction: (angleValue: number) => number;
     onChange: (piRatio: number) => void;
     piRatio: number;
 };
 
 type State = {
-  activeDrag: boolean;
+    activeDrag: boolean;
 };
 
-const sideLength = 150;
-const padding = 10;
+const svgHeight = 300;
+const svgWidth = 750;
+const padding = {
+    top: 35,
+    right: 0,
+    bottom: 35,
+    left: 20,
+};
 
-const domainMinimum = -1;
+const domainMinimum = 0;
+const domainMaximum = 2 * Math.PI;
+const domainWidth = domainMaximum - domainMinimum;
 const rangeMinimum = -1;
-const domainHeight = 2;
-const domainWidth = 2;
-const adjustedSvgHeight = sideLength - 2 * padding;
-const adjustedSvgWidth = sideLength - 2 * padding;
+const rangeMaximum = 1;
+const rangeHeight = rangeMaximum - rangeMinimum;
+const adjustedSvgHeight = svgHeight - padding.top - padding.bottom;
+const adjustedSvgWidth = svgWidth - padding.left - padding.right;
 
 const clampPiRatio = (raw: number): number =>  {
- return raw < 0 ?
-    raw + 2 :
-    raw;
+    return raw < 0 ?
+        raw + 2 :
+        raw;
 };
 
-class UnitCircleControl extends Component<Props, State> {
+class CurveControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
 
     state = {
@@ -36,36 +45,33 @@ class UnitCircleControl extends Component<Props, State> {
     };
 
     calculateSvgX(domainX: number): number {
-        return padding + (domainX - domainMinimum) * adjustedSvgWidth / domainWidth;
+        return padding.left + (domainX - domainMinimum) * adjustedSvgWidth / domainWidth;
     };
 
     calculateDomainX(eventX: number): number {
         const CTM = this.svgRef.current.getScreenCTM();
         const svgX = (eventX - CTM.e) / CTM.a;
-        const adjustedSvgX = svgX - padding;
+        const adjustedSvgX = svgX - padding.left;
         return domainMinimum + adjustedSvgX * domainWidth / adjustedSvgWidth;
     };
 
-    calculateSvgY(domainY: number): number {
-        const rawSvgY = (domainY - rangeMinimum) * adjustedSvgHeight / domainHeight;
-        return padding + adjustedSvgHeight - rawSvgY;
+    calculateSvgY(rangeY: number): number {
+        const rawSvgY = (rangeY - rangeMinimum) * adjustedSvgHeight / rangeHeight;
+        return padding.top + adjustedSvgHeight - rawSvgY;
     };
 
-    calculateDomainY(eventY: number): number {
+    calculateRangeY(eventY: number): number {
         const CTM = this.svgRef.current.getScreenCTM();
         const svgY = (eventY - CTM.f) / CTM.d;
         const svgUp = adjustedSvgHeight - svgY;
-        return rangeMinimum + svgUp * domainHeight / adjustedSvgHeight;
+        return rangeMinimum + svgUp * rangeHeight / adjustedSvgHeight;
     };
 
     onChange = (newSvgX: number, newSvgY: number, evt: any) => {
         if (this.state.activeDrag) {
             evt.preventDefault();
 
-            const newDomainX = this.calculateDomainX(newSvgX);
-            const newDomainY = this.calculateDomainY(newSvgY);
-
-            const newAngle = Math.atan2(newDomainY, newDomainX);
+            const newAngle = this.calculateDomainX(newSvgX);
             const piRatio = snap(newAngle / Math.PI, 2);
             this.props.onChange(clampPiRatio(piRatio));
         }
@@ -90,42 +96,44 @@ class UnitCircleControl extends Component<Props, State> {
     }
 
     render(): JSX.Element {
-        const { piRatio } = this.props;
+        const { yFunction, piRatio } = this.props;
 
-        const viewBox = `0 0 ${sideLength} ${sideLength}`;
+        const viewBox = `0 0 ${svgWidth} ${svgHeight}`;
 
-        const svgRadius = (sideLength - 2 * padding) / 2;
+        const horizontalLineBegin = this.calculateSvgX(0);
+        const horizontalLineEnd = this.calculateSvgX(piRatio * Math.PI);
+        const verticalLineStart = this.calculateSvgY(0);
+        const verticalLineEnd = this.calculateSvgY(yFunction(piRatio * Math.PI));
 
-        const centerX = this.calculateSvgX(0);
-        const centerY = this.calculateSvgY(0);
+        const verticalStrokeColor = yFunction === Math.sin ? 'orange' : 'blue';
 
-        const horizontalLineEnd = this.calculateSvgX(Math.cos(piRatio * Math.PI));
-        const verticalLineEnd = this.calculateSvgY(Math.sin(piRatio * Math.PI));
+        const step = 0.2;
+        let curvePath = `M ${this.calculateSvgX(0)} ${this.calculateSvgY(yFunction(0))} `;
+        for (let angle = step; angle <= 2 * Math.PI; angle += step) {
+           curvePath += `L ${this.calculateSvgX(angle)} ${this.calculateSvgY(yFunction(angle))} `;
+        }
 
-        const backgroundCircle = (
-            <circle
-                className="background-circle"
-                cx={centerX}
-                cy={centerY}
-                r={svgRadius}
-                />
-    );
-
+        const curve = (
+          <path
+          className="curve"
+          d={curvePath}
+          />
+        );
 
         const horizontalLine = (
             <path
-              className="horizontal-line"
-              d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${centerY}`}
-          />
+                className="horizontal-line"
+                d={`M ${horizontalLineBegin} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineStart}`}
+            />
         );
 
         const verticalLine = (
             <path
                 className="vertical-line"
-                d={`M ${horizontalLineEnd} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
+                stroke={verticalStrokeColor}
+                d={`M ${horizontalLineEnd} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineEnd}`}
             />
         );
-        const foregroundArc = null;
         const activeChangeDescription = null;
 
         const knob = (
@@ -141,10 +149,10 @@ class UnitCircleControl extends Component<Props, State> {
                 onTouchEnd = {this.stopDrag}
                 onTouchMove={this.onTouch}
             />
-    );
+        );
 
         return (
-            <div className="UnitCircleControl">
+            <div className="CurveControl">
                 <svg
                     ref={this.svgRef}
                     viewBox={viewBox}
@@ -155,8 +163,7 @@ class UnitCircleControl extends Component<Props, State> {
                     onTouchEnd = {this.stopDrag}
                     onTouchMove={this.onTouch}
                 >
-                    {backgroundCircle}
-                    {foregroundArc}
+                    {curve}
                     {horizontalLine}
                     {verticalLine}
                     {knob}
@@ -167,4 +174,4 @@ class UnitCircleControl extends Component<Props, State> {
     };
 }
 
-export default UnitCircleControl
+export default CurveControl

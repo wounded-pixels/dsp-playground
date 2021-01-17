@@ -14,7 +14,7 @@ import TopNav from 'components/TopNav';
 import {LabeledPath} from 'model/types';
 import Topics from 'content/Topics';
 import SumOfManySines from './content/SumOfManySines';
-import UnitCircleAndCurves from "./content/UnitCircleAndCurves";
+import UnitCircleAndCurves from './content/UnitCircleAndCurves/UnitCircleAndCurves';
 
 type Props = {};
 
