@@ -141,7 +141,7 @@ class CurveControl extends Component<Props, State> {
                 className="knob"
                 cx={horizontalLineEnd}
                 cy={verticalLineEnd}
-                r={2}
+                r={4}
                 onMouseMove={this.onMove}
                 onMouseDown={this.startDrag}
                 onMouseUp = {this.stopDrag}
