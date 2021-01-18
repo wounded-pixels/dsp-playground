@@ -120,6 +120,19 @@ class CurveControl extends Component<Props, State> {
           />
         );
 
+        const angleLabelVerticalOffset = yFunction(piRatio * Math.PI) < 0 ? -15 : 25;
+        const angleLabelHorizontalOffset = piRatio < 1.9 ? 0 : -45;
+        const angleLabel = (
+            <text
+                className="angle-label"
+                x={this.calculateSvgX(piRatio * Math.PI) + angleLabelHorizontalOffset}
+                y={this.calculateSvgY(0) + angleLabelVerticalOffset}
+                >
+                {piRatio}&#960;
+            </text>
+
+        );
+
         const horizontalLine = (
             <path
                 className="horizontal-line"
@@ -166,6 +179,7 @@ class CurveControl extends Component<Props, State> {
                     {horizontalLine}
                     {verticalLine}
                     {curve}
+                    {angleLabel}
                     {knob}
                     {activeChangeDescription}
                 </svg>
