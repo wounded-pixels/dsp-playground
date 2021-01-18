@@ -9,6 +9,10 @@
   user-select: none;
   justify-content: flex-start;
 
+  svg {
+    cursor: pointer;
+  }
+
   text.active-change-description {
   }
 
@@ -23,10 +27,18 @@
 
   path.horizontal-line {
     stroke: blue;
+    stroke-width: 2;
   }
 
   path.vertical-line {
     stroke: orange;
+    stroke-width: 2;
+  }
+
+  path.arc {
+    fill: none;
+    stroke: green;
+    stroke-width: 2;
   }
 
   circle.knob {

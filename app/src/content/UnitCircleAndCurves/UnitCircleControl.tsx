@@ -46,8 +46,8 @@ class UnitCircleControl extends Component<Props, State> {
         return domainMinimum + adjustedSvgX * domainWidth / adjustedSvgWidth;
     };
 
-    calculateSvgY(domainY: number): number {
-        const rawSvgY = (domainY - rangeMinimum) * adjustedSvgHeight / domainHeight;
+    calculateSvgY(rangeY: number): number {
+        const rawSvgY = (rangeY - rangeMinimum) * adjustedSvgHeight / domainHeight;
         return padding + adjustedSvgHeight - rawSvgY;
     };
 
@@ -99,6 +99,11 @@ class UnitCircleControl extends Component<Props, State> {
         const centerX = this.calculateSvgX(0);
         const centerY = this.calculateSvgY(0);
 
+        const largeArc = piRatio <= 1 ? 0 : 1;
+        const positiveSweep = 0;
+        const xArcRadius = this.calculateSvgX(1) - this.calculateSvgX(0);
+        const yArcRadius = this.calculateSvgY(1) - this.calculateSvgY(0);
+
         const horizontalLineEnd = this.calculateSvgX(Math.cos(piRatio * Math.PI));
         const verticalLineEnd = this.calculateSvgY(Math.sin(piRatio * Math.PI));
 
@@ -125,7 +130,14 @@ class UnitCircleControl extends Component<Props, State> {
                 d={`M ${horizontalLineEnd} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
             />
         );
-        const foregroundArc = null;
+
+        const foregroundArc = (
+            <path
+                className="arc"
+                d={`M ${this.calculateSvgX(1)} ${this.calculateSvgY(0)} A ${xArcRadius},${yArcRadius} 0 ${largeArc} ${positiveSweep} ${horizontalLineEnd} ${verticalLineEnd}`}
+                />
+        );
+
         const activeChangeDescription = null;
 
         const knob = (

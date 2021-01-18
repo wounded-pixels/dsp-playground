@@ -9,6 +9,10 @@
   user-select: none;
   justify-content: flex-start;
 
+  svg {
+    cursor: pointer;
+  }
+
   text.active-change-description {
   }
 
@@ -18,11 +22,11 @@
 
   path.horizontal-line {
     stroke: green;
-    stroke-width: 2;
+    stroke-width: 4;
   }
 
   path.vertical-line {
-    stroke-width: 2;
+    stroke-width: 4;
   }
 
   path.curve{

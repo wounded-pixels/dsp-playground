@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './CurveControl.scss';
-import {snap} from 'util/math-hacks';
+import {clamp, snap} from 'util/math-hacks';
 
 type Props = {
     yFunction: (angleValue: number) => number;
@@ -71,7 +71,7 @@ class CurveControl extends Component<Props, State> {
         if (this.state.activeDrag) {
             evt.preventDefault();
 
-            const newAngle = this.calculateDomainX(newSvgX);
+            const newAngle = clamp(this.calculateDomainX(newSvgX), 0, 2 * Math.PI);
             const piRatio = snap(newAngle / Math.PI, 2);
             this.props.onChange(clampPiRatio(piRatio));
         }
@@ -107,9 +107,9 @@ class CurveControl extends Component<Props, State> {
 
         const verticalStrokeColor = yFunction === Math.sin ? 'orange' : 'blue';
 
-        const step = 0.2;
+        const step = 0.1;
         let curvePath = `M ${this.calculateSvgX(0)} ${this.calculateSvgY(yFunction(0))} `;
-        for (let angle = step; angle <= 2 * Math.PI; angle += step) {
+        for (let angle = step; angle <= 2 * Math.PI + step; angle += step) {
            curvePath += `L ${this.calculateSvgX(angle)} ${this.calculateSvgY(yFunction(angle))} `;
         }
 
@@ -163,9 +163,9 @@ class CurveControl extends Component<Props, State> {
                     onTouchEnd = {this.stopDrag}
                     onTouchMove={this.onTouch}
                 >
-                    {curve}
                     {horizontalLine}
                     {verticalLine}
+                    {curve}
                     {knob}
                     {activeChangeDescription}
                 </svg>
