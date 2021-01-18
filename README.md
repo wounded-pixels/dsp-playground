@@ -30,6 +30,7 @@ More on sum of many sines
 ## Soon
 * switch to css grid?
 * fix on iPad
+  * prevent scroll on drag
   * spinner should be touchable
   * hints look terrible and dont work on ipad
   * strange line on phone
