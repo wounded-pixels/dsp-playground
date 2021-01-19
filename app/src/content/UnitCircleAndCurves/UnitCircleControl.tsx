@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './UnitCircleControl.scss';
-import {snap} from 'util/math-hacks';
+import {clamp, snap} from 'util/math-hacks';
 
 type Props = {
     onChange: (piRatio: number) => void;
@@ -13,7 +13,7 @@ type State = {
 };
 
 const sideLength = 150;
-const padding = 20;
+const padding = 25;
 
 const domainMinimum = -1;
 const rangeMinimum = -1;
@@ -21,12 +21,6 @@ const domainHeight = 2;
 const domainWidth = 2;
 const adjustedSvgHeight = sideLength - 2 * padding;
 const adjustedSvgWidth = sideLength - 2 * padding;
-
-const clampPiRatio = (raw: number): number =>  {
- return raw < 0 ?
-    raw + 2 :
-    raw;
-};
 
 class UnitCircleControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
@@ -67,7 +61,7 @@ class UnitCircleControl extends Component<Props, State> {
 
             const newAngle = Math.atan2(newDomainY, newDomainX);
             const piRatio = snap(newAngle / Math.PI, 2);
-            this.props.onChange(clampPiRatio(piRatio));
+            this.props.onChange(piRatio);
         }
     };
 
@@ -114,7 +108,22 @@ class UnitCircleControl extends Component<Props, State> {
                 cy={centerY}
                 r={svgRadius}
                 />
-    );
+        );
+
+        const offsetRadius = 1.08;
+        const angleLabelDomainX = offsetRadius * Math.cos(piRatio * Math.PI / 2);
+        const angleLabelRangeY  = offsetRadius * Math.sin(piRatio * Math.PI / 2);
+        const textAnchor = angleLabelDomainX > 0 ? 'start' : 'end';
+        const angleLabel = (
+            <text
+                className="angle-label"
+                x={this.calculateSvgX(angleLabelDomainX)}
+                y={this.calculateSvgY(angleLabelRangeY)}
+                textAnchor={textAnchor}
+            >
+                {piRatio}&#960;
+            </text>
+        );
 
 
         const horizontalLine = (
@@ -171,6 +180,7 @@ class UnitCircleControl extends Component<Props, State> {
                     {foregroundArc}
                     {horizontalLine}
                     {verticalLine}
+                    {angleLabel}
                     {knob}
                     {activeChangeDescription}
                 </svg>

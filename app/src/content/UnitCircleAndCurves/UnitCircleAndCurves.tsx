@@ -8,13 +8,18 @@ type Props = {};
 
 type State = {};
 
+const clampPiRatio = (raw: number): number =>  {
+    const clamped = raw < 0 ? raw + 2 : raw;
+    return Math.round(clamped * 100)/100;
+};
+
 class UnitCircleAndCurves extends Component<Props, State> {
     state = {
         piRatio: 0.25,
     };
 
     onChangePiRatio = (piRatio: number) => {
-        this.setState({piRatio});
+        this.setState({piRatio: clampPiRatio(piRatio)});
     };
 
     render(): JSX.Element {

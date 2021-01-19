@@ -16,9 +16,9 @@ type State = {
 const svgHeight = 300;
 const svgWidth = 750;
 const padding = {
-    top: 35,
+    top: 42,
     right: 0,
-    bottom: 35,
+    bottom: 42,
     left: 20,
 };
 
@@ -30,12 +30,6 @@ const rangeMaximum = 1;
 const rangeHeight = rangeMaximum - rangeMinimum;
 const adjustedSvgHeight = svgHeight - padding.top - padding.bottom;
 const adjustedSvgWidth = svgWidth - padding.left - padding.right;
-
-const clampPiRatio = (raw: number): number =>  {
-    return raw < 0 ?
-        raw + 2 :
-        raw;
-};
 
 class CurveControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
@@ -73,7 +67,7 @@ class CurveControl extends Component<Props, State> {
 
             const newAngle = clamp(this.calculateDomainX(newSvgX), 0, 2 * Math.PI);
             const piRatio = snap(newAngle / Math.PI, 2);
-            this.props.onChange(clampPiRatio(piRatio));
+            this.props.onChange(piRatio);
         }
     };
 
@@ -120,17 +114,16 @@ class CurveControl extends Component<Props, State> {
           />
         );
 
-        const angleLabelVerticalOffset = yFunction(piRatio * Math.PI) < 0 ? -15 : 25;
-        const angleLabelHorizontalOffset = piRatio < 1.9 ? 0 : -45;
+        const angleLabelDomainX = clamp(piRatio * Math.PI / 2, 0.1, Math.PI);
+        const angleLabelVerticalOffset = yFunction(angleLabelDomainX) < 0 ? -15 : 25;
         const angleLabel = (
             <text
                 className="angle-label"
-                x={this.calculateSvgX(piRatio * Math.PI) + angleLabelHorizontalOffset}
+                x={this.calculateSvgX(angleLabelDomainX)}
                 y={this.calculateSvgY(0) + angleLabelVerticalOffset}
                 >
                 {piRatio}&#960;
             </text>
-
         );
 
         const horizontalLine = (
