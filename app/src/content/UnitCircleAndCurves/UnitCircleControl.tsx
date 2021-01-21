@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import './UnitCircleControl.scss';
-import {clamp, snap} from 'util/math-hacks';
+import {snap} from 'util/math-hacks';
 
 type Props = {
     onChange: (piRatio: number) => void;

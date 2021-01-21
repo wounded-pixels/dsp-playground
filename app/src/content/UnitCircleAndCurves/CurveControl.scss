@@ -20,6 +20,12 @@
     text-anchor: middle;
   }
 
+  text.vertical-line-label {
+    alignment-baseline: middle;
+    font-family: sans-serif;
+    font-size: 18px;
+  }
+
   text.active-change-description {
   }
 

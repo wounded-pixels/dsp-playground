@@ -140,6 +140,20 @@ class CurveControl extends Component<Props, State> {
                 d={`M ${horizontalLineEnd} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineEnd}`}
             />
         );
+
+        const verticalLineValue = yFunction(piRatio * Math.PI);
+        const verticalLineLabel =
+            Math.abs(verticalLineValue) > 0.1 ? (
+                <text
+                className="vertical-line-label"
+                fill={verticalStrokeColor}
+                textAnchor={piRatio < 1.7 ? 'start' : 'end'}
+                x={horizontalLineEnd + (piRatio < 1.7 ? 8 : -8) }
+                y={(verticalLineStart + verticalLineEnd) /2}
+            >
+                {verticalLineValue.toFixed(2)}
+            </text>
+            ) : null;
         const activeChangeDescription = null;
 
         const knob = (
@@ -173,6 +187,7 @@ class CurveControl extends Component<Props, State> {
                     {verticalLine}
                     {curve}
                     {angleLabel}
+                    {verticalLineLabel}
                     {knob}
                     {activeChangeDescription}
                 </svg>
