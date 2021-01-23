@@ -140,6 +140,31 @@ class UnitCircleControl extends Component<Props, State> {
             />
         );
 
+        const verticalLineRangeY = Math.sin(piRatio * Math.PI);
+        const horizontalDomainX = Math.cos(piRatio * Math.PI);
+        const verticalLineLabel =
+            Math.abs(verticalLineRangeY) > 0.1 ? (
+                <text
+                    className="vertical-line-label"
+                    textAnchor={horizontalDomainX > 0 ? 'end' : 'start'}
+                    x={horizontalLineEnd + (horizontalDomainX > 0 ? -5 : 5) }
+                    y={(centerY + verticalLineEnd) /2}
+                >
+                    {verticalLineRangeY.toFixed(2)}
+                </text>
+            ) : null;
+
+        const horizontalLineLabel =
+            Math.abs(horizontalDomainX) > 0.1 ? (
+                <text
+                    className="horizontal-line-label"
+                    x={(horizontalLineEnd + centerX) / 2 }
+                    y={centerY + (verticalLineRangeY > 0 ? 8 : -6) }
+                >
+                    {horizontalDomainX.toFixed(2)}
+                </text>
+            ) : null;
+
         const foregroundArc = (
             <path
                 className="arc"
@@ -180,6 +205,8 @@ class UnitCircleControl extends Component<Props, State> {
                     {foregroundArc}
                     {horizontalLine}
                     {verticalLine}
+                    {verticalLineLabel}
+                    {horizontalLineLabel}
                     {angleLabel}
                     {knob}
                     {activeChangeDescription}
