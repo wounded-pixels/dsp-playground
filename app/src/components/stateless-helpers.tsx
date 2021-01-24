@@ -78,20 +78,24 @@ export const Topic: FunctionComponent<TopicProps> = ({children}) => {
     );
 };
 
-type SymbolProps = {};
-const symbolStyles: CSSProperties = {
-    display: 'flex',
-    fontSize: '32px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    justifyContent: 'center',
-    width: '150px',
-    height: '32px',
+type SymbolProps = {
+    width: string;
 };
-export const Symbol: FunctionComponent<SymbolProps> = ({children}) => {
+
+export const Symbol: FunctionComponent<SymbolProps> = (props) => {
+    const symbolStyles: CSSProperties = {
+        display: 'flex',
+        fontSize: '32px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        justifyContent: 'center',
+        width: props.width,
+        height: '32px',
+    };
+
     return (
       <div style={symbolStyles}>
-          {children}
+          {props.children}
       </div>
     );
 };

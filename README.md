@@ -5,14 +5,16 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## Now
+* consolidate angle, sine and cosine colors
+* standardize pixel width, height and viewbox with paddings
 * fix spinners on sum of 2 - make them svg controls and size better
 
 ### Unit circle
+* slowly show more - unit circle alone, with sine, all three?
+* explanation
 * center dot in circle?
 * lines should have an arrow marker
 * add an arrow for sum of vectors? radius 1 labeled?
-* slowly show more - unit circle alone, with sine, all three?
-* explanation
 * switch deg or radians?
 
 ## Next up
