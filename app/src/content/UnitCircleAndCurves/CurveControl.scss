@@ -8,6 +8,7 @@
   height: 300px;
   user-select: none;
   justify-content: flex-start;
+  touch-action: none;
 
   svg {
     cursor: pointer;
