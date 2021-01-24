@@ -8,7 +8,17 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {CurveParameters, Sample} from 'model/types';
-import {Context, Hint, KeyIdea, Row, ScenarioLink, Symbol, Topic, Visualization} from 'components/stateless-helpers';
+import {
+    Context,
+    Hint,
+    KeyIdea,
+    Row,
+    ScenarioLink,
+    ScrollToTopOnMount,
+    Symbol,
+    Topic,
+    Visualization
+} from 'components/stateless-helpers';
 import { Link } from 'react-router-dom';
 
 type Props = {};
@@ -75,6 +85,7 @@ class SimpleAddition extends Component<Props, State> {
 
         return (
             <Topic>
+                <ScrollToTopOnMount />
                 <h2>Addition of Sine Curves</h2>
                 <Context>
                     Adding sine curves is pretty simple, but it can produce some very strange results:

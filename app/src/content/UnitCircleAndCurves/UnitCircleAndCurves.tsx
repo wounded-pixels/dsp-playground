@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Context, Row, Topic, Visualization} from 'components/stateless-helpers';
+import {Context, Row, ScrollToTopOnMount, Topic, Visualization} from 'components/stateless-helpers';
 import UnitCircleControl from './UnitCircleControl';
 import CurveControl from './CurveControl';
 
@@ -25,6 +25,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
     render(): JSX.Element {
         return (
             <Topic>
+                <ScrollToTopOnMount />
                 <h2>Sine, Cosine, and the Unit Circle</h2>
                 <Context>
                 </Context>

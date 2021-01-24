@@ -7,7 +7,16 @@ import TimePlot from 'components/TimePlot';
 import { addSamples } from 'util/samples';
 
 import {Sample, TimeValue} from 'model/types';
-import {Context, Hint, KeyIdea, ScenarioLink, Topic, Visualization} from 'components/stateless-helpers';
+import {
+    Context,
+    Hint,
+    KeyIdea,
+    ScenarioLink,
+    ScrollToTopOnMount,
+    Topic,
+    Visualization
+} from 'components/stateless-helpers';
+
 import FrequencyDomainControl from '../components/FrequencyDomainControl';
 import { Link } from 'react-router-dom';
 
@@ -70,6 +79,7 @@ class SumOfManySines extends Component<Props, State> {
         const combined: Sample = addSamples(...samples)
         return (
             <Topic>
+                <ScrollToTopOnMount />
                 <h2>Sum of Many Sines</h2>
                 <Context>
                     Each slider allows you to change the amplitude of a sine at that frequency.

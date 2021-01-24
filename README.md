@@ -5,12 +5,12 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## Now
-* route change should also scroll to top
+* fix spinners on sum of 2 - make them svg controls and size better
 
 ### Unit circle
 * center dot in circle?
-* lines should have a point marker
-* add an arrow for sum of vectors?
+* lines should have an arrow marker
+* add an arrow for sum of vectors? radius 1 labeled?
 * slowly show more - unit circle alone, with sine, all three?
 * explanation
 * switch deg or radians?
@@ -25,19 +25,16 @@ More on sum of many sines
 ## Soon
 * switch to css grid?
 * fix on iPad
-  * prevent scroll on drag
-  * spinner should be touchable
   * hints look terrible and dont work on ipad
   * strange line on phone
 * fixes
   * h scrollbar on freq domain
-  * improve knob drag
-  * improve change tooltip
-  * page refresh is wonky - path is wrong 
+  * improve or change tooltip
 * pretty up 
   * background
   * top branding
   * footer
+  * favicon
   * differentiate internal scenario control links from routing links
 * Convert a sample to audio
   * also on iPad?
