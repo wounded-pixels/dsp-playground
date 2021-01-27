@@ -5,8 +5,8 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## Now
+* standardize pixel width, height and viewbox with paddings for curve and unit circle
 * consolidate angle, sine and cosine colors
-* standardize pixel width, height and viewbox with paddings
 * fix spinners on sum of 2 - make them svg controls and size better
 
 ### Unit circle

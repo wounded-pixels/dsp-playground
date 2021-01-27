@@ -1,17 +1,18 @@
-.CurveControl {
+.AnnotatedCurveControl {
   background: #d0d0d0;
   display: flex;
   flex-grow: 0;
   flex-direction: column;
   margin-top: 20px;
-  width: 310px;
-  height: 150px;
+  width: 700px;
+  height: 300px;
   user-select: none;
   justify-content: flex-start;
   touch-action: none;
 
   svg {
     cursor: pointer;
+    height: 100%;
   }
 
   text.angle-label {

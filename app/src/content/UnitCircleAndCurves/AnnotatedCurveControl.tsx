@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './CurveControl.scss';
+import './AnnotatedCurveControl.scss';
 import {clamp, snap} from 'util/math-hacks';
 
 type Props = {
@@ -16,9 +16,9 @@ type State = {
 const svgHeight = 300;
 const svgWidth = 750;
 const padding = {
-    top: 42,
+    top: 40,
     right: 0,
-    bottom: 42,
+    bottom: 40,
     left: 20,
 };
 
@@ -31,7 +31,7 @@ const rangeHeight = rangeMaximum - rangeMinimum;
 const adjustedSvgHeight = svgHeight - padding.top - padding.bottom;
 const adjustedSvgWidth = svgWidth - padding.left - padding.right;
 
-class CurveControl extends Component<Props, State> {
+class AnnotatedCurveControl extends Component<Props, State> {
     private svgRef: any = React.createRef();
 
     state = {
@@ -172,7 +172,7 @@ class CurveControl extends Component<Props, State> {
         );
 
         return (
-            <div className="CurveControl">
+            <div className="AnnotatedCurveControl">
                 <svg
                     ref={this.svgRef}
                     viewBox={viewBox}
@@ -196,4 +196,4 @@ class CurveControl extends Component<Props, State> {
     };
 }
 
-export default CurveControl
+export default AnnotatedCurveControl;

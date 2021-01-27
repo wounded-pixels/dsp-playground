@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {Context, Row, ScrollToTopOnMount, Topic, Visualization} from 'components/stateless-helpers';
 import UnitCircleControl from './UnitCircleControl';
-import CurveControl from './CurveControl';
+import AnnotatedCurveControl from './AnnotatedCurveControl';
 
 type Props = {};
 
@@ -31,11 +31,11 @@ class UnitCircleAndCurves extends Component<Props, State> {
                 </Context>
                 <Visualization>
                     <Row>
-                        <CurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.sin}/>
+                        <AnnotatedCurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.sin}/>
                         <UnitCircleControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio}/>
                     </Row>
                     <Row>
-                        <CurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.cos}/>
+                        <AnnotatedCurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.cos}/>
                     </Row>
 
                 </Visualization>
