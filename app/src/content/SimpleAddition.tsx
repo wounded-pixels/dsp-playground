@@ -120,15 +120,15 @@ class SimpleAddition extends Component<Props, State> {
                       <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={firstSample}/>
                   </Row>
                   <Row>
-                      <Symbol width="310px">+</Symbol>
-                      <Symbol width="700px">&nbsp;</Symbol>
+                      <Symbol width="150px">+</Symbol>
+                      <Symbol width="100%">&nbsp;</Symbol>
                   </Row>
                   <Row>
                       <CurveControl onChange={this.onChangeCurveParameter} curveNumber={1} curveParameters={this.state.curveParameters[1]}/>
                       <TimePlot width={500} height={timePlotHeight} minY={-amplitude} maxY={amplitude} values={secondSample}/>
                   </Row>
                   <Row>
-                      <Symbol width="310px">=</Symbol>
+                      <Symbol width="150px">=</Symbol>
                       <TimePlot width={500} height={2 * timePlotHeight} minY={-2*amplitude} maxY={2*amplitude} values={combined} />
                   </Row>
                 </Visualization>
