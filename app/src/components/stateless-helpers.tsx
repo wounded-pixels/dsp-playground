@@ -127,6 +127,18 @@ export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({index, onCli
     );
 };
 
+type RevealLinkProps = {
+    onClick: any;
+};
+export const RevealLink: FunctionComponent<RevealLinkProps> = ({onClick, children}) => {
+    return (
+        <span>
+          &nbsp;
+            <Link onClick={onClick}> {children} </Link>
+      </span>
+    );
+};
+
 export class ScrollToTopOnMount extends React.Component {
   componentDidMount() {
       window.scrollTo(0,0);

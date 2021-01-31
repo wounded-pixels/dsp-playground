@@ -6,6 +6,7 @@ import {snap} from 'util/math-hacks';
 type Props = {
     onChange: (piRatio: number) => void;
     piRatio: number;
+    revealLevel: number;
 };
 
 type State = {
@@ -84,7 +85,7 @@ class UnitCircleControl extends Component<Props, State> {
     }
 
     render(): JSX.Element {
-        const { piRatio } = this.props;
+        const { piRatio, revealLevel } = this.props;
 
         const viewBox = `0 0 ${sideLength} ${sideLength}`;
 
@@ -204,7 +205,17 @@ class UnitCircleControl extends Component<Props, State> {
                 onTouchEnd = {this.stopDrag}
                 onTouchMove={this.onTouch}
             />
-    );
+        );
+
+        const triangle = revealLevel >= 1 ?
+            (
+                <React.Fragment>
+                {horizontalLine}
+                {verticalLine}
+                {verticalLineLabel}
+                {horizontalLineLabel}
+                </React.Fragment>
+            ) : null;
 
         return (
             <div className="UnitCircleControl">
@@ -220,12 +231,9 @@ class UnitCircleControl extends Component<Props, State> {
                 >
                     {plotTitle}
                     {backgroundCircle}
-                    {foregroundArc}
                     {radiusLine}
-                    {horizontalLine}
-                    {verticalLine}
-                    {verticalLineLabel}
-                    {horizontalLineLabel}
+                    {triangle}
+                    {foregroundArc}
                     {angleLabel}
                     {knob}
                     {activeChangeDescription}
