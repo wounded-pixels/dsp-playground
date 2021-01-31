@@ -91,6 +91,7 @@ class AnnotatedCurveControl extends Component<Props, State> {
 
     render(): JSX.Element {
         const { yFunction, piRatio } = this.props;
+        const title = yFunction === Math.sin ? 'Sine' : 'Cosine';
 
         const viewBox = `0 0 ${svgWidth} ${svgHeight}`;
 
@@ -112,6 +113,16 @@ class AnnotatedCurveControl extends Component<Props, State> {
           className="curve"
           d={curvePath}
           />
+        );
+
+        const plotTitle = (
+            <text
+                className="plot-title"
+                x={this.calculateSvgX(Math.PI)}
+                y="13"
+            >
+                {title}
+            </text>
         );
 
         const angleLabelDomainX = clamp(piRatio * Math.PI / 2, 0.1, Math.PI);
@@ -183,6 +194,7 @@ class AnnotatedCurveControl extends Component<Props, State> {
                     onTouchEnd = {this.stopDrag}
                     onTouchMove={this.onTouch}
                 >
+                    {plotTitle}
                     {horizontalLine}
                     {verticalLine}
                     {curve}

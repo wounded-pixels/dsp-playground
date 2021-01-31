@@ -38,12 +38,12 @@ const rowStyles: CSSProperties = {
     display: 'flex',
     flexDirection: 'row',
     flexGrow: 2,
-    justifyContent: 'center',
+    justifyContent: 'start',
     width: '100%',
 };
 export const Row: FunctionComponent<RowProps> = ({children}) => {
     return (
-        <div style={rowStyles}>
+        <div className="Row" style={rowStyles}>
             {children}
         </div>
     );

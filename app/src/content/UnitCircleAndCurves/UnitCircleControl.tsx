@@ -101,19 +101,21 @@ class UnitCircleControl extends Component<Props, State> {
         const horizontalLineEnd = this.calculateSvgX(Math.cos(piRatio * Math.PI));
         const verticalLineEnd = this.calculateSvgY(Math.sin(piRatio * Math.PI));
 
-        const backgroundCircle = (
-            <circle
-                className="background-circle"
-                cx={centerX}
-                cy={centerY}
-                r={svgRadius}
-                />
-        );
-
         const offsetRadius = 1.08;
         const angleLabelDomainX = offsetRadius * Math.cos(piRatio * Math.PI / 2);
         const angleLabelRangeY  = offsetRadius * Math.sin(piRatio * Math.PI / 2);
         const textAnchor = angleLabelDomainX > 0 ? 'start' : 'end';
+
+        const plotTitle = (
+            <text
+                className="plot-title"
+                x={this.calculateSvgX(0)}
+                y="11"
+            >
+                Unit Circle
+            </text>
+        );
+
         const angleLabel = (
             <text
                 className="angle-label"
@@ -125,6 +127,14 @@ class UnitCircleControl extends Component<Props, State> {
             </text>
         );
 
+        const backgroundCircle = (
+            <circle
+                className="background-circle"
+                cx={centerX}
+                cy={centerY}
+                r={svgRadius}
+            />
+        );
 
         const horizontalLine = (
             <path
@@ -137,6 +147,13 @@ class UnitCircleControl extends Component<Props, State> {
             <path
                 className="vertical-line"
                 d={`M ${horizontalLineEnd} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
+            />
+        );
+
+        const radiusLine = (
+            <path
+                className="radius-line"
+                d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
             />
         );
 
@@ -201,8 +218,10 @@ class UnitCircleControl extends Component<Props, State> {
                     onTouchEnd = {this.stopDrag}
                     onTouchMove={this.onTouch}
                 >
+                    {plotTitle}
                     {backgroundCircle}
                     {foregroundArc}
+                    {radiusLine}
                     {horizontalLine}
                     {verticalLine}
                     {verticalLineLabel}
