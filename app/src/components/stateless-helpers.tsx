@@ -37,7 +37,7 @@ const rowStyles: CSSProperties = {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
-    flexGrow: 2,
+    flexGrow: 0,
     justifyContent: 'start',
     width: '100%',
 };

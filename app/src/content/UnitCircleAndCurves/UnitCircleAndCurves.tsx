@@ -42,7 +42,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
                     fits inside the unit circle.<p/>
                     Then it shows how a unit circle is related to a
                     <RevealLink onClick={() => this.setReveal(2)}>sine curve.</RevealLink>
-                    Finally it brings<RevealLink onClick={() => this.setReveal(3)}>Cosine curves</RevealLink>
+                    Finally it brings<RevealLink onClick={() => this.setReveal(3)}>cosine curves</RevealLink>
                     into the picture.<p/>
                     But let's start at the beginning.
                 </Context>
@@ -55,7 +55,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
                             <h3>Unit Circle</h3>
                             A unit circle is a circle that is centered at x=0, y=0.<p/>
                             The white line from (0,0) to the circle always has length of 1.
-                            The green arc shows the distance around the perimeter of the circle.<p/>
+                            The green arc shows the distance around the perimeter of the circle (aka arc length).<p/>
                             Perhaps you recall the formula for the perimeter
                             of a circle?<br/>
                             As you drag the grey knob around, what do you expect the arc length to be at the top?<br/>
@@ -65,7 +65,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
                                 this.setReveal(1);
                                 this.onChangePiRatio(0.25)}
                             }>
-                                a triangle!
+                            a triangle!
                             </RevealLink>
                         </Context>
                     {revealLevel >= 1 && (
@@ -81,6 +81,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
                     )}
                     </Context>
                 </Row>
+
                 {revealLevel >= 2 && (
                     <Row>
                         <Context>
@@ -92,19 +93,28 @@ class UnitCircleAndCurves extends Component<Props, State> {
                             But our triangle is trapped in a unit circle so the hypotenuse is always 1 and the opposite side
                             of the triangle and the sine of the angle are exactly the same.<p/>
                             As you manipulate the angle you can see how the vertical side of the triangle in the unit circle
-                            matches up to the value of the sine curve.
+                            matches up to the value of the sine curve (both in orange).<p/>
+                            The blue horizontal line in the triangle leads us to our next topic,
+                            <RevealLink onClick={() => this.setReveal(3)}>cosine curves</RevealLink>
                         </Context>
                         <AnnotatedCurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.sin}/>
                     </Row>
                 )}
 
-                <Context>
-                    {revealLevel >= 3 && <AnnotatedCurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.cos}/>}
-                </Context>
+                {revealLevel >= 3 && (
+                   <Row>
+                       <Context>
+                           <h3>Cosine Curve</h3>
+                           The value of the blue cosine curve is the same as the length of the blue adjacent side of the triangle.
+                       </Context>
+                       <AnnotatedCurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.cos}/>
+                   </Row>
+                )}
+
                 <Context>
                     <h3>Next Steps</h3>
-                    <div>
-                    </div>
+                    Now that we have built some understanding of what a sine curve means in the context of a triangle we can explore
+                    other uses. TODO: add link here.
                 </Context>
             </Topic>
         );
