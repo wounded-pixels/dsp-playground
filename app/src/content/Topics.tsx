@@ -12,7 +12,7 @@ const Topics: FunctionComponent<Props> = () => {
                 DSP depends on sine waves and you need to understand the unit circle in order to understand sine waves.
                 This visualization shows how the height and width of the triangle in the unit circle map to the sine and cosine curves.
             </Context>
-            <h3>Coming Soon - Sine over Time</h3>
+            <h3><Link to="/sine-over-time">Sine over Time</Link></h3>
             <Context>
                 In trigonometry sine is all about angles of triangles. In DSP it is all about
                 sound or signal intensity over time.

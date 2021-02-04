@@ -13,8 +13,9 @@ import './App.scss';
 import TopNav from 'components/TopNav';
 import {LabeledPath} from 'model/types';
 import Topics from 'content/Topics';
-import SumOfManySines from './content/SumOfManySines';
-import UnitCircleAndCurves from './content/UnitCircleAndCurves/UnitCircleAndCurves';
+import SumOfManySines from 'content/SumOfManySines';
+import UnitCircleAndCurves from 'content/UnitCircleAndCurves/UnitCircleAndCurves';
+import SineOverTime from 'content/SineOverTime';
 
 type Props = {};
 
@@ -38,6 +39,9 @@ class App extends Component<Props, State> {
                     <Switch>
                         <Route path="/unit-circle">
                             <UnitCircleAndCurves />
+                        </Route>
+                        <Route path="/sine-over-time">
+                            <SineOverTime />
                         </Route>
                         <Route path="/add-sines">
                             <SimpleAddition />

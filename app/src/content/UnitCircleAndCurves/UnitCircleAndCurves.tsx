@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import {Context, RevealLink, Row, ScrollToTopOnMount, Topic, Visualization} from 'components/stateless-helpers';
 import UnitCircleControl from './UnitCircleControl';
@@ -114,7 +115,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
                 <Context>
                     <h3>Next Steps</h3>
                     Now that we have built some understanding of what a sine curve means in the context of a triangle we can explore
-                    other uses. TODO: add link here.
+                    other uses. For example, many things change periodically <Link to="/sine-over-time">over time</Link>.
                 </Context>
             </Topic>
         );
