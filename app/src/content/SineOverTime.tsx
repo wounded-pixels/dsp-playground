@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import {Context, RevealLink, Row, ScrollToTopOnMount, Topic, Visualization} from 'components/stateless-helpers';
+import {
+    Context,
+    RevealLink,
+    Row,
+    ScrollToTopOnMount,
+    Symbol,
+    Title,
+    Topic,
+    Visualization
+} from 'components/stateless-helpers';
 import CurveControl from "../components/CurveControl";
 import TimePlot from "../components/TimePlot";
 import {Sample} from "../model/types";
@@ -58,9 +67,14 @@ class SineOverTime extends Component<Props, State> {
                         this.setState({amplitude: 2});
                         this.setState({frequency: 1});
                     }}>1 Hertz</RevealLink>
-                    (1 Hz) sine curve repeats once every second.
+                    (1 Hz) sine curve repeats once every second.<p/>
+                    To get a curve that repeats f times a second, the argument to sine must be 2π multiplied by f.
                 </Context>
                 <Visualization>
+                    <Row>
+                        <Symbol width="150px">&nbsp;</Symbol>
+                        <Title width="500px">{amplitude} sin({frequency} x 2π x time) </Title>
+                    </Row>
                     <Row>
                         <CurveControl onChange={this.onChangeCurveParameter} curveNumber={0} curveParameters={{amplitude, frequency}}/>
                         <TimePlot width={500} height={timePlotHeight} minY={-maxAmplitude} maxY={maxAmplitude} values={firstSample}/>

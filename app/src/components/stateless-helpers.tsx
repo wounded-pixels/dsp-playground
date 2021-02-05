@@ -78,6 +78,28 @@ export const Topic: FunctionComponent<TopicProps> = ({children}) => {
     );
 };
 
+type TitleProps = {
+    width: string;
+};
+
+export const Title: FunctionComponent<TitleProps> = (props) => {
+    const titleStyles: CSSProperties = {
+        display: 'flex',
+        fontSize: '18px',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        justifyContent: 'center',
+        width: props.width,
+        height: '18px',
+    };
+
+    return (
+        <div style={titleStyles}>
+            {props.children}
+        </div>
+    );
+};
+
 type SymbolProps = {
     width: string;
 };
