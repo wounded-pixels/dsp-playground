@@ -64,7 +64,8 @@ class UnitCircleAndCurves extends Component<Props, State> {
                             Now that our circle makes sense, let's add
                             <RevealLink onClick={() => {
                                 this.setReveal(1);
-                                this.onChangePiRatio(0.25)}
+                                this.onChangePiRatio(0.25);
+                            }
                             }>
                             a triangle!
                             </RevealLink>
@@ -72,12 +73,16 @@ class UnitCircleAndCurves extends Component<Props, State> {
                     {revealLevel >= 1 && (
                         <Context>
                             <h3>The Triangle</h3>
-                            We just put a traditional triangle from trigonometry inside of our circle with the hypotenuse along the radius
-                            with a length of 1.
-                            The horizontal side is shown in blue and the vertical side is shown in orange.<p/>
+                            We just put a traditional right triangle from trigonometry inside of our circle with the
+                            hypotenuse along the radius with a length of 1.
+                            The horizontal or adjacent side is shown in blue and the vertical or opposite side is shown in orange.<p/>
                             The length of the arc gives us a way to describe the inside angle of the triangle in radians.<p/>
                             Focus on the length of the orange vertical line as you change the angle. It leads directly to our next topic,
-                            <RevealLink onClick={() => this.setReveal(2)}>sine curves</RevealLink>
+                            <RevealLink onClick={() => {
+                                this.setReveal(2);
+                                this.onChangePiRatio(0.25);
+                            }
+                            }>sine curves</RevealLink>
                         </Context>
                     )}
                     </Context>
@@ -91,12 +96,16 @@ class UnitCircleAndCurves extends Component<Props, State> {
                             the opposite side divided by the hypotenuse.
                             Or to put it the other way, the height of the opposite side of a triangle is the hypotenuse
                             multiplied by the sine of the angle.<p/>
-                            But our triangle is trapped in a unit circle so the hypotenuse is always 1 and the opposite side
+                            But our triangle is trapped in a unit circle! So, the hypotenuse is always 1 and the opposite side
                             of the triangle and the sine of the angle are exactly the same.<p/>
                             As you manipulate the angle you can see how the vertical side of the triangle in the unit circle
                             matches up to the value of the sine curve (both in orange).<p/>
-                            The blue horizontal line in the triangle leads us to our next topic,
-                            <RevealLink onClick={() => this.setReveal(3)}>cosine curves</RevealLink>
+                            The blue horizontal line in the triangle leads us to our last topic,
+                            <RevealLink onClick={() => {
+                                this.setReveal(3);
+                                this.onChangePiRatio(0.25);
+                            }
+                            }>cosine curves</RevealLink>
                         </Context>
                         <AnnotatedCurveControl onChange={this.onChangePiRatio} piRatio={this.state.piRatio} yFunction={Math.sin}/>
                     </Row>

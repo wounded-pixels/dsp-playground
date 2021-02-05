@@ -1,6 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import SineCurve from 'model/SineCurve';
 import TimePlot from 'components/TimePlot';
@@ -18,7 +19,6 @@ import {
 } from 'components/stateless-helpers';
 
 import FrequencyDomainControl from '../components/FrequencyDomainControl';
-import { Link } from 'react-router-dom';
 
 type Props = {};
 
@@ -33,6 +33,7 @@ const oldBeatFrequencies = [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0
 const flatBeatFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, -4, 0 ,0, 0, 0];
 const alternatingBeatFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 2, -1, 0 ,0, 0];
 const twoFourSixFrequencies = [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
+const inkFrequencies = [1.3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2 ,-0.4, 0.2];
 
 const examples: { [index: string] : number[]} = {
     alternatingBeatFrequencies,
@@ -41,6 +42,7 @@ const examples: { [index: string] : number[]} = {
     justOneFrequencies,
     spikyFrequencies,
     twoFourSixFrequencies,
+    inkFrequencies,
     oldBeatFrequencies
 };
 
@@ -114,6 +116,12 @@ class SumOfManySines extends Component<Props, State> {
                             With a gap between the primary frequencies you can get alternating
                             <ScenarioLink index="alternatingBeat" onClick={this.onExample}>
                                 long and short beats
+                            </ScenarioLink>
+                        </li>
+                        <li>
+                            A low frequency mixed with a few high frequencies can create a line and
+                            <ScenarioLink index="ink" onClick={this.onExample}>
+                                brush stroke effect
                             </ScenarioLink>
                         </li>
                         <li>
