@@ -68,7 +68,7 @@ class SimpleAddition extends Component<Props, State> {
     };
 
     render(): JSX.Element {
-        const samplingRate = 600;
+        const samplingRate = 1200;
         const tEnd = 5;
 
         const {curveParameters} = this.state;

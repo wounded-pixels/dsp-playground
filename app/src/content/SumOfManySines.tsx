@@ -70,7 +70,7 @@ class SumOfManySines extends Component<Props, State> {
     render(): JSX.Element {
         const plotAmplitude = 10;
         const controlAmplitude = 4;
-        const samplingRate = 600;
+        const samplingRate = 2000;
         const tEnd = 5;
 
         const curves: SineCurve[] = this.state.amplitudes.map((amplitude, index) => {

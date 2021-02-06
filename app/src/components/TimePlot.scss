@@ -1,4 +1,10 @@
 .TimePlot {
   display: flex;
   flex-grow: 2;
+
+  path.curve {
+    fill: none;
+    stroke: black;
+    stroke-width: 1;
+  }
 }
