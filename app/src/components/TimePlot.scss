@@ -2,9 +2,14 @@
   display: flex;
   flex-grow: 2;
 
-  path.curve {
-    fill: none;
-    stroke: black;
-    stroke-width: 1;
+  svg {
+    height: 100%;
+    width: 100%;
+
+    path.curve {
+      fill: none;
+      stroke: black;
+      stroke-width: 1;
+    }
   }
 }

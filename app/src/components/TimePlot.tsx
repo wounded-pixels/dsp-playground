@@ -62,7 +62,7 @@ class TimePlot extends Component<Props> {
         );
 
         return (
-          <div className="TimePlot">
+          <div className="TimePlot" style={{width: `${width}px`}}>
              <svg
                 viewBox={viewBox}
              >
