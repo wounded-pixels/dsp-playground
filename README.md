@@ -5,16 +5,17 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## Now
-* standardize pixel width, height and viewbox with paddings for curve and unit circle
-* consolidate angle, sine and cosine colors
+* fix sizes on time  plot
+* add lines and labels to time plot
+* analytics
+* feedback from educator
+* feedback from visual peer
+* feedback from dsp sme
 * fix spinners on sum of 2 - make them svg controls and size better
 
 ### Unit circle
-* slowly show more - unit circle alone, with sine, all three?
-* explanation
 * center dot in circle?
-* lines should have an arrow marker
-* add an arrow for sum of vectors? radius 1 labeled?
+* lines should have an arrow marker?
 * switch deg or radians?
 
 ## Next up
@@ -65,11 +66,6 @@ More on sum of many sines
 * each page should have a logical Next link to go further
 
 ## Topics
-* Adding sines
-* Adding sines with frequency controls - (freq domain and time domain)
-* Terminology for freq and time domains
-* Sines, Cosines and the Unit Circle
-* From angles to time
 * Reverse the Addition - Frequency filters
   * Limitations - beats
 * Convolution in general with a kernel editor
@@ -78,15 +74,8 @@ More on sum of many sines
 * Sampling rate and Nyquist rate
   * simple example of aliasing
   * detail loss from composite
+* FFT
 
-
-## Features
-* graphic to tie unit circle to strip chart
-  * slider to increase angle 
-  * triangle and dot on unit circle
-  * sin curve along angle with dot
-  * dotted and solid lines
-  * same for cosine?
   
 ## Someday
 * Move PointPlot into EDA
@@ -94,8 +83,6 @@ More on sum of many sines
 * Zen mode?
 
 ## deployment
-* make repo private?
-* AWS Amplify? GAE?
 * cache and cache busting?
 
 ## lessons learned
