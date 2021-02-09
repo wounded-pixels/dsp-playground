@@ -1,6 +1,9 @@
 .TimePlot {
+  background: #d0d0d0;
   display: flex;
-  flex-grow: 2;
+  flex-grow: 0;
+  margin-top: 10px;
+  margin-left: 10px;
 
   svg {
     height: 100%;
@@ -10,6 +13,28 @@
       fill: none;
       stroke: black;
       stroke-width: 1;
+    }
+
+    path.grid-line {
+      stroke: white;
+    }
+
+    text.bottom-label {
+      alignment-baseline: bottom;
+      font-weight: bolder;
+      text-anchor: middle;
+    }
+
+    text.x-axis-label {
+      alignment-baseline: top;
+      font-weight: bolder;
+      text-anchor: middle;
+    }
+
+    text.y-axis-label {
+      alignment-baseline: middle;
+      font-weight: bolder;
+      text-anchor: end;
     }
   }
 }
