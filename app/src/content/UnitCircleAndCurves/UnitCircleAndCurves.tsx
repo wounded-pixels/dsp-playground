@@ -42,8 +42,15 @@ class UnitCircleAndCurves extends Component<Props, State> {
                     <RevealLink onClick={() => this.setReveal(1)}>traditional trig triangle</RevealLink>
                     fits inside the unit circle.<p/>
                     Then it shows how a unit circle is related to a
-                    <RevealLink onClick={() => this.setReveal(2)}>sine curve.</RevealLink>
-                    Finally it brings<RevealLink onClick={() => this.setReveal(3)}>cosine curves</RevealLink>
+                    <RevealLink onClick={() => {
+                        this.setReveal(2);
+                        this.onChangePiRatio(0.25);
+                    }}>sine curve.</RevealLink>
+                    Finally it brings
+                    <RevealLink onClick={() => {
+                        this.setReveal(3);
+                        this.onChangePiRatio(0.25);
+                    }}>cosine curves</RevealLink>
                     into the picture.<p/>
                     But let's start at the beginning.
                 </Context>
