@@ -26,6 +26,15 @@ const Topics: FunctionComponent<Props> = () => {
             <Context>
                 We can get interesting shapes by adding two sines together. What mischief can we create with twenty?
             </Context>
+            <h3>Coming Soon</h3>
+            <ul>
+                <li>Encoding information with Amplitude Modulation</li>
+                <li>Encoding information with Frequency Modulation</li>
+                <li>Introduction to Convolution</li>
+                <li>Convolution - DSP's Swiss army chainsaw</li>
+                <li>Discrete Fast Fourier Transforms</li>
+                <li>Sampling</li>
+            </ul>
         </Topic>
     );
 };

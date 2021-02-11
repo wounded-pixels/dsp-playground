@@ -63,7 +63,7 @@ class UnitCircleAndCurves extends Component<Props, State> {
                             <h3>Unit Circle</h3>
                             A unit circle is a circle that is centered at x=0, y=0.<p/>
                             The white line from (0,0) to the circle always has length of 1.
-                            The green arc shows the distance around the perimeter of the circle (aka arc length).<p/>
+                            The green arc length shows the distance around the perimeter of the circle from (1,0).<p/>
                             Perhaps you recall the formula for the perimeter
                             of a circle?<br/>
                             As you drag the grey knob around, what do you expect the arc length to be at the top?<br/>
