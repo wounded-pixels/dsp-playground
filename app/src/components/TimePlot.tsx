@@ -107,7 +107,7 @@ class TimePlot extends Component<Props> {
         });
 
         const yLabels = yTickValues.map((yValue, index) => {
-            return index % 2 == 0 ? (
+            return index % 2 === 0 ? (
                 <text
                     key={index}
                     className="y-axis-label"
