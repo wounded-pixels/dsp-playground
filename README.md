@@ -6,8 +6,9 @@ https://dsp-playground.woundedpixels.com/
 
 ## Now
 * fix sizes on time  plot
-* add lines and labels to time plot
+* add lines and labels to time plot X
 * analytics
+* more on  why bother about interpreting natural data as the sum of sines -  heart rate,  seismic activity
 * feedback from educator
 * feedback from visual peer
 * feedback from dsp sme
