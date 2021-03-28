@@ -5,21 +5,15 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## TODAY
-* sound as a new page 
-  * units for sound
-  * change control to take a list of frequencies and display them
-  * change time plot to display Hz or 100 Hz units
-  
 * more on  why bother about interpreting natural data as the sum of sines -  heart rate,  seismic activity
+* clear all for plot / freq control 
 
 ## Now
-* fix sizes on time  plot
-* add lines and labels to time plot X
+* fix spinners on sum of 2 - make them svg controls and size better
 * analytics
 * feedback from educator
 * feedback from visual peer
 * feedback from dsp sme
-* fix spinners on sum of 2 - make them svg controls and size better
 
 ### Unit circle
 * center dot in circle?

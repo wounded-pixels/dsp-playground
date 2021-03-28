@@ -63,7 +63,7 @@ class FrequencyDomainPlayer extends Component<Props, State> {
 
         if (this.state.playing) {
             this.amplitudeNodes.forEach((node, index) => {
-                node.gain.value = 1 * this.props.amplitudes[index] / this.props.maxAmplitude;
+                node.gain.value = 0.8 * this.props.amplitudes[index] / this.props.maxAmplitude;
             });
         } else {
             for (const amplitudeNode of this.amplitudeNodes) {
@@ -72,7 +72,9 @@ class FrequencyDomainPlayer extends Component<Props, State> {
         }
 
         return (
-            <button onClick={this.togglePlayer}>{title}</button>
+            <div className="FrequencyDomainPlayer">
+                <button onClick={this.togglePlayer}>{title}</button>
+            </div>
         );
     };
 }
