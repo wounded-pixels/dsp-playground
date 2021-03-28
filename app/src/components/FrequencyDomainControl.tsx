@@ -5,6 +5,7 @@ import {clamp, snap} from '../util/math-hacks';
 
 type Props = {
     amplitudes: number[];
+    frequencies: number[];
     maxAmplitude: number;
     onChange: (frequencyIndex: number, value: number) => void;
 };
@@ -87,6 +88,9 @@ class FrequencyDomainControl extends Component<Props, State> {
 
     render(): JSX.Element {
         const {amplitudes, maxAmplitude} = this.props;
+        const minFrequency = this.props.frequencies[0];
+        const maxFrequency = this.props.frequencies[19];
+
 
         const bottomLabel = (
           <text
@@ -94,7 +98,7 @@ class FrequencyDomainControl extends Component<Props, State> {
             x={0.4 * width}
             y={height - 0.35 * padding.bottom}
             >
-              frequencies from 1 to 20 Hz
+              frequencies from {minFrequency} to {maxFrequency} Hz
           </text>
         );
 
@@ -183,7 +187,7 @@ class FrequencyDomainControl extends Component<Props, State> {
                     x={this.calculateTooltipX(activeDragIndex) + 10}
                     y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 20}
                     className="active-change-description">
-                    {activeDragIndex + 1} Hz
+                    {this.props.frequencies[activeDragIndex]} Hz
                 </text>
                 <text
                     x={this.calculateTooltipX(activeDragIndex) + 10}

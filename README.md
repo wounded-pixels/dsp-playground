@@ -4,12 +4,18 @@
 https://dsp-playground.woundedpixels.com/
 
 
+## TODAY
+* sound as a new page 
+  * units for sound
+  * change control to take a list of frequencies and display them
+  * change time plot to display Hz or 100 Hz units
+  
+* more on  why bother about interpreting natural data as the sum of sines -  heart rate,  seismic activity
+
 ## Now
 * fix sizes on time  plot
 * add lines and labels to time plot X
 * analytics
-* more on  why bother about interpreting natural data as the sum of sines -  heart rate,  seismic activity
-* sound
 * feedback from educator
 * feedback from visual peer
 * feedback from dsp sme

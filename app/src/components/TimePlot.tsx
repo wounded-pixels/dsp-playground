@@ -83,17 +83,19 @@ class TimePlot extends Component<Props> {
           />
         );
 
+        const timeLabel = xTickValues[0] < 1 ? 'time (milliseconds)' : 'time (seconds)';
         const bottomLabel = (
             <text
                 className="bottom-label"
                 x={0.52 * width}
                 y={height - 0.2 * padding.bottom}
             >
-                time
+                {timeLabel}
             </text>
         );
 
         const xLabels = xTickValues.map((xValue, index) => {
+            const adjustedXValue = xTickValues[0] < 1 ? xValue * 1000 : xValue;
             return (
                 <text
                     key={index}
@@ -101,7 +103,7 @@ class TimePlot extends Component<Props> {
                     x={this.calculateSvgX(xValue)}
                     y={height - 0.6 * padding.bottom}
                 >
-                    {xValue}
+                    {adjustedXValue}
                 </text>
             )
         });

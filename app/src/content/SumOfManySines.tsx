@@ -4,7 +4,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import SineCurve from 'model/SineCurve';
+
+import FrequencyDomainControl from 'components/FrequencyDomainControl';
 import TimePlot from 'components/TimePlot';
+
 import { addSamples } from 'util/samples';
 
 import {Sample, TimeValue} from 'model/types';
@@ -18,13 +21,13 @@ import {
     Visualization
 } from 'components/stateless-helpers';
 
-import FrequencyDomainControl from '../components/FrequencyDomainControl';
-
 type Props = {};
 
 type State = {
     amplitudes: number[];
 };
+
+const frequencies = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
 const clearFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 const justOneFrequencies = [0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
@@ -139,6 +142,7 @@ class SumOfManySines extends Component<Props, State> {
                     <div>
                         <FrequencyDomainControl
                           amplitudes={this.state.amplitudes}
+                          frequencies={frequencies}
                           maxAmplitude={controlAmplitude}
                           onChange={this.onChange}
                         />
@@ -163,6 +167,11 @@ class SumOfManySines extends Component<Props, State> {
                         Fourier analysis is the branch of mathematics that is dedicated to the tricky bit of calculating
                         the right amplitudes
                     </KeyIdea>
+                </Context>
+                <Context>
+                    <h3>Next Steps</h3>
+                    Sine waves are not just interesting to look at.
+                    Adding sines together <Link to="/sounds-from-sines">can make sounds</Link> as well.
                 </Context>
             </Topic>
         );

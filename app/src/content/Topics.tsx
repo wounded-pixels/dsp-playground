@@ -26,6 +26,10 @@ const Topics: FunctionComponent<Props> = () => {
             <Context>
                 We can get interesting shapes by adding two sines together. What mischief can we create with twenty?
             </Context>
+            <h3><Link to="/sounds-from-sines">Sounds from Sines</Link></h3>
+            <Context>
+                We can make some fairly interesting sounds by combining sine waves
+            </Context>
             <h3>Coming Soon</h3>
             <ul>
                 <li>Encoding information with Amplitude Modulation</li>

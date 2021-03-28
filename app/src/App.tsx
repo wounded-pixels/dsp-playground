@@ -16,6 +16,7 @@ import Topics from 'content/Topics';
 import SumOfManySines from 'content/SumOfManySines';
 import UnitCircleAndCurves from 'content/UnitCircleAndCurves/UnitCircleAndCurves';
 import SineOverTime from 'content/SineOverTime';
+import SoundsFromSines from "./content/SoundsFromSines";
 
 type Props = {};
 
@@ -48,6 +49,9 @@ class App extends Component<Props, State> {
                         </Route>
                         <Route path="/sum-many-sines">
                             <SumOfManySines />
+                        </Route>
+                        <Route path="/sounds-from-sines">
+                            <SoundsFromSines/>
                         </Route>
                         <Route path="/about">
                             <About />
