@@ -21,11 +21,7 @@ https://dsp-playground.woundedpixels.com/
 * switch deg or radians?
 
 ## Next up
-More on sum of many sines
-* verbiage and connections to previous topic, next topic
-* goals - show curve on plot and let them match it
-  * transparent blue and yellow? too cute?
-
+* Sound effects with sines - closely spaced frequencies
 
 ## Soon
 * switch to css grid?
