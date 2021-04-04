@@ -154,6 +154,14 @@ class SimpleAddition extends Component<Props, State> {
                       it is usually encoded with fancy combinations of sine waves!
                   </KeyIdea>
                   <div>
+                     Engineering and medical data is often easier to understand if it is modeled as the sum of sine waves.
+                     Electrical activity from the heart and brain can be measured and modeled to help researchers and practitioners.
+                     While the scale of the waves are very different, the same mathematical techniques that help scientists
+                     understand the behavior of the heart also apply to vibrations in the earth's crust!
+                  </div>
+                </Context>
+                <Context>
+                  <div>
                       Many academic and professional pursuits build on these concepts:
                       <ul>
                           <li>Acoustics</li>
@@ -161,6 +169,7 @@ class SimpleAddition extends Component<Props, State> {
                           <li>Electrical Engineering</li>
                           <li>Radios and Software Defined Radios</li>
                           <li>Radar systems</li>
+                          <li>Understanding complex periodic data from cardiology to seismology</li>
                       </ul>
                   </div>
                 </Context>

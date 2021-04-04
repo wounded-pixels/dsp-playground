@@ -51,7 +51,7 @@ export const Row: FunctionComponent<RowProps> = ({children}) => {
 
 type ContextProps = {};
 const contextStyles: CSSProperties = {
-    paddingTop: '2px',
+    paddingTop: '8px',
 };
 export const Context: FunctionComponent<ContextProps> = ({children}) => {
     return (

@@ -13,22 +13,26 @@ import { addSamples } from 'util/samples';
 import {Sample, TimeValue} from 'model/types';
 import {
     Context,
+    Row,
     ScenarioLink,
     ScrollToTopOnMount,
     Topic,
     Visualization
 } from 'components/stateless-helpers';
 
+import {clamp} from '../util/math-hacks';
 
 type Props = {};
 
 type State = {
     amplitudes: number[];
+    samplingRate: number,
+    zoomLevel: number,
 };
 
 const frequencies = [250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 2200];
 const clearFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
-const justOneFrequencies = [0, 0.8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
+const justOneFrequencies = [0, 0.8, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 const harmonicFrequencies = [0, 1, 0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 0.2, 0, 0, 0 ,0, 0, 0];
 const buzzFrequencies = [0.9, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
 const buzzierFrequencies = [0.3, 0.8, 0.3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.6, 0.9, 1.0 ,0.6, 0.2, 0];
@@ -44,7 +48,14 @@ const examples: { [index: string] : number[]} = {
 class SoundsFromSines extends Component<Props, State> {
     state = {
         amplitudes: cloneDeep(justOneFrequencies),
+        samplingRate: 15000,
+        zoomLevel: 0,
     };
+
+    onZoom = (increment: number) => {
+        const newZoom = clamp(this.state.zoomLevel + increment, 0, 6);
+        this.setState({zoomLevel: newZoom});
+    }
 
     onExample = (rawKey: string) => {
         const key = rawKey + 'Frequencies';
@@ -64,14 +75,14 @@ class SoundsFromSines extends Component<Props, State> {
     render(): JSX.Element {
         const plotAmplitude = 10;
         const controlAmplitude = 1;
-        const samplingRate = 15000;
-        const tEnd = 0.020;
+
+        const tEnd = 0.020 * (2 ** this.state.zoomLevel);
 
         const curves: SineCurve[] = this.state.amplitudes.map((amplitude, index) => {
             return new SineCurve({amplitude, frequency: frequencies[index]});
         });
 
-        const samples: TimeValue[][] = curves.map((curve: SineCurve) => curve.sample(0, tEnd, samplingRate));
+        const samples: TimeValue[][] = curves.map((curve: SineCurve) => curve.sample(0, tEnd, this.state.samplingRate));
         const combined: Sample = addSamples(...samples)
         return (
             <Topic>
@@ -119,7 +130,12 @@ class SoundsFromSines extends Component<Props, State> {
                 </Context>
                 <Visualization>
                     <TimePlot values={combined} width={800} height={400} minY={-plotAmplitude} maxY={plotAmplitude}/>
-                    <FrequencyDomainPlayer amplitudes={this.state.amplitudes} frequencies={frequencies} maxAmplitude={controlAmplitude}/>
+                    <Row>
+                        <FrequencyDomainPlayer amplitudes={this.state.amplitudes} frequencies={frequencies} maxAmplitude={controlAmplitude}/>
+                        <button onClick={() => this.onExample('clear') }>Clear</button>
+                        <button onClick={() => this.onZoom(-1) }>Zoom In</button>
+                        <button onClick={() => this.onZoom(1) }>Zoom Out</button>
+                    </Row>
                     <FrequencyDomainControl
                         amplitudes={this.state.amplitudes}
                         frequencies={frequencies}

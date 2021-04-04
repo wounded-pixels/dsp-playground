@@ -5,12 +5,16 @@ https://dsp-playground.woundedpixels.com/
 
 
 ## TODAY
-* more on  why bother about interpreting natural data as the sum of sines -  heart rate,  seismic activity
+* zoom timescale
 * clear all for plot / freq control 
+* normalize volume
 
 ## Now
 * fix spinners on sum of 2 - make them svg controls and size better
-* analytics
+* Sound effects with sines - closely spaced frequencies
+
+## Next up
+* analytics?
 * feedback from educator
 * feedback from visual peer
 * feedback from dsp sme
@@ -19,9 +23,6 @@ https://dsp-playground.woundedpixels.com/
 * center dot in circle?
 * lines should have an arrow marker?
 * switch deg or radians?
-
-## Next up
-* Sound effects with sines - closely spaced frequencies
 
 ## Soon
 * switch to css grid?
