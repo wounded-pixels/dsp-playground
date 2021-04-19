@@ -41,7 +41,7 @@ class FrequencyDomainPlayer extends Component<Props, State> {
             this.oscillators.push(oscillator);
             this.amplitudeNodes.push(amplitudeNode);
         }
-
+        this.mergeGainNode.gain.value = 0.4;
         this.mergeGainNode.connect(this.audioCtx.destination);
     }
 
@@ -62,8 +62,14 @@ class FrequencyDomainPlayer extends Component<Props, State> {
         const title = this.state.playing ? 'Stop' : 'Play';
 
         if (this.state.playing) {
+            const totalActive = this.props.amplitudes.reduce((total, value) => {
+                const active = value > 0 ? 1 : 0;
+                return total + active;
+            }, 1);
+
+            const balancedGain = 0.1 / totalActive;
             this.amplitudeNodes.forEach((node, index) => {
-                node.gain.value = 0.8 * this.props.amplitudes[index] / this.props.maxAmplitude;
+                node.gain.value = balancedGain * this.props.amplitudes[index] / this.props.maxAmplitude;
             });
         } else {
             for (const amplitudeNode of this.amplitudeNodes) {
