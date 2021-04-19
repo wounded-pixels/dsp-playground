@@ -83,8 +83,8 @@ class TimePlot extends Component<Props> {
           />
         );
 
-        const sizeCutoffIndex = xTickValues.length-1;
-        const timeLabel = xTickValues[sizeCutoffIndex] < 1 ? 'time (milliseconds)' : 'time (seconds)';
+        const inMilliseconds = xTickValues[xTickValues.length-1] < 0.2;
+        const timeLabel = inMilliseconds ? 'time (milliseconds)' : 'time (seconds)';
         const bottomLabel = (
             <text
                 className="bottom-label"
@@ -96,7 +96,7 @@ class TimePlot extends Component<Props> {
         );
 
         const xLabels = xTickValues.map((xValue, index) => {
-            const adjustedXValue = xTickValues[sizeCutoffIndex] < 1 ? xValue * 1000 : xValue;
+            const adjustedXValue = inMilliseconds ? xValue * 1000 : xValue;
             return (
                 <text
                     key={index}

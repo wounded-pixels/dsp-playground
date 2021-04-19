@@ -56,7 +56,7 @@ const examples: { [index: string] : number[]} = {
 class SumOfManySines extends Component<Props, State> {
     state = {
         amplitudes: cloneDeep(justOneFrequencies),
-        zoomLevel: 0,
+        zoomLevel: 1,
         logMessage: '',
     };
 
@@ -85,7 +85,7 @@ class SumOfManySines extends Component<Props, State> {
         const controlAmplitude = 4;
         const samplingRate = 2000;
 
-        const tEnd = 1.5 * (2 ** this.state.zoomLevel);
+        const tEnd = 0.5 * (2 ** this.state.zoomLevel);
 
         const curves: SineCurve[] = this.state.amplitudes.map((amplitude, index) => {
            return new SineCurve({amplitude, frequency: index + 1});
