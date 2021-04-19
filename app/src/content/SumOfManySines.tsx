@@ -14,18 +14,22 @@ import {Sample, TimeValue} from 'model/types';
 import {
     Context,
     Hint,
-    KeyIdea,
+    KeyIdea, Row,
     ScenarioLink,
     ScrollToTopOnMount,
     Topic,
-    Visualization
+    Visualization, ZoomControl
 } from 'components/stateless-helpers';
+import {clamp} from '../util/math-hacks';
 
 type Props = {};
 
 type State = {
     amplitudes: number[];
+    zoomLevel: number,
 };
+
+const MAX_ZOOM_INDEX = 3;
 
 const frequencies = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
@@ -52,8 +56,14 @@ const examples: { [index: string] : number[]} = {
 class SumOfManySines extends Component<Props, State> {
     state = {
         amplitudes: cloneDeep(justOneFrequencies),
+        zoomLevel: 0,
         logMessage: '',
     };
+
+    onZoom = (increment: number) => {
+        const newZoom = clamp(this.state.zoomLevel + increment, 0, MAX_ZOOM_INDEX);
+        this.setState({zoomLevel: newZoom});
+    }
 
     onExample = (rawKey: string) => {
         const key = rawKey + 'Frequencies';
@@ -74,7 +84,8 @@ class SumOfManySines extends Component<Props, State> {
         const plotAmplitude = 10;
         const controlAmplitude = 4;
         const samplingRate = 2000;
-        const tEnd = 5;
+
+        const tEnd = 1.5 * (2 ** this.state.zoomLevel);
 
         const curves: SineCurve[] = this.state.amplitudes.map((amplitude, index) => {
            return new SineCurve({amplitude, frequency: index + 1});
@@ -138,6 +149,10 @@ class SumOfManySines extends Component<Props, State> {
                 <Visualization>
                     <div>
                         <TimePlot values={combined} width={800} height={400} minY={-plotAmplitude} maxY={plotAmplitude}/>
+                        <Row>
+                            <button onClick={() => this.onExample('clear') }>Clear</button>
+                            <ZoomControl current={this.state.zoomLevel} min={0} max={MAX_ZOOM_INDEX} onZoom={this.onZoom} />
+                        </Row>
                     </div>
                     <div>
                         <FrequencyDomainControl

@@ -17,7 +17,7 @@ import {
     ScenarioLink,
     ScrollToTopOnMount,
     Topic,
-    Visualization
+    Visualization, ZoomControl
 } from 'components/stateless-helpers';
 
 import {clamp} from '../util/math-hacks';
@@ -26,9 +26,10 @@ type Props = {};
 
 type State = {
     amplitudes: number[];
-    samplingRate: number,
     zoomLevel: number,
 };
+
+const MAX_ZOOM_INDEX = 6;
 
 const frequencies = [250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 2200];
 const clearFrequencies = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0];
@@ -48,12 +49,11 @@ const examples: { [index: string] : number[]} = {
 class SoundsFromSines extends Component<Props, State> {
     state = {
         amplitudes: cloneDeep(justOneFrequencies),
-        samplingRate: 15000,
         zoomLevel: 0,
     };
 
     onZoom = (increment: number) => {
-        const newZoom = clamp(this.state.zoomLevel + increment, 0, 6);
+        const newZoom = clamp(this.state.zoomLevel + increment, 0, MAX_ZOOM_INDEX);
         this.setState({zoomLevel: newZoom});
     }
 
@@ -75,6 +75,7 @@ class SoundsFromSines extends Component<Props, State> {
     render(): JSX.Element {
         const plotAmplitude = 10;
         const controlAmplitude = 1;
+        const samplingRate = 15000;
 
         const tEnd = 0.020 * (2 ** this.state.zoomLevel);
 
@@ -82,7 +83,7 @@ class SoundsFromSines extends Component<Props, State> {
             return new SineCurve({amplitude, frequency: frequencies[index]});
         });
 
-        const samples: TimeValue[][] = curves.map((curve: SineCurve) => curve.sample(0, tEnd, this.state.samplingRate));
+        const samples: TimeValue[][] = curves.map((curve: SineCurve) => curve.sample(0, tEnd, samplingRate));
         const combined: Sample = addSamples(...samples)
         return (
             <Topic>
@@ -133,8 +134,7 @@ class SoundsFromSines extends Component<Props, State> {
                     <Row>
                         <FrequencyDomainPlayer amplitudes={this.state.amplitudes} frequencies={frequencies} maxAmplitude={controlAmplitude}/>
                         <button onClick={() => this.onExample('clear') }>Clear</button>
-                        <button onClick={() => this.onZoom(-1) }>Zoom In</button>
-                        <button onClick={() => this.onZoom(1) }>Zoom Out</button>
+                        <ZoomControl current={this.state.zoomLevel} min={0} max={MAX_ZOOM_INDEX} onZoom={this.onZoom} />
                     </Row>
                     <FrequencyDomainControl
                         amplitudes={this.state.amplitudes}

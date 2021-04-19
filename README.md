@@ -6,18 +6,22 @@ https://dsp-playground.woundedpixels.com/
 
 ## TODAY
 * zoom timescale
-* clear all for plot / freq control 
+  * factor out a component X
+  * disable button when at edge X
+  * better cosmetics on button bar X
+* clear and zoom on many sines X
+  
 * normalize volume
 
-## Now
+## Next up
+* convolution!
 * fix spinners on sum of 2 - make them svg controls and size better
 * Sound effects with sines - closely spaced frequencies
-
-## Next up
 * analytics?
 * feedback from educator
 * feedback from visual peer
 * feedback from dsp sme
+* use iterators?
 
 ### Unit circle
 * center dot in circle?

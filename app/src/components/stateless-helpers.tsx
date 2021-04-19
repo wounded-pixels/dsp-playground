@@ -171,4 +171,26 @@ export class ScrollToTopOnMount extends React.Component {
   }
 }
 
+type ZoomControlProps = {
+    current: number;
+    min: number;
+    max: number;
+    onZoom: (increment: number) => void;
+};
+export const ZoomControl: FunctionComponent<ZoomControlProps> = ({current, min, max, onZoom}) => {
+    const zoomDivStyles: CSSProperties = {
+        margin: '0 10px',
+    };
+    const zoomButtonStyles: CSSProperties = {
+      margin: '0 2px',
+    };
+
+    return (
+        <div style={zoomDivStyles}>
+            <button style={zoomButtonStyles} disabled={current === min} onClick={() => onZoom(-1)}>Zoom In</button>
+            <button style={zoomButtonStyles} disabled={current === max} onClick={() => onZoom(1)}>Zoom Out</button>
+        </div>
+    );
+};
+
 
