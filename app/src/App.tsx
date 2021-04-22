@@ -12,6 +12,7 @@ import SimpleAddition from 'content/SimpleAddition';
 import './App.scss';
 import TopNav from 'components/TopNav';
 import {LabeledPath} from 'model/types';
+import ConvolutionSteps from './content/ConvolutionSteps/ConvolutionSteps';
 import Topics from 'content/Topics';
 import SumOfManySines from 'content/SumOfManySines';
 import UnitCircleAndCurves from 'content/UnitCircleAndCurves/UnitCircleAndCurves';
@@ -52,6 +53,9 @@ class App extends Component<Props, State> {
                         </Route>
                         <Route path="/sounds-from-sines">
                             <SoundsFromSines/>
+                        </Route>
+                        <Route path="/convolution=steps">
+                            <ConvolutionSteps/>
                         </Route>
                         <Route path="/about">
                             <About />

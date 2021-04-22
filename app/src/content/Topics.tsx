@@ -30,6 +30,11 @@ const Topics: FunctionComponent<Props> = () => {
             <Context>
                 We can make some fairly interesting sounds by combining sine waves
             </Context>
+            <h3><Link to="/convolution=steps">Convolution Steps</Link></h3>
+            <Context>
+                Convolution is not as complicated as it first appears. Ok, why it works is still magic to me but we can
+                definitely understand the mechanics!
+            </Context>
             <h3>Coming Soon</h3>
             <ul>
                 <li>Encoding information with Amplitude Modulation</li>

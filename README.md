@@ -3,18 +3,16 @@
 ## deployed at
 https://dsp-playground.woundedpixels.com/
 
-
 ## TODAY
-* zoom timescale
-  * factor out a component X
-  * disable button when at edge X
-  * better cosmetics on button bar X
-* clear and zoom on many sines X
-  
-* normalize volume
-
-## Next up
 * convolution!
+* steps  
+  * page and structure
+  * very simple kernels
+  * slide steps - is that enough or need animation for inner loop as well?
+  
+## Next up
+* add sound effects page
+  
 * fix spinners on sum of 2 - make them svg controls and size better
 * Sound effects with sines - closely spaced frequencies
 * analytics?

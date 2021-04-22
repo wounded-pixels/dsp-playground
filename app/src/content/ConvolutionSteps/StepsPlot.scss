@@ -1,0 +1,28 @@
+.StepsPlot {
+  path.grid-line {
+    stroke: grey;
+  }
+
+  path.diagonal {
+    stroke: grey;
+  }
+
+  path.current-diagonal {
+    stroke: blue;
+  }
+
+  circle.previous-signal-value {
+    stroke: grey;
+    fill: grey;
+  }
+
+  circle.current-signal-value {
+    stroke: blue;
+    fill: blue;
+  }
+
+  circle.future-signal-value {
+    stroke: black;
+    fill: none;
+  }
+}

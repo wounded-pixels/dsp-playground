@@ -53,4 +53,4 @@ class CurveControl extends Component<Props> {
     };
 }
 
-export default CurveControl
+export default CurveControl;

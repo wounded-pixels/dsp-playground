@@ -20,7 +20,7 @@ import {
     Topic,
     Visualization, ZoomControl
 } from 'components/stateless-helpers';
-import {clamp} from '../util/math-hacks';
+import {clamp} from 'util/math-hacks';
 
 type Props = {};
 
