@@ -5,14 +5,18 @@ https://dsp-playground.woundedpixels.com/
 
 ## TODAY
 * convolution!
-* steps  
-  * page and structure
-  * very simple kernels
-  * slide steps - is that enough or need animation for inner loop as well?
+  * better colors for ends of line and for sum
+  * better first sample
+  * spacing in summation
+  * sample kernels
+  * sample signals
+  * text 
   
 ## Next up
+* start with examples of convolution with sound?
 * add sound effects page
-  
+
+## Soon  
 * fix spinners on sum of 2 - make them svg controls and size better
 * Sound effects with sines - closely spaced frequencies
 * analytics?
@@ -22,8 +26,6 @@ https://dsp-playground.woundedpixels.com/
 * use iterators?
 
 ### Unit circle
-* center dot in circle?
-* lines should have an arrow marker?
 * switch deg or radians?
 
 ## Soon

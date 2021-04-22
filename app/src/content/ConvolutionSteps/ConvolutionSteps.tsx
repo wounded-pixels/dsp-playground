@@ -28,7 +28,7 @@ class ConvolutionSteps extends Component<Props, State> {
 
     incrementIndex = () => {
         const {iIndex, jIndex, kernelAmplitudes, signalAmplitudes} = this.state;
-        if (iIndex === signalAmplitudes.length - 1 && jIndex === kernelAmplitudes.length - 1) {
+        if (iIndex === signalAmplitudes.length + kernelAmplitudes.length - 2 && jIndex === kernelAmplitudes.length - 1) {
             this.setState({iIndex: 0, jIndex: 0});
         } else if (jIndex === kernelAmplitudes.length - 1) {
             this.setState({iIndex: iIndex + 1, jIndex: 0});
@@ -45,16 +45,27 @@ class ConvolutionSteps extends Component<Props, State> {
             const text = `(${signalAmplitudes[signalIndex]} x ${value})`;
             const symbol = index < jIndex ? ' + ' : ' = ';
             const spanColor = index === jIndex ? 'blue' : 'black';
-            return index <= jIndex && signalIndex >= 0 ? (
-                <span key={index}>
+
+            if (index > jIndex) {
+                return null;
+            }
+
+            if (signalIndex >= 0 && signalIndex < signalAmplitudes.length) {
+                return (
+                    <span key={index}>
                     <span style={{color: spanColor}}>{text}</span><span>{symbol}</span>
-                </span>
-            ) : null;
+                </span>);
+            }
+
+            return (
+                <span key={index}>
+                    <span style={{color: spanColor}}>0</span><span>{symbol}</span>
+                </span>);
         });
 
         const productSum = kernelAmplitudes.reduce((total, value, index) => {
             const signalIndex = iIndex - index;
-            return index <= jIndex && signalIndex >= 0 ?
+            return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ?
                 total + value * signalAmplitudes[signalIndex] :
                 total;
         }, 0);

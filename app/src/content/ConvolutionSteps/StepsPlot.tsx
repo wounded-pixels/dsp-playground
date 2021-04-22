@@ -25,7 +25,7 @@ const padding = {
 class StepsPlot extends Component<Props> {
     calculateSvgX(timeIndex: number): number {
         const {signalAmplitudes, kernelAmplitudes, width} = this.props;
-        const domainWidth = signalAmplitudes.length + kernelAmplitudes.length - 1;
+        const domainWidth = signalAmplitudes.length + kernelAmplitudes.length + 1;
         const adjustedSvgWidth = width - padding.left - padding.right;
         return padding.left + (timeIndex + kernelAmplitudes.length - 1) * adjustedSvgWidth / domainWidth;
     };
@@ -112,21 +112,20 @@ class StepsPlot extends Component<Props> {
         });
 
         const outputSignalCircles = outputSignalAmplitudes.map((value, index) => {
-            const inGoodPart = index >= kernelAmplitudes.length - 1 && index < signalAmplitudes.length;
             const className = (index < iIndex) ? 'previous-signal-value' : 'future-signal-value';
 
-            return inGoodPart ? (<circle
+            return (<circle
                 key={index}
                 className={className}
                 cx={this.calculateSvgX(index)}
                 cy={this.calculateSvgOutputSignalY(value)}
                 r={3}
-            />) : null;
+            />);
         });
 
         const productSum = kernelAmplitudes.reduce((total, value, index) => {
             const signalIndex = iIndex - index;
-            return index <= jIndex && signalIndex >= 0 ?
+            return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ?
                 total + value * signalAmplitudes[signalIndex] :
                 total;
         }, 0);
@@ -143,7 +142,7 @@ class StepsPlot extends Component<Props> {
         const diagonalLines = kernelAmplitudes.map((value, index) => {
             const signalIndex = iIndex - index;
             const className = jIndex === index ? 'current-diagonal' : 'diagonal';
-            return index <= jIndex && signalIndex >= 0 ? (
+            return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ? (
                 <path
                     key={index}
                     className={className}
