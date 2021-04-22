@@ -61,7 +61,10 @@ export const Context: FunctionComponent<ContextProps> = ({children}) => {
     );
 };
 
-type TopicProps = {};
+type TopicProps = {
+    className?: string;
+};
+
 const topicStyles: CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -70,9 +73,9 @@ const topicStyles: CSSProperties = {
     textAlign: 'left',
     width: '85%',
 };
-export const Topic: FunctionComponent<TopicProps> = ({children}) => {
+export const Topic: FunctionComponent<TopicProps> = ({className, children}) => {
     return (
-      <div style={topicStyles}>
+      <div className={className} style={topicStyles}>
           {children}
       </div>
     );

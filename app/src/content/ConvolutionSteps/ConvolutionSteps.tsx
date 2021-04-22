@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './ConvolutionSteps.scss';
+
 import {
     Context,
     Row,
@@ -42,9 +44,11 @@ class ConvolutionSteps extends Component<Props, State> {
 
         const productSpans = kernelAmplitudes.map((value, index) => {
             const signalIndex = iIndex - index;
-            const text = `(${signalAmplitudes[signalIndex]} x ${value})`;
+            const signalText = ''+signalAmplitudes[signalIndex];
+            const kernelText = ''+value;
             const symbol = index < jIndex ? ' + ' : ' = ';
-            const spanColor = index === jIndex ? 'blue' : 'black';
+            const signalSpanClass = index === jIndex ? 'current-signal-span' : 'signal-span';
+            const kernelSpanClass = index === jIndex ? 'current-kernel-span' : 'kernel-span';
 
             if (index > jIndex) {
                 return null;
@@ -52,14 +56,19 @@ class ConvolutionSteps extends Component<Props, State> {
 
             if (signalIndex >= 0 && signalIndex < signalAmplitudes.length) {
                 return (
-                    <span key={index}>
-                    <span style={{color: spanColor}}>{text}</span><span>{symbol}</span>
+                <span key={index}>
+                    <span>(</span>
+                    <span className={signalSpanClass}>{signalText}</span>
+                    <span>x</span>
+                    <span className={kernelSpanClass}>{kernelText}</span>
+                    <span>)</span>
+                    <span>{symbol}</span>
                 </span>);
             }
 
             return (
                 <span key={index}>
-                    <span style={{color: spanColor}}>0</span><span>{symbol}</span>
+                    <span className={signalSpanClass}>0</span><span>{symbol}</span>
                 </span>);
         });
 
@@ -71,7 +80,7 @@ class ConvolutionSteps extends Component<Props, State> {
         }, 0);
 
         return (
-            <Topic>
+            <Topic className="ConvolutionSteps">
                 <ScrollToTopOnMount />
                 <h2>Convolution Steps</h2>
                 <Context>
@@ -95,7 +104,7 @@ class ConvolutionSteps extends Component<Props, State> {
                 <Row>
                     <button onClick={this.incrementIndex}>Next</button>
                     &nbsp;
-                    {productSpans}{productSum}
+                    {productSpans}<span className="product-sum">{productSum}</span>
                 </Row>
             </Topic>
         );

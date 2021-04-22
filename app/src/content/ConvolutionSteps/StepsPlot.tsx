@@ -22,6 +22,8 @@ const padding = {
     left: 25,
 };
 
+const circleSize = 4;
+
 class StepsPlot extends Component<Props> {
     calculateSvgX(timeIndex: number): number {
         const {signalAmplitudes, kernelAmplitudes, width} = this.props;
@@ -92,34 +94,41 @@ class StepsPlot extends Component<Props> {
         });
 
         const signalCircles = signalAmplitudes.map((value, index) => {
+            let className = 'unused-signal-value';
+            if (index === (iIndex - jIndex)) {
+                className = 'current-signal-value' ;
+            } else if (index > (iIndex - kernelAmplitudes.length) && index <= iIndex) {
+                className = 'signal-value';
+            }
             return (<circle
                 key={index}
-                className="signal-value"
+                className={className}
                 cx={this.calculateSvgX(index)}
                 cy={this.calculateSvgSignalY(value)}
-                r={3}
+                r={circleSize}
             />);
         });
 
         const kernelCircles = kernelAmplitudes.map((value, index) => {
+            const className = index === jIndex ? 'current-kernel-value' : 'kernel-value';
             return (<circle
                 key={index}
-                className="signal-value"
+                className={className}
                 cx={this.calculateSvgX(iIndex - kernelAmplitudes.length +1 + index)}
                 cy={this.calculateSvgKernelY(value)}
-                r={3}
+                r={circleSize}
             />);
         });
 
         const outputSignalCircles = outputSignalAmplitudes.map((value, index) => {
-            const className = (index < iIndex) ? 'previous-signal-value' : 'future-signal-value';
+            const className = (index < iIndex) ? 'previous-out-signal-value' : 'future-out-signal-value';
 
             return (<circle
                 key={index}
                 className={className}
                 cx={this.calculateSvgX(index)}
                 cy={this.calculateSvgOutputSignalY(value)}
-                r={3}
+                r={circleSize}
             />);
         });
 
@@ -132,10 +141,10 @@ class StepsPlot extends Component<Props> {
 
         const currentOutputSignalCircle = (
             <circle
-                className="current-signal-value"
+                className="current-out-signal-value"
                 cx={this.calculateSvgX(iIndex)}
                 cy={this.calculateSvgOutputSignalY(productSum)}
-                r={3}
+                r={circleSize}
             />
         );
 
@@ -162,11 +171,11 @@ class StepsPlot extends Component<Props> {
                     {horizontalSignalGridLines}
                     {horizontalKernelGridLines}
                     {horizontalOutputSignalGridLines}
+                    {diagonalLines}
                     {signalCircles}
                     {kernelCircles}
                     {outputSignalCircles}
                     {currentOutputSignalCircle}
-                    {diagonalLines}
                 </svg>
             </div>
         );

@@ -1,0 +1,20 @@
+.ConvolutionSteps {
+  span {
+    margin: 0 5px;
+  }
+
+  span.current-signal-span {
+    color: blue;
+    font-weight: bold;
+  }
+
+  span.current-kernel-span {
+    color: green;
+    font-weight: bold;
+  }
+
+  span.product-sum {
+    color: orange;
+    font-weight: bold;
+  }
+}

@@ -8,12 +8,8 @@
   }
 
   path.current-diagonal {
-    stroke: blue;
-  }
-
-  circle.previous-signal-value {
-    stroke: grey;
-    fill: grey;
+    stroke: black;
+    stroke-width: 2;
   }
 
   circle.current-signal-value {
@@ -21,7 +17,32 @@
     fill: blue;
   }
 
-  circle.future-signal-value {
+  circle.signal-value {
+    stroke: black;
+    fill: black;
+  }
+
+  circle.unused-signal-value {
+    stroke: none;
+    fill:grey;
+  }
+
+  circle.current-kernel-value {
+    stroke: green;
+    fill: green;
+  }
+
+  circle.previous-out-signal-value {
+    stroke: grey;
+    fill: grey;
+  }
+
+  circle.current-out-signal-value {
+    stroke: none;
+    fill: orange;
+  }
+
+  circle.future-out-signal-value {
     stroke: black;
     fill: none;
   }
