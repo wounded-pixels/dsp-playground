@@ -16,6 +16,11 @@
     alignment-baseline: middle;
     text-anchor: end;
   }
+  rect.plus-sign-background {
+    stroke: orange;
+    stroke-width: 1;
+    fill: white;
+  }
 
   line.plus-sign {
     stroke: orange;

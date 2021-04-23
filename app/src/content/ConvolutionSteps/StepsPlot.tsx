@@ -217,14 +217,35 @@ class StepsPlot extends Component<Props> {
             ) : null;
         });
 
+        const linesToPlus = kernelAmplitudes.map((value, index) => {
+            const signalIndex = iIndex - index;
+            const className = jIndex === index ? 'current-diagonal' : 'diagonal';
+            return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ? (
+                <path
+                    key={index}
+                    className={className}
+                    d={`M ${this.calculateSvgX(iIndex - kernelAmplitudes.length + 1 + index)} ${this.calculateSvgKernelY(value)}
+                        L ${this.calculateSvgX(iIndex)} ${this.calculateSvgKernelY(-10)}`
+                    } />
+            ) : null;
+        });
+
         const plusRadius = 6;
+        const plusBackgroundRadius = plusRadius + 4;
+        const plusCenterX = this.calculateSvgX(iIndex);
+        const plusCenterY = this.calculateSvgKernelY(-10);
         const plusSign = (
             <Fragment>
+                <rect className="plus-sign-background"
+                      x={plusCenterX - plusBackgroundRadius}
+                      y={plusCenterY - plusBackgroundRadius}
+                      width={2*plusBackgroundRadius}
+                      height={2*plusBackgroundRadius}/>
                 <line className="plus-sign"
-                      x1={this.calculateSvgX(iIndex) - plusRadius}
-                      y1={this.calculateSvgKernelY(-10)}
-                      x2={this.calculateSvgX(iIndex) + plusRadius}
-                      y2={this.calculateSvgKernelY(-10)}/>
+                      x1={plusCenterX - plusRadius}
+                      y1={plusCenterY}
+                      x2={plusCenterX + plusRadius}
+                      y2={plusCenterY}/>
                 <line className="plus-sign"
                       x1={this.calculateSvgX(iIndex)}
                       y1={this.calculateSvgKernelY(-10) - plusRadius}
@@ -251,6 +272,7 @@ class StepsPlot extends Component<Props> {
                     {horizontalKernelGridLines}
                     {horizontalOutputSignalGridLines}
                     {diagonalLines}
+                    {linesToPlus}
                     {plusSign}
                     {signalCircles}
                     {kernelCircles}
