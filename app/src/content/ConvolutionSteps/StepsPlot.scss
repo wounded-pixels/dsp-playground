@@ -7,7 +7,7 @@
     stroke: grey;
   }
 
-  path.current-diagonal {
+  path.current-diagonal, line.current-diagonal {
     stroke: black;
     stroke-width: 2;
   }
@@ -64,7 +64,7 @@
   }
 
   circle.current-out-signal-value {
-    stroke: none;
+    stroke: orange;
     fill: orange;
   }
 

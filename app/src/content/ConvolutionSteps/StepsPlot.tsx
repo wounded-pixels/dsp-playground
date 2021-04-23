@@ -22,7 +22,7 @@ const padding = {
     left: 65,
 };
 
-const circleSize = 4;
+const circleSize = 5;
 
 class StepsPlot extends Component<Props> {
     calculateSvgX(timeIndex: number): number {
@@ -279,7 +279,13 @@ class StepsPlot extends Component<Props> {
             </Fragment>
         );
 
-
+        const lineToProductSum = (
+            <line className="current-diagonal"
+                  x1={plusCenterX}
+                  y1={plusCenterY}
+                  x2={plusCenterX}
+                  y2={this.calculateSvgOutputSignalY(productSum)} />
+        );
 
         return (
             <div className="StepsPlot" style={{width: `${width}px`, height: `${height}px`}}>
@@ -297,13 +303,14 @@ class StepsPlot extends Component<Props> {
                     {horizontalKernelGridLines}
                     {horizontalOutputSignalGridLines}
                     {diagonalLines}
-                    {multiplicationSign}
                     {linesToPlus}
+                    {lineToProductSum}
+                    {multiplicationSign}
                     {plusSign}
                     {signalCircles}
                     {kernelCircles}
-                    {outputSignalCircles}
                     {currentOutputSignalCircle}
+                    {outputSignalCircles}
                 </svg>
             </div>
         );

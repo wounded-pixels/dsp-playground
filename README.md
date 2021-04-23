@@ -13,7 +13,8 @@ https://dsp-playground.woundedpixels.com/
   * explanation text 
   * labels for signal, kernel, output signal X
   * y axis labels X
-  * some sort of funnel line from kernel to output signal
+  * some sort of funnel line from kernel to output signal X
+  * initial step with no lines
   
 ## Next up
 * start with examples of convolution with sound?
