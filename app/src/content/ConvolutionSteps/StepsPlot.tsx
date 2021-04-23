@@ -17,9 +17,9 @@ type Props = {
 
 const padding = {
     top: 5,
-    right: 25,
+    right: 5,
     bottom: 40,
-    left: 25,
+    left: 65,
 };
 
 const circleSize = 4;
@@ -59,6 +59,62 @@ class StepsPlot extends Component<Props> {
         const viewBox = `0 0 ${width} ${height}`;
 
         const yTickValues = calculateDefaultTicks(-plotAmplitude, plotAmplitude);
+
+        const labelOffset = 0;
+        const axisLabelOffset = -8;
+
+        const signalLabel = (
+            <text className="section-label" x={labelOffset} y={this.calculateSvgSignalY(0)}>
+               Signal
+            </text>
+        );
+
+        const kernelLabel = (
+            <text className="section-label" x={labelOffset} y={this.calculateSvgKernelY(0)}>
+                Kernel
+            </text>
+        );
+
+        const outputSignalLabel = (
+            <text className="section-label" x={labelOffset} y={this.calculateSvgOutputSignalY(0)}>
+                Output Signal
+            </text>
+        );
+
+        const signalAxisLabels = yTickValues.map((yValue: number, index: number) => {
+            return (
+                <text
+                    key={index}
+                    className="axis-label"
+                    x={this.calculateSvgX(0) + axisLabelOffset}
+                    y={this.calculateSvgSignalY(yValue)}>
+                    {yValue}
+                </text>
+            );
+        });
+
+        const kernelAxisLabels = yTickValues.map((yValue: number, index: number) => {
+            return (
+                <text
+                    key={index}
+                    className="axis-label"
+                    x={this.calculateSvgX(iIndex-kernelAmplitudes.length+1) + axisLabelOffset}
+                    y={this.calculateSvgKernelY(yValue)}>
+                    {yValue}
+                </text>
+            );
+        });
+        const outputSignalAxisLabels = yTickValues.map((yValue: number, index: number) => {
+            return (
+                <text
+                    key={index}
+                    className="axis-label"
+                    x={this.calculateSvgX(0) + axisLabelOffset}
+                    y={this.calculateSvgOutputSignalY(yValue)}>
+                {yValue}
+                </text>
+            );
+        });
 
         const horizontalSignalGridLines = yTickValues.map((yValue: number, index: number) => {
             return (
@@ -168,6 +224,12 @@ class StepsPlot extends Component<Props> {
                     style={{width: `${width}px`, height: `${height}px`}}
                     viewBox={viewBox}
                 >
+                    {signalLabel}
+                    {kernelLabel}
+                    {outputSignalLabel}
+                    {signalAxisLabels}
+                    {kernelAxisLabels}
+                    {outputSignalAxisLabels}
                     {horizontalSignalGridLines}
                     {horizontalKernelGridLines}
                     {horizontalOutputSignalGridLines}

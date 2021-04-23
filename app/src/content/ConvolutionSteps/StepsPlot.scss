@@ -12,6 +12,11 @@
     stroke-width: 2;
   }
 
+  text.axis-label {
+    alignment-baseline: middle;
+    text-anchor: end;
+  }
+
   circle.current-signal-value {
     stroke: blue;
     fill: blue;

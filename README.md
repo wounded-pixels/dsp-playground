@@ -11,8 +11,8 @@ https://dsp-playground.woundedpixels.com/
   * sample kernels with links
   * sample signals with links
   * explanation text 
-  * labels for signal, kernel, output signal
-  * y axis labels
+  * labels for signal, kernel, output signal X
+  * y axis labels X
   * some sort of funnel line from kernel to output signal
   
 ## Next up
