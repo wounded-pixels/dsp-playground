@@ -217,6 +217,31 @@ class StepsPlot extends Component<Props> {
             ) : null;
         });
 
+        const crossRadius = 4;
+        const crossBackgroundRadius = crossRadius + 5;
+
+        const crossCenterX = (this.calculateSvgX(iIndex - jIndex) + this.calculateSvgX(iIndex - kernelAmplitudes.length + 1 + jIndex)) / 2;
+        const crossCenterY = (this.calculateSvgSignalY(signalAmplitudes[iIndex - jIndex]) + this.calculateSvgKernelY(kernelAmplitudes[jIndex])) / 2;
+        const multiplicationSign = iIndex - jIndex >= 0 && iIndex - jIndex < signalAmplitudes.length ? (
+            <Fragment>
+                <rect className="multiplication-sign-background"
+                      x={crossCenterX - crossBackgroundRadius}
+                      y={crossCenterY - crossBackgroundRadius}
+                      width={2*crossBackgroundRadius}
+                      height={2*crossBackgroundRadius}/>
+                <line className="multiplication-sign"
+                      x1={crossCenterX - crossRadius}
+                      y1={crossCenterY - crossRadius}
+                      x2={crossCenterX + crossRadius}
+                      y2={crossCenterY + crossRadius}/>
+                <line className="multiplication-sign"
+                      x1={crossCenterX - crossRadius}
+                      y1={crossCenterY + crossRadius}
+                      x2={crossCenterX + crossRadius}
+                      y2={crossCenterY - crossRadius}/>
+            </Fragment>
+        ) : null;
+
         const linesToPlus = kernelAmplitudes.map((value, index) => {
             const signalIndex = iIndex - index;
             const className = jIndex === index ? 'current-diagonal' : 'diagonal';
@@ -230,7 +255,7 @@ class StepsPlot extends Component<Props> {
             ) : null;
         });
 
-        const plusRadius = 6;
+        const plusRadius = 5;
         const plusBackgroundRadius = plusRadius + 4;
         const plusCenterX = this.calculateSvgX(iIndex);
         const plusCenterY = this.calculateSvgKernelY(-10);
@@ -247,10 +272,10 @@ class StepsPlot extends Component<Props> {
                       x2={plusCenterX + plusRadius}
                       y2={plusCenterY}/>
                 <line className="plus-sign"
-                      x1={this.calculateSvgX(iIndex)}
-                      y1={this.calculateSvgKernelY(-10) - plusRadius}
-                      x2={this.calculateSvgX(iIndex)}
-                      y2={this.calculateSvgKernelY(-10) + plusRadius}/>
+                      x1={plusCenterX}
+                      y1={plusCenterY - plusRadius}
+                      x2={plusCenterX}
+                      y2={plusCenterY + plusRadius}/>
             </Fragment>
         );
 
@@ -272,6 +297,7 @@ class StepsPlot extends Component<Props> {
                     {horizontalKernelGridLines}
                     {horizontalOutputSignalGridLines}
                     {diagonalLines}
+                    {multiplicationSign}
                     {linesToPlus}
                     {plusSign}
                     {signalCircles}

@@ -16,14 +16,25 @@
     alignment-baseline: middle;
     text-anchor: end;
   }
+
+  line.multiplication-sign {
+    stroke: black;
+    stroke-width: 3;
+  }
+
   rect.plus-sign-background {
-    stroke: orange;
+    stroke: black;
+    stroke-width: 1;
+    fill: white;
+  }
+  rect.multiplication-sign-background {
+    stroke: black;
     stroke-width: 1;
     fill: white;
   }
 
   line.plus-sign {
-    stroke: orange;
+    stroke: black;
     stroke-width: 3;
   }
 
