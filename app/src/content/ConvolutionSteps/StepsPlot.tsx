@@ -56,6 +56,7 @@ class StepsPlot extends Component<Props> {
         const {width, height, iIndex, jIndex, plotAmplitude, kernelAmplitudes, signalAmplitudes} = this.props;
 
         const outputSignalAmplitudes = convolve(signalAmplitudes, kernelAmplitudes);
+
         const viewBox = `0 0 ${width} ${height}`;
 
         const yTickValues = calculateDefaultTicks(-plotAmplitude, plotAmplitude);
@@ -149,9 +150,23 @@ class StepsPlot extends Component<Props> {
             );
         });
 
+        const diagonalLines = kernelAmplitudes.map((value, index) => {
+            const signalIndex = iIndex - index;
+            const className = jIndex === index ? 'current-diagonal' : 'diagonal';
+            return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ? (
+                <path
+                    key={index}
+                    className={className}
+                    d={`M ${this.calculateSvgX(signalIndex)} ${this.calculateSvgSignalY(signalAmplitudes[signalIndex])}
+                        L ${this.calculateSvgX(iIndex - kernelAmplitudes.length + 1 + index)} ${this.calculateSvgKernelY(value)}`
+                    } />
+            ) : null;
+        }).filter(line => line !== null);
+
+        const showDecorations = jIndex >= 0 && diagonalLines.length > 0;
         const signalCircles = signalAmplitudes.map((value, index) => {
             let className = 'unused-signal-value';
-            if (index === (iIndex - jIndex)) {
+            if (showDecorations && index === (iIndex - jIndex)) {
                 className = 'current-signal-value' ;
             } else if (index > (iIndex - kernelAmplitudes.length) && index <= iIndex) {
                 className = 'signal-value';
@@ -195,34 +210,22 @@ class StepsPlot extends Component<Props> {
                 total;
         }, 0);
 
-        const currentOutputSignalCircle = (
+        const currentOutputSignalCircle = showDecorations ? (
             <circle
                 className="current-out-signal-value"
                 cx={this.calculateSvgX(iIndex)}
                 cy={this.calculateSvgOutputSignalY(productSum)}
                 r={circleSize}
             />
-        );
+        ) : null;
 
-        const diagonalLines = kernelAmplitudes.map((value, index) => {
-            const signalIndex = iIndex - index;
-            const className = jIndex === index ? 'current-diagonal' : 'diagonal';
-            return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ? (
-                <path
-                    key={index}
-                    className={className}
-                    d={`M ${this.calculateSvgX(signalIndex)} ${this.calculateSvgSignalY(signalAmplitudes[signalIndex])}
-                        L ${this.calculateSvgX(iIndex - kernelAmplitudes.length + 1 + index)} ${this.calculateSvgKernelY(value)}`
-                    } />
-            ) : null;
-        });
 
         const crossRadius = 4;
         const crossBackgroundRadius = crossRadius + 5;
 
         const crossCenterX = (this.calculateSvgX(iIndex - jIndex) + this.calculateSvgX(iIndex - kernelAmplitudes.length + 1 + jIndex)) / 2;
         const crossCenterY = (this.calculateSvgSignalY(signalAmplitudes[iIndex - jIndex]) + this.calculateSvgKernelY(kernelAmplitudes[jIndex])) / 2;
-        const multiplicationSign = iIndex - jIndex >= 0 && iIndex - jIndex < signalAmplitudes.length ? (
+        const multiplicationSign = showDecorations && iIndex - jIndex >= 0 && iIndex - jIndex < signalAmplitudes.length ? (
             <Fragment>
                 <rect className="multiplication-sign-background"
                       x={crossCenterX - crossBackgroundRadius}
@@ -259,7 +262,7 @@ class StepsPlot extends Component<Props> {
         const plusBackgroundRadius = plusRadius + 4;
         const plusCenterX = this.calculateSvgX(iIndex);
         const plusCenterY = this.calculateSvgKernelY(-10);
-        const plusSign = (
+        const plusSign = showDecorations ? (
             <Fragment>
                 <rect className="plus-sign-background"
                       x={plusCenterX - plusBackgroundRadius}
@@ -277,15 +280,15 @@ class StepsPlot extends Component<Props> {
                       x2={plusCenterX}
                       y2={plusCenterY + plusRadius}/>
             </Fragment>
-        );
+        ) : null;
 
-        const lineToProductSum = (
+        const lineToProductSum = showDecorations ? (
             <line className="current-diagonal"
                   x1={plusCenterX}
                   y1={plusCenterY}
                   x2={plusCenterX}
                   y2={this.calculateSvgOutputSignalY(productSum)} />
-        );
+        ) : null;
 
         return (
             <div className="StepsPlot" style={{width: `${width}px`, height: `${height}px`}}>

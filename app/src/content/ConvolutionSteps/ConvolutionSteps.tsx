@@ -25,15 +25,15 @@ class ConvolutionSteps extends Component<Props, State> {
         signalAmplitudes: [1, 2,2, 1,1, 2,3,3,2,1,1, 3, 4,4, 5,6,6],
         kernelAmplitudes: [-1, 0.5, 0.5],
         iIndex: 5,
-        jIndex: 0,
+        jIndex: -1,
     };
 
     incrementIndex = () => {
         const {iIndex, jIndex, kernelAmplitudes, signalAmplitudes} = this.state;
         if (iIndex === signalAmplitudes.length + kernelAmplitudes.length - 2 && jIndex === kernelAmplitudes.length - 1) {
-            this.setState({iIndex: 0, jIndex: 0});
+            this.setState({iIndex: 0, jIndex: -1});
         } else if (jIndex === kernelAmplitudes.length - 1) {
-            this.setState({iIndex: iIndex + 1, jIndex: 0});
+            this.setState({iIndex: iIndex + 1, jIndex: -1});
         } else {
             this.setState({jIndex: jIndex + 1 })
         }
@@ -41,6 +41,8 @@ class ConvolutionSteps extends Component<Props, State> {
 
     render(): JSX.Element {
         const {signalAmplitudes, kernelAmplitudes, iIndex, jIndex} = this.state;
+
+        const showDecorations = jIndex >= 0 && iIndex - jIndex >= 0 && iIndex - jIndex < signalAmplitudes.length
 
         const productSpans = kernelAmplitudes.map((value, index) => {
             const signalIndex = iIndex - index;
@@ -80,6 +82,9 @@ class ConvolutionSteps extends Component<Props, State> {
         }, 0);
 
         const productSum = Math.round(rawProductSum * 100) / 100;
+        const resultSummary = showDecorations ?
+            (<div> {productSpans}<span className="product-sum">{productSum}</span></div>) :
+            null;
 
         return (
             <Topic className="ConvolutionSteps">
@@ -106,7 +111,7 @@ class ConvolutionSteps extends Component<Props, State> {
                 <Row>
                     <button onClick={this.incrementIndex}>Next</button>
                     &nbsp;
-                    {productSpans}<span className="product-sum">{productSum}</span>
+                    {resultSummary}
                 </Row>
             </Topic>
         );
