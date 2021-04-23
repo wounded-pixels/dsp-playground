@@ -17,6 +17,11 @@
     text-anchor: end;
   }
 
+  line.plus-sign {
+    stroke: orange;
+    stroke-width: 3;
+  }
+
   circle.current-signal-value {
     stroke: blue;
     fill: blue;

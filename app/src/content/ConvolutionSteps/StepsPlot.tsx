@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 
 import './StepsPlot.scss';
 
@@ -217,6 +217,23 @@ class StepsPlot extends Component<Props> {
             ) : null;
         });
 
+        const plusRadius = 6;
+        const plusSign = (
+            <Fragment>
+                <line className="plus-sign"
+                      x1={this.calculateSvgX(iIndex) - plusRadius}
+                      y1={this.calculateSvgKernelY(-10)}
+                      x2={this.calculateSvgX(iIndex) + plusRadius}
+                      y2={this.calculateSvgKernelY(-10)}/>
+                <line className="plus-sign"
+                      x1={this.calculateSvgX(iIndex)}
+                      y1={this.calculateSvgKernelY(-10) - plusRadius}
+                      x2={this.calculateSvgX(iIndex)}
+                      y2={this.calculateSvgKernelY(-10) + plusRadius}/>
+            </Fragment>
+        );
+
+
 
         return (
             <div className="StepsPlot" style={{width: `${width}px`, height: `${height}px`}}>
@@ -234,6 +251,7 @@ class StepsPlot extends Component<Props> {
                     {horizontalKernelGridLines}
                     {horizontalOutputSignalGridLines}
                     {diagonalLines}
+                    {plusSign}
                     {signalCircles}
                     {kernelCircles}
                     {outputSignalCircles}
