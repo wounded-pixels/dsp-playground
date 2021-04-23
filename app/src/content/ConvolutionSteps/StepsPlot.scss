@@ -29,7 +29,7 @@
 
   circle.unused-signal-value {
     stroke: none;
-    fill:grey;
+    fill:#c3c3c3;
   }
 
   circle.current-kernel-value {
@@ -38,8 +38,8 @@
   }
 
   circle.previous-out-signal-value {
-    stroke: grey;
-    fill: grey;
+    stroke: none;
+    fill: #c3c3c3;
   }
 
   circle.current-out-signal-value {

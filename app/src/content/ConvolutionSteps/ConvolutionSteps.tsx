@@ -22,9 +22,9 @@ type State = {
 
 class ConvolutionSteps extends Component<Props, State> {
     state = {
-        signalAmplitudes: [0,1,1,0,-1,-1,0,2,2,1],
-        kernelAmplitudes: [-2,-1,1,2],
-        iIndex: 3,
+        signalAmplitudes: [1, 2,2, 1,1, 2,3,3,2,1,1, 3, 4,4, 5,6,6],
+        kernelAmplitudes: [-1, 0.5, 0.5],
+        iIndex: 5,
         jIndex: 0,
     };
 
@@ -72,12 +72,14 @@ class ConvolutionSteps extends Component<Props, State> {
                 </span>);
         });
 
-        const productSum = kernelAmplitudes.reduce((total, value, index) => {
+        const rawProductSum = kernelAmplitudes.reduce((total, value, index) => {
             const signalIndex = iIndex - index;
             return index <= jIndex && signalIndex >= 0 && signalIndex < signalAmplitudes.length ?
                 total + value * signalAmplitudes[signalIndex] :
                 total;
         }, 0);
+
+        const productSum = Math.round(rawProductSum * 100) / 100;
 
         return (
             <Topic className="ConvolutionSteps">
