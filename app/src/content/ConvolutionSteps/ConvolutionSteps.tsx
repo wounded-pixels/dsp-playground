@@ -39,9 +39,51 @@ class ConvolutionSteps extends Component<Props, State> {
         }
     };
 
+    buildCommentary(): string {
+        const {iIndex, jIndex, kernelAmplitudes, signalAmplitudes} = this.state;
+        const signalIndex = iIndex - jIndex;
+
+
+        if (jIndex === -1) {
+            return `The grey dots in the output signal represent the values that have already been calculated. The empty
+            dot represents the value that is about to be calculated. Each dark black value in the signal will be
+            multiplied with one of the kernel values to contribute to the output value.`;
+        }
+
+        if (signalIndex >= signalAmplitudes.length) {
+            return `Things get a little odd as the kernel slides past the edge of the input signal. If there is no
+            corresponding input value for a kernel value then it is assumed to be zero.`
+        }
+
+        if (signalIndex < 0) {
+            return `Things get a little odd as the kernel slides up to the edge of the input signal. If there is no
+            corresponding input value for a kernel value then it is assumed to be zero.`
+        }
+
+        const signalValue = signalAmplitudes[signalIndex];
+        const kernelValue = kernelAmplitudes[jIndex];
+        if (jIndex === 0) {
+           return `Each value in the kernel is associated with the opposite value in the input signal in a 
+           criss cross pattern. In this step the blue ${signalValue} from the input signal is multiplied by the
+           green ${kernelValue} from the kernel to contribute ${signalValue*kernelValue} to the output signal.`
+        }
+
+        if (jIndex === 1) {
+            return `The running total is shown in orange in the output signal.`;
+        }
+
+        if (iIndex) {
+
+        }
+
+        return `Once you get past the odd criss cross pattern it is just repetitive multiplication and addition. But if
+        a computer does it fast enough you can get some amazing results.`;
+    }
+
     render(): JSX.Element {
         const {signalAmplitudes, kernelAmplitudes, iIndex, jIndex} = this.state;
 
+        const commentary = this.buildCommentary();
         const showDecorations = jIndex >= 0 && iIndex - jIndex >= 0 && iIndex - jIndex < signalAmplitudes.length
 
         const productSpans = kernelAmplitudes.map((value, index) => {
@@ -95,8 +137,11 @@ class ConvolutionSteps extends Component<Props, State> {
                     In our case both signals are represented by discrete points rather than smooth or continuous curves.
 
                     The signal that we are trying to modify is combined with a carefully selected smaller signal called
-                    a kernel. Each element of the output signal is calculated by applying the kernel values to the nearby
-                    values of the input signal.
+                    a kernel. Each element of the output signal is calculated by applying the kernel values to a block
+                    of points in the signal that is the same size as the kernel. The kernel is slid along the input signal
+                    until all the values of the output signal have been calculated.
+
+                    Use the 'Next' button below to see the sequence of steps that calculate each point in the output signal.
                 </Context>
                 <Visualization>
                     <StepsPlot width={700}
@@ -107,11 +152,13 @@ class ConvolutionSteps extends Component<Props, State> {
                                iIndex={iIndex}
                                jIndex={jIndex} />
                 </Visualization>
-
                 <Row>
                     <button onClick={this.incrementIndex}>Next</button>
                     &nbsp;
                     {resultSummary}
+                </Row>
+                <Row>
+                    {commentary}
                 </Row>
             </Topic>
         );

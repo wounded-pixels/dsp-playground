@@ -10,11 +10,11 @@ https://dsp-playground.woundedpixels.com/
   * spacing in summation X
   * sample kernels with links
   * sample signals with links
-  * explanation text 
+  * explanation text X
   * labels for signal, kernel, output signal X
   * y axis labels X
   * some sort of funnel line from kernel to output signal X
-  * initial step with no lines
+  * initial step with no lines X
   
 ## Next up
 * start with examples of convolution with sound?
