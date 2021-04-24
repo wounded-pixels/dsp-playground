@@ -17,9 +17,9 @@ type Props = {
 
 const padding = {
     top: 5,
-    right: 5,
+    right: 0,
     bottom: 40,
-    left: 65,
+    left: 70,
 };
 
 const circleSize = 5;

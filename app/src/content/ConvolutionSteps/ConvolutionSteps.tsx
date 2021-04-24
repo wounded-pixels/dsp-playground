@@ -5,6 +5,7 @@ import './ConvolutionSteps.scss';
 import {
     Context,
     Row,
+    ScenarioLink,
     ScrollToTopOnMount,
     Topic,
     Visualization,
@@ -20,13 +21,35 @@ type State = {
     jIndex: number;
 };
 
+const sampleKernel = [-1, 1, 1];
+const flipKernel = [-1];
+const derivativeKernel = [1, -1];
+const delayKernel = [0, 0, 0, 1];
+
+const exampleKernels: { [index: string] : number[]} = {
+    sampleKernel,
+    flipKernel,
+    derivativeKernel,
+    delayKernel,
+};
+
 class ConvolutionSteps extends Component<Props, State> {
     state = {
-        signalAmplitudes: [1, 2,2, 1,1, 2,3,3,2,1,1, 3, 4,4, 5,6,6],
-        kernelAmplitudes: [-1, 0.5, 0.5],
+        signalAmplitudes: [-2, -1, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, -1, -2, -3, -3, -3],
+        kernelAmplitudes: sampleKernel,
         iIndex: 5,
         jIndex: -1,
     };
+
+    onSelectKernel = (rawKey: string) => {
+        const key = rawKey + 'Kernel';
+        if (exampleKernels[key]) {
+            const iIndex = this.state.signalAmplitudes.length - 1;
+            this.setState({iIndex: iIndex, jIndex: -1, kernelAmplitudes: exampleKernels[key]});
+        } else {
+            this.setState({iIndex: 5, jIndex: -1, kernelAmplitudes: sampleKernel});
+        }
+    }
 
     incrementIndex = () => {
         const {iIndex, jIndex, kernelAmplitudes, signalAmplitudes} = this.state;
@@ -135,10 +158,10 @@ class ConvolutionSteps extends Component<Props, State> {
                 <Context>
                     Convolution is a powerful way to alter or filter a signal by combining it with another signal.
                     In our case both signals are represented by discrete points rather than smooth or continuous curves.
-
+                    <p/>
                     The signal that we are trying to modify is combined with a carefully selected smaller signal called
                     a kernel. Each element of the output signal is calculated by applying the kernel values to a block
-                    of points in the signal that is the same size as the kernel. The kernel is slid along the input signal
+                    of points in the signal that is the same size as the kernel. The kernel slides along the input signal
                     until all the values of the output signal have been calculated.
 
                     Use the 'Next' button below to see the sequence of steps that calculate each point in the output signal.
@@ -160,6 +183,15 @@ class ConvolutionSteps extends Component<Props, State> {
                 <Row>
                     {commentary}
                 </Row>
+                <Context>
+                    <h3>More Kernels</h3>
+                   The initial<ScenarioLink index="sample" onClick={this.onSelectKernel}>sample kernel</ScenarioLink>
+                    is devised to make the math easy to follow. More interesting kernels include
+                    <ScenarioLink index="flip" onClick={this.onSelectKernel}>flipping</ScenarioLink>
+                    the signal, <ScenarioLink index="delay" onClick={this.onSelectKernel}>delaying</ScenarioLink> the signal and
+                    <ScenarioLink index="derivative" onClick={this.onSelectKernel}>taking the derivative</ScenarioLink>
+                    of the signal.
+                </Context>
             </Topic>
         );
     };

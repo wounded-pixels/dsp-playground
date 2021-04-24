@@ -6,15 +6,15 @@ https://dsp-playground.woundedpixels.com/
 ## TODAY
 * convolution!
   * better colors for ends of line and for sum X
-  * better first sample
   * spacing in summation X
-  * sample kernels with links
-  * sample signals with links
   * explanation text X
   * labels for signal, kernel, output signal X
   * y axis labels X
   * some sort of funnel line from kernel to output signal X
   * initial step with no lines X
+  * better signal X
+  * sample kernels with links X
+  * next button in svg
   
 ## Next up
 * start with examples of convolution with sound?
