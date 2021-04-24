@@ -1,6 +1,7 @@
 import {cloneDeep} from 'lodash';
 
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import SineCurve from 'model/SineCurve';
 
@@ -162,6 +163,9 @@ class SoundsFromSines extends Component<Props, State> {
                     music theory.
                     <div>
                     </div>
+                    <h3>Next Steps</h3>
+                    Creating interesting signals is just one part of the DSP toolbox. Sometimes you have a signal but
+                    need to modify with <Link to="/convolution=steps">convolution</Link>
                 </Context>
             </Topic>
         );

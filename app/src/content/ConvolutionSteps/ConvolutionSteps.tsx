@@ -107,7 +107,6 @@ class ConvolutionSteps extends Component<Props, State> {
         const {signalAmplitudes, kernelAmplitudes, iIndex, jIndex} = this.state;
 
         const commentary = this.buildCommentary();
-        const showDecorations = jIndex >= 0 && iIndex - jIndex >= 0 && iIndex - jIndex < signalAmplitudes.length
 
         const productSpans = kernelAmplitudes.map((value, index) => {
             const signalIndex = iIndex - index;
@@ -147,7 +146,7 @@ class ConvolutionSteps extends Component<Props, State> {
         }, 0);
 
         const productSum = Math.round(rawProductSum * 100) / 100;
-        const resultSummary = showDecorations ?
+        const resultSummary = jIndex >= 0 ?
             (<div> {productSpans}<span className="product-sum">{productSum}</span></div>) :
             null;
 
@@ -167,7 +166,7 @@ class ConvolutionSteps extends Component<Props, State> {
                     Use the 'Next' button below to see the sequence of steps that calculate each point in the output signal.
                 </Context>
                 <Visualization>
-                    <StepsPlot width={700}
+                    <StepsPlot width={800}
                                height={500}
                                plotAmplitude={10}
                                signalAmplitudes={signalAmplitudes}
@@ -181,7 +180,9 @@ class ConvolutionSteps extends Component<Props, State> {
                     {resultSummary}
                 </Row>
                 <Row>
-                    {commentary}
+                    <div className="commentary">
+                        {commentary}
+                    </div>
                 </Row>
                 <Context>
                     <h3>More Kernels</h3>

@@ -14,7 +14,7 @@ https://dsp-playground.woundedpixels.com/
   * initial step with no lines X
   * better signal X
   * sample kernels with links X
-  * next button in svg
+  * spacing X
   
 ## Next up
 * start with examples of convolution with sound?

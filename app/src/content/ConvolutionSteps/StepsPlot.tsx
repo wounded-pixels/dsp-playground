@@ -17,9 +17,9 @@ type Props = {
 
 const padding = {
     top: 5,
-    right: 0,
-    bottom: 40,
-    left: 70,
+    right: 40,
+    bottom: 0,
+    left: 100,
 };
 
 const circleSize = 5;
@@ -29,7 +29,7 @@ class StepsPlot extends Component<Props> {
         const {signalAmplitudes, kernelAmplitudes, width} = this.props;
         const domainWidth = signalAmplitudes.length + kernelAmplitudes.length + 1;
         const adjustedSvgWidth = width - padding.left - padding.right;
-        return padding.left + (timeIndex + kernelAmplitudes.length - 1) * adjustedSvgWidth / domainWidth;
+        return padding.left + (timeIndex + kernelAmplitudes.length) * adjustedSvgWidth / domainWidth;
     };
 
     calculateSvgY(value: number, section: number): number {
