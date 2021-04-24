@@ -194,13 +194,13 @@ class StepsPlot extends Component<Props> {
         const outputSignalCircles = outputSignalAmplitudes.map((value, index) => {
             const className = (index < iIndex) ? 'previous-out-signal-value' : 'future-out-signal-value';
 
-            return (<circle
+            return index <= iIndex ? (<circle
                 key={index}
                 className={className}
                 cx={this.calculateSvgX(index)}
                 cy={this.calculateSvgOutputSignalY(value)}
                 r={circleSize}
-            />);
+            />) : null;
         });
 
         const productSum = kernelAmplitudes.reduce((total, value, index) => {
