@@ -144,7 +144,6 @@ type ScenarioLinkProps = {
 export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({index, onClick, children}) => {
     return (
       <span>
-          &nbsp;
           <Link onClick={() => {
               onClick(index)
           }} > {children} </Link>
