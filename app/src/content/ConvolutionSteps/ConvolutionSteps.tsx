@@ -19,7 +19,13 @@ type State = {
     kernelAmplitudes: number[];
     iIndex: number;
     jIndex: number;
+    playing: boolean;
 };
+
+const TICK_INTERVAL = 25;
+
+const shortSignal = [-2, -1, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, -1, -2, -3, -3, -3];
+
 
 const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
@@ -29,44 +35,67 @@ const delayKernel = [0, 0, 0, 1];
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,
     flipKernel,
-    derivativeKernel,
-    delayKernel,
+    derivativeKernel, delayKernel,
 };
 
 class ConvolutionSteps extends Component<Props, State> {
     state = {
-        signalAmplitudes: [-2, -1, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, -1, -2, -3, -3, -3],
+        signalAmplitudes: shortSignal,
         kernelAmplitudes: sampleKernel,
         iIndex: 5,
         jIndex: -1,
+        playing: false,
     };
 
-    onSelectKernel = (rawKey: string) => {
-        const key = rawKey + 'Kernel';
-        if (exampleKernels[key]) {
-            const iIndex = this.state.signalAmplitudes.length - 1;
-            this.setState({iIndex: iIndex, jIndex: -1, kernelAmplitudes: exampleKernels[key]});
+    onSelectKernel = (rawKey: string) => { const key = rawKey + 'Kernel';
+        if (exampleKernels[key]) { const iIndex = this.state.signalAmplitudes.length - 1;
+            this.setState({iIndex: iIndex, jIndex: exampleKernels[key].length - 1, kernelAmplitudes: exampleKernels[key]});
         } else {
-            this.setState({iIndex: 5, jIndex: -1, kernelAmplitudes: sampleKernel});
+            this.setState({iIndex: 5, jIndex: sampleKernel.length - 1, kernelAmplitudes: sampleKernel});
         }
     }
 
     incrementIndex = () => {
         const {iIndex, jIndex, kernelAmplitudes, signalAmplitudes} = this.state;
         if (iIndex === signalAmplitudes.length + kernelAmplitudes.length - 2 && jIndex === kernelAmplitudes.length - 1) {
-            this.setState({iIndex: 0, jIndex: -1});
+            this.setState({playing: false, iIndex: 0, jIndex: -1});
         } else if (jIndex === kernelAmplitudes.length - 1) {
-            this.setState({iIndex: iIndex + 1, jIndex: -1});
+            this.setState({playing: false, iIndex: iIndex + 1, jIndex: -1});
         } else {
-            this.setState({jIndex: jIndex + 1 })
+            this.setState({playing: false, jIndex: jIndex + 1 })
         }
     };
 
+    doPlay = () => {
+        const {iIndex, kernelAmplitudes, signalAmplitudes} = this.state;
+        if (this.state.playing) {
+            if (iIndex === signalAmplitudes.length + kernelAmplitudes.length - 2) {
+                this.setState({iIndex: 0, jIndex: kernelAmplitudes.length - 1});
+            } else {
+                this.setState({iIndex: iIndex + 1, jIndex: kernelAmplitudes.length - 1 })
+            }
+
+            setTimeout(this.doPlay, TICK_INTERVAL);
+        }
+    };
+
+    togglePlay = () => {
+        this.setState({playing: !this.state.playing});
+        setTimeout(this.doPlay, TICK_INTERVAL);
+    };
+
+    incrementToEnd = () => {
+        const {kernelAmplitudes, signalAmplitudes} = this.state;
+        this.setState({playing: false, iIndex: signalAmplitudes.length-1, jIndex: kernelAmplitudes.length-1});
+    };
+
     buildCommentary(): string {
-        const {iIndex, jIndex, kernelAmplitudes, signalAmplitudes} = this.state;
+        const {iIndex, jIndex, kernelAmplitudes, playing, signalAmplitudes} = this.state;
         const signalIndex = iIndex - jIndex;
 
-
+        if (playing) {
+            return '';
+        }
         if (jIndex === -1) {
             return `The grey dots in the output signal represent the values that have already been calculated. The empty
             dot represents the value that is about to be calculated. Each dark black value in the signal will be
@@ -86,17 +115,13 @@ class ConvolutionSteps extends Component<Props, State> {
         const signalValue = signalAmplitudes[signalIndex];
         const kernelValue = kernelAmplitudes[jIndex];
         if (jIndex === 0) {
-           return `Each value in the kernel is associated with the opposite value in the input signal in a 
+            return `Each value in the kernel is associated with the opposite value in the input signal in a 
            criss cross pattern. In this step the blue ${signalValue} from the input signal is multiplied by the
-           green ${kernelValue} from the kernel to contribute ${signalValue*kernelValue} to the output signal.`
+           green ${kernelValue} from the kernel to contribute ${signalValue * kernelValue} to the output signal.`
         }
 
         if (jIndex === 1) {
             return `The running total is shown in orange in the output signal.`;
-        }
-
-        if (iIndex) {
-
         }
 
         return `Once you get past the odd criss cross pattern it is just repetitive multiplication and addition. But if
@@ -104,7 +129,7 @@ class ConvolutionSteps extends Component<Props, State> {
     }
 
     render(): JSX.Element {
-        const {signalAmplitudes, kernelAmplitudes, iIndex, jIndex} = this.state;
+        const {signalAmplitudes, playing, kernelAmplitudes, iIndex, jIndex} = this.state;
 
         const commentary = this.buildCommentary();
 
@@ -129,8 +154,7 @@ class ConvolutionSteps extends Component<Props, State> {
                     <span className={kernelSpanClass}>{kernelText}</span>
                     <span>)</span>
                     <span>{symbol}</span>
-                </span>);
-            }
+                </span>); }
 
             return (
                 <span key={index}>
@@ -146,7 +170,7 @@ class ConvolutionSteps extends Component<Props, State> {
         }, 0);
 
         const productSum = Math.round(rawProductSum * 100) / 100;
-        const resultSummary = jIndex >= 0 ?
+        const resultSummary = jIndex >= 0 && !playing ?
             (<div> {productSpans}<span className="product-sum">{productSum}</span></div>) :
             null;
 
@@ -176,6 +200,8 @@ class ConvolutionSteps extends Component<Props, State> {
                 </Visualization>
                 <Row>
                     <button onClick={this.incrementIndex}>Next</button>
+                    <button onClick={this.togglePlay}>{this.state.playing ? 'Stop' : 'Play'}</button>
+                    <button onClick={this.incrementToEnd}>End</button>
                     &nbsp;
                     {resultSummary}
                 </Row>
