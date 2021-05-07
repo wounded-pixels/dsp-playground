@@ -16,7 +16,13 @@ https://dsp-playground.woundedpixels.com/
   * sample kernels with links X
   * spacing X
   
+  * longer signal
+  * better kernels 
+    * low pass filter
+    * high pass filter
+  
 ## Next up
+* kernel editor
 * start with examples of convolution with sound?
 * add sound effects page
 

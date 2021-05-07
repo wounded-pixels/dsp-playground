@@ -1,3 +1,9 @@
+import {CurveParameters} from "../model/types";
+
+export function round(raw: number, multiplier = 100) {
+    return Math.round(raw * multiplier) / multiplier;
+}
+
 export function clamp(value: number, min: number, max: number) {
     if (value > max) {
         return max;
@@ -31,4 +37,23 @@ export function convolve(signal: number[], kernel: number[]) {
     }
 
     return output;
+}
+
+export function createSignal(length: number, curveParameters: CurveParameters[]) {
+    const values = [];
+
+    const lowestFrequency = Math.min(...curveParameters.map(cp => cp.frequency));
+    const interval = 4 * Math.PI / lowestFrequency; // we want the overall signal to repeat twice
+    const dt = interval / length;
+
+    for (let time = 0; time < interval; time = time + dt) {
+        let value = 0;
+        for (const curveParameter of curveParameters) {
+            value = value + curveParameter.amplitude * Math.sin(curveParameter.frequency * time);
+        }
+
+        values.push(value);
+    }
+
+    return values;
 }
