@@ -11,7 +11,7 @@ import {
     Visualization,
 } from 'components/stateless-helpers';
 import StepsPlot from './StepsPlot';
-import {createSignal, round} from 'util/math-hacks';
+import {createLowPassKernel, createSignal, round} from 'util/math-hacks';
 
 type Props = {};
 
@@ -27,18 +27,20 @@ const PLOT_AMPLITUDE = 10;
 const TICK_INTERVAL = 25;
 
 const shortSignal = [-2, -1, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, -1, -2, -3, -3, -3];
-const longSignal = createSignal(400, [{frequency: 1, amplitude: 5}, {frequency: 10, amplitude: 1}]);
+const longSignal = createSignal(400, [{frequency: 1, amplitude: 5}, {frequency: 10, amplitude: 1}], 4);
 
 const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
 const derivativeKernel = [1, -1];
 const delayKernel = [0, 0, 0, 1];
+const lowpassKernel = createLowPassKernel(0.09, 50);
 
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,
     flipKernel,
     derivativeKernel,
     delayKernel,
+    lowpassKernel,
 };
 
 const exampleSignals: { [index: string] : number[]} = {
@@ -57,21 +59,31 @@ class ConvolutionSteps extends Component<Props, State> {
 
     onSelectKernel = (rawKey: string) => { const key = rawKey + 'Kernel';
         if (exampleKernels[key]) {
-            const iIndex = this.state.signalAmplitudes.length - 1;
-            this.setState({iIndex: iIndex, jIndex: exampleKernels[key].length - 1, kernelAmplitudes: exampleKernels[key]});
+            const signalAmplitudes =  (exampleKernels[key].length > 0.25 * this.state.signalAmplitudes.length) ?
+              longSignal :
+              this.state.signalAmplitudes;
+
+            const iIndex = signalAmplitudes.length + exampleKernels[key].length - 2;
+            this.setState({iIndex: iIndex, jIndex: exampleKernels[key].length - 1, signalAmplitudes, kernelAmplitudes: exampleKernels[key]});
         } else {
-            this.setState({iIndex: 5, jIndex: sampleKernel.length - 1, kernelAmplitudes: sampleKernel});
+            const iIndex = shortSignal.length + sampleKernel.length - 2;
+            const jIndex = sampleKernel.length - 1;
+            this.setState({iIndex, jIndex, signalAmplitudes: shortSignal, kernelAmplitudes: sampleKernel});
         }
     };
 
     onSelectSignal = (rawKey: string) => { const key = rawKey + 'Signal';
-        const jIndex = this.state.kernelAmplitudes.length - 1;
         if (exampleSignals[key]) {
-            const iIndex = exampleSignals[key].length - 1;
-            this.setState({iIndex: iIndex, jIndex, signalAmplitudes: exampleSignals[key]});
+            const kernelAmplitudes = this.state.kernelAmplitudes.length > 0.25 * exampleSignals[key].length ?
+                sampleKernel :
+                this.state.kernelAmplitudes;
+            const iIndex = exampleSignals[key].length + kernelAmplitudes.length - 2;
+            const jIndex = kernelAmplitudes.length - 1;
+            this.setState({iIndex: iIndex, jIndex, signalAmplitudes: exampleSignals[key], kernelAmplitudes});
         } else {
-            const iIndex = shortSignal.length - 1;
-            this.setState({iIndex, jIndex, signalAmplitudes: shortSignal});
+            const iIndex = shortSignal.length + sampleKernel.length - 2;
+            const jIndex = sampleKernel.length - 1;
+            this.setState({iIndex, jIndex, signalAmplitudes: shortSignal, kernelAmplitudes: sampleKernel});
         }
     }
 
@@ -106,14 +118,14 @@ class ConvolutionSteps extends Component<Props, State> {
 
     incrementToEnd = () => {
         const {kernelAmplitudes, signalAmplitudes} = this.state;
-        this.setState({playing: false, iIndex: signalAmplitudes.length-1, jIndex: kernelAmplitudes.length-1});
+        this.setState({playing: false, iIndex: signalAmplitudes.length+kernelAmplitudes.length-2, jIndex: kernelAmplitudes.length-1});
     };
 
     buildCommentary(): string {
         const {iIndex, jIndex, kernelAmplitudes, playing, signalAmplitudes} = this.state;
         const signalIndex = iIndex - jIndex;
 
-        if (playing) {
+        if (playing || kernelAmplitudes.length > 10) {
             return '';
         }
         if (jIndex === -1) {
@@ -190,7 +202,7 @@ class ConvolutionSteps extends Component<Props, State> {
         }, 0);
 
         const productSum = round(rawProductSum);
-        const resultSummary = jIndex >= 0 && !playing ?
+        const resultSummary = jIndex >= 0 && !playing && kernelAmplitudes.length < 10 ?
             (<div> {productSpans}<span className="product-sum">{productSum}</span></div>) :
             null;
 
@@ -235,14 +247,14 @@ class ConvolutionSteps extends Component<Props, State> {
                    The initial<ScenarioLink index="sample" onClick={this.onSelectKernel}>sample kernel</ScenarioLink>
                     is devised to make the math easy to follow. More interesting kernels include
                     <ScenarioLink index="flip" onClick={this.onSelectKernel}>flipping</ScenarioLink>
-                    the signal, <ScenarioLink index="delay" onClick={this.onSelectKernel}>delaying</ScenarioLink> the signal and
+                    the signal, <ScenarioLink index="delay" onClick={this.onSelectKernel}>delaying</ScenarioLink> the signal,
                     <ScenarioLink index="derivative" onClick={this.onSelectKernel}>taking the derivative</ScenarioLink>
-                    of the signal.
+                    of the signal and <ScenarioLink index="lowpass" onClick={this.onSelectKernel}>filtering for low frequencies</ScenarioLink>
                 </Context>
                 <Context>
                     <h3>More Signals</h3>
                     The initial<ScenarioLink index="short" onClick={this.onSelectSignal}>sample signal</ScenarioLink>
-                    is devised to make the math easy to follow. More interesting kernels include
+                    is devised to make the math easy to follow. More interesting signals include
                     <ScenarioLink index="long" onClick={this.onSelectSignal}>high and low frequencies</ScenarioLink>
                 </Context>
             </Topic>

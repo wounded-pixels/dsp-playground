@@ -39,11 +39,11 @@ export function convolve(signal: number[], kernel: number[]) {
     return output;
 }
 
-export function createSignal(length: number, curveParameters: CurveParameters[]) {
-    const values = [];
+export function createSignal(length: number, curveParameters: CurveParameters[], repetitions: number = 2) {
+    const values: number[] = [];
 
     const lowestFrequency = Math.min(...curveParameters.map(cp => cp.frequency));
-    const interval = 4 * Math.PI / lowestFrequency; // we want the overall signal to repeat twice
+    const interval = repetitions * 2 * Math.PI / lowestFrequency; // we want the overall signal to repeat repetitions times
     const dt = interval / length;
 
     for (let time = 0; time < interval; time = time + dt) {
@@ -56,4 +56,26 @@ export function createSignal(length: number, curveParameters: CurveParameters[])
     }
 
     return values;
+}
+
+export function sinc(time: number) {
+    if (time === 0) {
+        return 1;
+    }
+
+    return Math.sin(Math.PI * time) / (Math.PI * time);
+}
+
+export function createLowPassKernel(cutoffFrequency: number, length: number = 50) {
+    const values = [];
+    for (let step = -Math.round(length / 2); step <= length / 2; step++) {
+        values.push(sinc(2 * cutoffFrequency * step));
+    }
+
+    return normalize(values);
+}
+
+export function  normalize(raw: number[]) {
+    const sum = raw.reduce((sum, value) => { return value +  sum;}, 0);
+    return raw.map(value => value / sum);
 }

@@ -15,11 +15,11 @@ https://dsp-playground.woundedpixels.com/
   * better signal X
   * sample kernels with links X
   * spacing X
-  
-  * longer signal
+  * longer signal X
   * better kernels 
-    * low pass filter
+    * low pass filter X
     * high pass filter
+    * window
   
 ## Next up
 * kernel editor

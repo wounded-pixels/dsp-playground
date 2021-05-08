@@ -22,12 +22,12 @@ const padding = {
     left: 100,
 };
 
-const circleSize = 5;
+const circleSize = 3;
 
 class StepsPlot extends Component<Props> {
     calculateSvgX(timeIndex: number): number {
         const {signalAmplitudes, kernelAmplitudes, width} = this.props;
-        const domainWidth = signalAmplitudes.length + kernelAmplitudes.length + 1;
+        const domainWidth = signalAmplitudes.length + 2*kernelAmplitudes.length + 1;
         const adjustedSvgWidth = width - padding.left - padding.right;
         return padding.left + (timeIndex + kernelAmplitudes.length) * adjustedSvgWidth / domainWidth;
     };
