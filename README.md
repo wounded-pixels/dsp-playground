@@ -18,8 +18,10 @@ https://dsp-playground.woundedpixels.com/
   * longer signal X
   * better kernels 
     * low pass filter X
-    * high pass filter
-    * window
+    * high pass filter X
+  * more detail about kernel
+    * kernel editor - set frequency, length, normalization, windowing
+    * vary inputs - what happens at the edge? sensitivity    
   
 ## Next up
 * kernel editor

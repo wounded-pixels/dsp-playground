@@ -66,13 +66,20 @@ export function sinc(time: number) {
     return Math.sin(Math.PI * time) / (Math.PI * time);
 }
 
-export function createLowPassKernel(cutoffFrequency: number, length: number = 50) {
+export function createLowPassKernel(cutoffFrequency: number, length: number = 51) {
     const values = [];
     for (let step = -Math.round(length / 2); step <= length / 2; step++) {
         values.push(sinc(2 * cutoffFrequency * step));
     }
 
     return normalize(values);
+}
+
+export function spectralInvert(kernel: number[]) {
+    const values = kernel.map(value => -value);
+    const middleIndex = Math.round(values.length/2);
+    values[middleIndex] += 1;
+    return values;
 }
 
 export function  normalize(raw: number[]) {

@@ -11,7 +11,7 @@ import {
     Visualization,
 } from 'components/stateless-helpers';
 import StepsPlot from './StepsPlot';
-import {createLowPassKernel, createSignal, round} from 'util/math-hacks';
+import {createLowPassKernel, createSignal, round, spectralInvert} from 'util/math-hacks';
 
 type Props = {};
 
@@ -34,6 +34,7 @@ const flipKernel = [-1];
 const derivativeKernel = [1, -1];
 const delayKernel = [0, 0, 0, 1];
 const lowpassKernel = createLowPassKernel(0.09, 50);
+const highpassKernel = spectralInvert(lowpassKernel);
 
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,
@@ -41,6 +42,7 @@ const exampleKernels: { [index: string] : number[]} = {
     derivativeKernel,
     delayKernel,
     lowpassKernel,
+    highpassKernel,
 };
 
 const exampleSignals: { [index: string] : number[]} = {
@@ -249,7 +251,10 @@ class ConvolutionSteps extends Component<Props, State> {
                     <ScenarioLink index="flip" onClick={this.onSelectKernel}>flipping</ScenarioLink>
                     the signal, <ScenarioLink index="delay" onClick={this.onSelectKernel}>delaying</ScenarioLink> the signal,
                     <ScenarioLink index="derivative" onClick={this.onSelectKernel}>taking the derivative</ScenarioLink>
-                    of the signal and <ScenarioLink index="lowpass" onClick={this.onSelectKernel}>filtering for low frequencies</ScenarioLink>
+                    of the signal and <ScenarioLink index="lowpass" onClick={this.onSelectKernel}>filtering for low frequencies</ScenarioLink>.
+                    Filters that allow low frequencies to live and suppress higher frequencies are known as low pass filters.
+                    <ScenarioLink index="highpass" onClick={this.onSelectKernel}>high pass filters</ScenarioLink> do the opposite
+                    task as they allow high frequency signals to pass through to the output.
                 </Context>
                 <Context>
                     <h3>More Signals</h3>
