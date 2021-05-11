@@ -58,6 +58,42 @@ export function createSignal(length: number, curveParameters: CurveParameters[],
     return values;
 }
 
+export function createNoise(length: number, mean: number, std: number) {
+    const values = [];
+    const sampleCount = 7;
+
+    for (let index = 0; index < length; index++) {
+        let sum = 0;
+        for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++) {
+            sum += Math.random();
+        }
+
+        // center at zero
+        sum = sum - sampleCount/2;
+
+        // apply std
+        sum = sum * std;
+
+        // recenter on mean
+        sum += mean;
+
+        values.push(sum);
+    }
+
+    return values;
+}
+
+export function addSignals(first: number[], second: number[]) {
+    const values = [];
+
+    const maxIndex = Math.min(first.length, second.length);
+    for (let index = 0; index < maxIndex; index++) {
+        values.push(first[index] + second[index]);
+    }
+
+    return values;
+}
+
 export function sinc(time: number) {
     if (time === 0) {
         return 1;

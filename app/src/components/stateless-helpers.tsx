@@ -141,9 +141,12 @@ type ScenarioLinkProps = {
     index: string,
     onClick: (index: string) => void;
 };
+const scenarioLinkStyles: CSSProperties = {
+    margin: '0px 0px',
+};
 export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({index, onClick, children}) => {
     return (
-      <span>
+      <span style={scenarioLinkStyles}>
           <Link onClick={() => {
               onClick(index)
           }} > {children} </Link>

@@ -11,7 +11,7 @@ import {
     Visualization,
 } from 'components/stateless-helpers';
 import StepsPlot from './StepsPlot';
-import {createLowPassKernel, createSignal, round, spectralInvert} from 'util/math-hacks';
+import {addSignals, createLowPassKernel, createNoise, createSignal, round, spectralInvert} from 'util/math-hacks';
 
 type Props = {};
 
@@ -27,13 +27,16 @@ const PLOT_AMPLITUDE = 10;
 const TICK_INTERVAL = 25;
 
 const shortSignal = [-2, -1, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, -1, -2, -3, -3, -3];
-const longSignal = createSignal(400, [{frequency: 1, amplitude: 5}, {frequency: 10, amplitude: 1}], 4);
+const longLength = 1000;
+const longSignal = createSignal(longLength, [{frequency: 1, amplitude: 5}, {frequency: 10, amplitude: 1}], 4);
+const lowWithNoiseSignal = addSignals(createSignal(longLength, [{frequency:1, amplitude: 3}], 4), createNoise(longLength, 0, 1.0));
+const lowBackgroundSignal = createSignal(longLength, [{frequency: 1, amplitude: 1}, {frequency: 10, amplitude: 3}], 4);
 
 const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
 const derivativeKernel = [1, -1];
 const delayKernel = [0, 0, 0, 1];
-const lowpassKernel = createLowPassKernel(0.09, 50);
+const lowpassKernel = createLowPassKernel(0.02, 50);
 const highpassKernel = spectralInvert(lowpassKernel);
 
 const exampleKernels: { [index: string] : number[]} = {
@@ -48,6 +51,8 @@ const exampleKernels: { [index: string] : number[]} = {
 const exampleSignals: { [index: string] : number[]} = {
     shortSignal,
     longSignal,
+    lowWithNoiseSignal,
+    lowBackgroundSignal,
 };
 
 class ConvolutionSteps extends Component<Props, State> {
@@ -245,22 +250,24 @@ class ConvolutionSteps extends Component<Props, State> {
                     </div>
                 </Row>
                 <Context>
+                    <h3>More Signals</h3>
+                    The initial<ScenarioLink index="short" onClick={this.onSelectSignal}>sample signal</ScenarioLink>
+                    is devised to make the math easy to follow. More interesting signals include
+                    <ScenarioLink index="long" onClick={this.onSelectSignal}>high and low frequencies</ScenarioLink>,
+                    <ScenarioLink index="lowBackground" onClick={this.onSelectSignal}>low frequency in the background</ScenarioLink> and
+                    <ScenarioLink index="lowWithNoise" onClick={this.onSelectSignal}>low frequency with noise.</ScenarioLink>
+                </Context>
+                <Context>
                     <h3>More Kernels</h3>
                    The initial<ScenarioLink index="sample" onClick={this.onSelectKernel}>sample kernel</ScenarioLink>
                     is devised to make the math easy to follow. More interesting kernels include
                     <ScenarioLink index="flip" onClick={this.onSelectKernel}>flipping</ScenarioLink>
                     the signal, <ScenarioLink index="delay" onClick={this.onSelectKernel}>delaying</ScenarioLink> the signal,
                     <ScenarioLink index="derivative" onClick={this.onSelectKernel}>taking the derivative</ScenarioLink>
-                    of the signal and <ScenarioLink index="lowpass" onClick={this.onSelectKernel}>filtering for low frequencies</ScenarioLink>.
-                    Filters that allow low frequencies to live and suppress higher frequencies are known as low pass filters.
-                    <ScenarioLink index="highpass" onClick={this.onSelectKernel}>high pass filters</ScenarioLink> do the opposite
-                    task as they allow high frequency signals to pass through to the output.
-                </Context>
-                <Context>
-                    <h3>More Signals</h3>
-                    The initial<ScenarioLink index="short" onClick={this.onSelectSignal}>sample signal</ScenarioLink>
-                    is devised to make the math easy to follow. More interesting signals include
-                    <ScenarioLink index="long" onClick={this.onSelectSignal}>high and low frequencies</ScenarioLink>
+                    of the signal and <ScenarioLink index="lowpass" onClick={this.onSelectKernel}>filtering for low frequencies.</ScenarioLink>
+                    Filters that allow low frequencies to pass through to the output signal and suppress higher frequencies are known as low pass filters.
+                    <ScenarioLink index="highpass" onClick={this.onSelectKernel}>High pass filters</ScenarioLink> do the opposite
+                    task as they allow high frequency signals to pass through to the output signal.
                 </Context>
             </Topic>
         );
