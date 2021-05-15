@@ -4,28 +4,18 @@
 https://dsp-playground.woundedpixels.com/
 
 ## TODAY
-* convolution!
-  * better colors for ends of line and for sum X
-  * spacing in summation X
-  * explanation text X
-  * labels for signal, kernel, output signal X
-  * y axis labels X
-  * some sort of funnel line from kernel to output signal X
-  * initial step with no lines X
-  * better signal X
-  * sample kernels with links X
-  * spacing X
-  * longer signal X
+* convolution
   * more signals
     * data over carrier
-  * better kernels 
-    * low pass filter X
-    * high pass filter X
-  * more detail about kernel
-    * show kernel at bottom zoomed in
+  * more detail about window sinc kernel in a new page
+    * show kernel zoomed in
     * optional windowing?
     * kernel editor - set frequency, length, normalization, windowing
     * vary inputs - what happens at the edge? sensitivity    
+    * manipulate frequencies of input along with attributes of kernel
+    * three frequencies for input? more?  noise? 
+    * show frequency response?
+    * audio playback of input and filtered?
   
 ## Next up
 * kernel editor
