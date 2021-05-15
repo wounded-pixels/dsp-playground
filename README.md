@@ -5,6 +5,7 @@ https://dsp-playground.woundedpixels.com/
 
 ## TODAY
 * convolution
+  *  fix bug in text around multiplication steps
   * more signals
     * data over carrier
   * more detail about window sinc kernel in a new page
