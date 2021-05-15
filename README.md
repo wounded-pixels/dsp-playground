@@ -16,10 +16,14 @@ https://dsp-playground.woundedpixels.com/
   * sample kernels with links X
   * spacing X
   * longer signal X
+  * more signals
+    * data over carrier
   * better kernels 
     * low pass filter X
     * high pass filter X
   * more detail about kernel
+    * show kernel at bottom zoomed in
+    * optional windowing?
     * kernel editor - set frequency, length, normalization, windowing
     * vary inputs - what happens at the edge? sensitivity    
   
