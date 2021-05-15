@@ -68,7 +68,7 @@ class App extends Component<Props, State> {
                         </Route>
                     </Switch>
 
-                    <TopNav {...navProps} centerText="&copy; 2021 - WoundedPixels.com" />
+                    <TopNav {...navProps} centerText="&copy; 2021 - WoundedPixels.com build date 05-15-21" />
                 </HashRouter>
             </div>
         );

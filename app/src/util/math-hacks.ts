@@ -118,6 +118,15 @@ export function spectralInvert(kernel: number[]) {
     return values;
 }
 
+export function addWindowing(kernel: number[]) {
+    const values = [...kernel];
+    for (let index = 0; index < kernel.length/2; index++) {
+        values.push(0);
+    }
+
+    return values;
+}
+
 export function  normalize(raw: number[]) {
     const sum = raw.reduce((sum, value) => { return value +  sum;}, 0);
     return raw.map(value => value / sum);

@@ -5,7 +5,8 @@ https://dsp-playground.woundedpixels.com/
 
 ## TODAY
 * convolution
-  *  fix bug in text around multiplication steps
+  * fix bug in text around multiplication steps?
+  * windowing in sinc kernel
   * more signals
     * data over carrier
   * more detail about window sinc kernel in a new page

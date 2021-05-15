@@ -11,7 +11,15 @@ import {
     Visualization,
 } from 'components/stateless-helpers';
 import StepsPlot from './StepsPlot';
-import {addSignals, createLowPassKernel, createNoise, createSignal, round, spectralInvert} from 'util/math-hacks';
+import {
+    addSignals,
+    addWindowing,
+    createLowPassKernel,
+    createNoise,
+    createSignal,
+    round,
+    spectralInvert
+} from 'util/math-hacks';
 
 type Props = {};
 
@@ -36,8 +44,8 @@ const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
 const derivativeKernel = [1, -1];
 const delayKernel = [0, 0, 0, 1];
-const lowpassKernel = createLowPassKernel(0.02, 50);
-const highpassKernel = spectralInvert(lowpassKernel);
+const lowpassKernel = addWindowing(createLowPassKernel(0.02, 50));
+const highpassKernel = addWindowing(spectralInvert(createLowPassKernel(0.2, 50)));
 
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,
