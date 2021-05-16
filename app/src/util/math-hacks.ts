@@ -131,7 +131,7 @@ export function spectralInvert(kernel: number[]) {
 
 export function addZeroes(kernel: number[]) {
     const values = [...kernel];
-    for (let index = 0; index < kernel.length/2; index++) {
+    for (let index = 0; index < kernel.length; index++) {
         values.push(0);
     }
 

@@ -46,8 +46,11 @@ const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
 const derivativeKernel = [1, -1];
 const delayKernel = [0, 0, 0, 1];
-const lowpassKernel = addZeroes(normalize(createLowPassKernel(0.02, 50)));
-const highpassKernel = addZeroes(spectralInvert(normalize(createLowPassKernel(0.02, 50))));
+
+const longKernelLength = 100;
+const rawLowPassKernel = normalize(multiplySignals(createLowPassKernel(0.02, longKernelLength), createBlackmanWindow(longKernelLength)));
+const lowpassKernel = addZeroes(rawLowPassKernel);
+const highpassKernel = addZeroes(spectralInvert(rawLowPassKernel));
 
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,
