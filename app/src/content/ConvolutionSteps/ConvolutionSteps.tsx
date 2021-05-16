@@ -13,10 +13,12 @@ import {
 import StepsPlot from './StepsPlot';
 import {
     addSignals,
-    addWindowing,
+    addZeroes, createBlackmanWindow,
     createLowPassKernel,
     createNoise,
     createSignal,
+    multiplySignals,
+    normalize,
     round,
     spectralInvert
 } from 'util/math-hacks';
@@ -44,8 +46,8 @@ const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
 const derivativeKernel = [1, -1];
 const delayKernel = [0, 0, 0, 1];
-const lowpassKernel = addWindowing(createLowPassKernel(0.02, 50));
-const highpassKernel = addWindowing(spectralInvert(createLowPassKernel(0.2, 50)));
+const lowpassKernel = addZeroes(normalize(createLowPassKernel(0.02, 50)));
+const highpassKernel = addZeroes(spectralInvert(normalize(createLowPassKernel(0.02, 50))));
 
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,

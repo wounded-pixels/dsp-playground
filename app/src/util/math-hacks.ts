@@ -94,6 +94,17 @@ export function addSignals(first: number[], second: number[]) {
     return values;
 }
 
+export function multiplySignals(first: number[], second: number[]) {
+    const values = [];
+
+    const maxIndex = Math.min(first.length, second.length);
+    for (let index = 0; index < maxIndex; index++) {
+        values.push(first[index] * second[index]);
+    }
+
+    return values;
+}
+
 export function sinc(time: number) {
     if (time === 0) {
         return 1;
@@ -108,7 +119,7 @@ export function createLowPassKernel(cutoffFrequency: number, length: number = 51
         values.push(sinc(2 * cutoffFrequency * step));
     }
 
-    return normalize(values);
+    return values;
 }
 
 export function spectralInvert(kernel: number[]) {
@@ -118,7 +129,7 @@ export function spectralInvert(kernel: number[]) {
     return values;
 }
 
-export function addWindowing(kernel: number[]) {
+export function addZeroes(kernel: number[]) {
     const values = [...kernel];
     for (let index = 0; index < kernel.length/2; index++) {
         values.push(0);
@@ -127,7 +138,18 @@ export function addWindowing(kernel: number[]) {
     return values;
 }
 
-export function  normalize(raw: number[]) {
+export function normalize(raw: number[]) {
     const sum = raw.reduce((sum, value) => { return value +  sum;}, 0);
     return raw.map(value => value / sum);
 }
+
+export function createBlackmanWindow(length: number = 51) {
+    const values = [];
+
+    for (let step = 0; step < length; step++) {
+        values.push(0.42 - 0.5 * Math.cos(2 * Math.PI * step / length) + 0.08 * Math.cos(4 * Math.PI * step / length));
+    }
+
+    return values;
+}
+
