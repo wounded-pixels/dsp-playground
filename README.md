@@ -5,7 +5,6 @@ https://dsp-playground.woundedpixels.com/
 
 ## TODAY
 * convolution
-  * fix bug in text around multiplication steps?
   * windowing in sinc kernel
   * more signals
     * data over carrier
@@ -32,9 +31,6 @@ https://dsp-playground.woundedpixels.com/
 * feedback from visual peer
 * feedback from dsp sme
 * use iterators?
-
-### Unit circle
-* switch deg or radians?
 
 ## Soon
 * switch to css grid?

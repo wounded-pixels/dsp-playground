@@ -54,7 +54,7 @@ class App extends Component<Props, State> {
                         <Route path="/sounds-from-sines">
                             <SoundsFromSines/>
                         </Route>
-                        <Route path="/convolution=steps">
+                        <Route path="/convolution-steps">
                             <ConvolutionSteps/>
                         </Route>
                         <Route path="/about">

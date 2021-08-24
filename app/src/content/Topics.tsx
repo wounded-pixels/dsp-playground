@@ -14,7 +14,7 @@ const Topics: FunctionComponent<Props> = () => {
             </Context>
             <h3><Link to="/sine-over-time">Sine over Time</Link></h3>
             <Context>
-                In trigonometry sine is all about angles of triangles. In DSP it is all about
+                In trigonometry sine is all about angles and the height of a triangle. In DSP it is all about
                 sound or signal intensity over time.
             </Context>
             <h3><Link to="/add-sines">Addition of Sine Curves</Link></h3>
@@ -30,7 +30,7 @@ const Topics: FunctionComponent<Props> = () => {
             <Context>
                 We can make some fairly interesting sounds by combining sine waves
             </Context>
-            <h3><Link to="/convolution=steps">Convolution Steps</Link></h3>
+            <h3><Link to="/convolution-steps">Convolution Steps</Link></h3>
             <Context>
                 Convolution is not as complicated as it first appears. Ok, why it works is still magic to me but we can
                 definitely understand the mechanics!

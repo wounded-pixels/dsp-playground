@@ -49,16 +49,16 @@ const delayKernel = [0, 0, 0, 1];
 
 const longKernelLength = 100;
 const rawLowPassKernel = normalize(multiplySignals(createLowPassKernel(0.02, longKernelLength), createBlackmanWindow(longKernelLength)));
-const lowpassKernel = addZeroes(rawLowPassKernel);
-const highpassKernel = addZeroes(spectralInvert(rawLowPassKernel));
+const lowPassKernel = addZeroes(rawLowPassKernel);
+const highPassKernel = addZeroes(spectralInvert(rawLowPassKernel));
 
 const exampleKernels: { [index: string] : number[]} = {
     sampleKernel,
     flipKernel,
     derivativeKernel,
     delayKernel,
-    lowpassKernel,
-    highpassKernel,
+    lowPassKernel,
+    highPassKernel,
 };
 
 const exampleSignals: { [index: string] : number[]} = {
@@ -277,9 +277,9 @@ class ConvolutionSteps extends Component<Props, State> {
                     <ScenarioLink index="flip" onClick={this.onSelectKernel}>flipping</ScenarioLink>
                     the signal, <ScenarioLink index="delay" onClick={this.onSelectKernel}>delaying</ScenarioLink> the signal,
                     <ScenarioLink index="derivative" onClick={this.onSelectKernel}>taking the derivative</ScenarioLink>
-                    of the signal and <ScenarioLink index="lowpass" onClick={this.onSelectKernel}>filtering for low frequencies.</ScenarioLink>
+                    of the signal and <ScenarioLink index="lowPass" onClick={this.onSelectKernel}>filtering for low frequencies.</ScenarioLink>
                     Filters that allow low frequencies to pass through to the output signal and suppress higher frequencies are known as low pass filters.
-                    <ScenarioLink index="highpass" onClick={this.onSelectKernel}>High pass filters</ScenarioLink> do the opposite
+                    <ScenarioLink index="highPass" onClick={this.onSelectKernel}>High pass filters</ScenarioLink> do the opposite
                     task as they allow high frequency signals to pass through to the output signal.
                 </Context>
             </Topic>
