@@ -1,201 +1,213 @@
 import React, { FunctionComponent, CSSProperties } from 'react';
 
-import {IconButton, Link, Tooltip} from '@material-ui/core';
-import {ContactSupport} from '@material-ui/icons';
+import { IconButton, Link, Tooltip } from '@material-ui/core';
+import { ContactSupport } from '@material-ui/icons';
 
-type HintProps = {text: string};
+type HintProps = { text: string };
 const hintStyles: CSSProperties = {};
-export const Hint: FunctionComponent<HintProps> = ({text, children}) => {
-    return (
-        <div style={hintStyles}>
-            {children}
-            <Tooltip title={text}>
-                <IconButton aria-label="hint">
-                    <ContactSupport fontSize="small"/>
-                </IconButton>
-            </Tooltip>
-        </div>
-    );
+export const Hint: FunctionComponent<HintProps> = ({ text, children }) => {
+  return (
+    <div style={hintStyles}>
+      {children}
+      <Tooltip title={text}>
+        <IconButton aria-label="hint">
+          <ContactSupport fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </div>
+  );
 };
 
 type KeyIdeaProps = {};
 const keyIdeaStyles: CSSProperties = {
-    background: '#f6ebb0',
-    margin: '10px 0',
-    padding: '5px 0',
+  background: '#f6ebb0',
+  margin: '10px 0',
+  padding: '5px 0',
 };
-export const KeyIdea: FunctionComponent<KeyIdeaProps> = ({children}) => {
-    return (
-        <div style={keyIdeaStyles}>
-            {children}
-        </div>
-    );
+export const KeyIdea: FunctionComponent<KeyIdeaProps> = ({ children }) => {
+  return <div style={keyIdeaStyles}>{children}</div>;
 };
 
 type RowProps = {};
 const rowStyles: CSSProperties = {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
-    flexGrow: 0,
-    justifyContent: 'start',
-    width: '100%',
+  alignItems: 'center',
+  display: 'flex',
+  flexDirection: 'row',
+  flexGrow: 0,
+  justifyContent: 'start',
+  width: '100%',
 };
-export const Row: FunctionComponent<RowProps> = ({children}) => {
-    return (
-        <div className="Row" style={rowStyles}>
-            {children}
-        </div>
-    );
+export const Row: FunctionComponent<RowProps> = ({ children }) => {
+  return (
+    <div className="Row" style={rowStyles}>
+      {children}
+    </div>
+  );
 };
 
 type ContextProps = {};
 const contextStyles: CSSProperties = {
-    paddingTop: '8px',
+  paddingTop: '8px',
 };
-export const Context: FunctionComponent<ContextProps> = ({children}) => {
-    return (
-    <div style={contextStyles}>
-    {children}
-    </div>
-    );
+export const Context: FunctionComponent<ContextProps> = ({ children }) => {
+  return <div style={contextStyles}>{children}</div>;
 };
 
 type TopicProps = {
-    className?: string;
+  className?: string;
 };
 
 const topicStyles: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 2,
-    paddingTop: '10px',
-    textAlign: 'left',
-    width: '85%',
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 2,
+  paddingTop: '10px',
+  textAlign: 'left',
+  width: '85%',
 };
-export const Topic: FunctionComponent<TopicProps> = ({className, children}) => {
-    return (
-      <div className={className} style={topicStyles}>
-          {children}
-      </div>
-    );
+export const Topic: FunctionComponent<TopicProps> = ({
+  className,
+  children,
+}) => {
+  return (
+    <div className={className} style={topicStyles}>
+      {children}
+    </div>
+  );
 };
 
 type TitleProps = {
-    width: string;
+  width: string;
 };
 
 export const Title: FunctionComponent<TitleProps> = (props) => {
-    const titleStyles: CSSProperties = {
-        display: 'flex',
-        fontSize: '18px',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        justifyContent: 'center',
-        width: props.width,
-        height: '18px',
-    };
+  const titleStyles: CSSProperties = {
+    display: 'flex',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    justifyContent: 'center',
+    width: props.width,
+    height: '18px',
+  };
 
-    return (
-        <div style={titleStyles}>
-            {props.children}
-        </div>
-    );
+  return <div style={titleStyles}>{props.children}</div>;
 };
 
 type SymbolProps = {
-    width: string;
+  width: string;
 };
 
 export const Symbol: FunctionComponent<SymbolProps> = (props) => {
-    const symbolStyles: CSSProperties = {
-        display: 'flex',
-        fontSize: '32px',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        justifyContent: 'center',
-        width: props.width,
-        height: '32px',
-    };
+  const symbolStyles: CSSProperties = {
+    display: 'flex',
+    fontSize: '32px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    justifyContent: 'center',
+    width: props.width,
+    height: '32px',
+  };
 
-    return (
-      <div style={symbolStyles}>
-          {props.children}
-      </div>
-    );
+  return <div style={symbolStyles}>{props.children}</div>;
 };
 
 type VisualizationProps = {};
 const visualizationStyles: CSSProperties = {
-    padding: '10px 10px',
+  padding: '10px 10px',
 };
-export const Visualization: FunctionComponent<VisualizationProps> = ({children}) => {
-    return (
-      <div style={visualizationStyles}>
-          {children}
-      </div>
-    );
+export const Visualization: FunctionComponent<VisualizationProps> = ({
+  children,
+}) => {
+  return <div style={visualizationStyles}>{children}</div>;
 };
 
 type ScenarioLinkProps = {
-    index: string,
-    onClick: (index: string) => void;
+  index: string;
+  onClick: (index: string) => void;
 };
 const scenarioLinkStyles: CSSProperties = {
-    margin: '0px 0px',
+  margin: '0px 0px',
 };
-export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({index, onClick, children}) => {
-    return (
-      <span style={scenarioLinkStyles}>
-          <Link onClick={() => {
-              onClick(index)
-          }} > {children} </Link>
-      </span>
-    );
+export const ScenarioLink: FunctionComponent<ScenarioLinkProps> = ({
+  index,
+  onClick,
+  children,
+}) => {
+  return (
+    <span style={scenarioLinkStyles}>
+      <Link
+        onClick={() => {
+          onClick(index);
+        }}
+      >
+        {' '}
+        {children}{' '}
+      </Link>
+    </span>
+  );
 };
 
 type RevealLinkProps = {
-    onClick: any;
+  onClick: any;
 };
-export const RevealLink: FunctionComponent<RevealLinkProps> = ({onClick, children}) => {
-    return (
-        <span>
-          &nbsp;
-            <Link onClick={onClick}> {children} </Link>
-      </span>
-    );
+export const RevealLink: FunctionComponent<RevealLinkProps> = ({
+  onClick,
+  children,
+}) => {
+  return (
+    <span>
+      &nbsp;
+      <Link onClick={onClick}> {children} </Link>
+    </span>
+  );
 };
 
 export class ScrollToTopOnMount extends React.Component {
   componentDidMount() {
-      window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   render() {
-      return null;
+    return null;
   }
 }
 
 type ZoomControlProps = {
-    current: number;
-    min: number;
-    max: number;
-    onZoom: (increment: number) => void;
+  current: number;
+  min: number;
+  max: number;
+  onZoom: (increment: number) => void;
 };
-export const ZoomControl: FunctionComponent<ZoomControlProps> = ({current, min, max, onZoom}) => {
-    const zoomDivStyles: CSSProperties = {
-        margin: '0 10px',
-    };
-    const zoomButtonStyles: CSSProperties = {
-      margin: '0 2px',
-    };
+export const ZoomControl: FunctionComponent<ZoomControlProps> = ({
+  current,
+  min,
+  max,
+  onZoom,
+}) => {
+  const zoomDivStyles: CSSProperties = {
+    margin: '0 10px',
+  };
+  const zoomButtonStyles: CSSProperties = {
+    margin: '0 2px',
+  };
 
-    return (
-        <div style={zoomDivStyles}>
-            <button style={zoomButtonStyles} disabled={current === min} onClick={() => onZoom(-1)}>Zoom In</button>
-            <button style={zoomButtonStyles} disabled={current === max} onClick={() => onZoom(1)}>Zoom Out</button>
-        </div>
-    );
+  return (
+    <div style={zoomDivStyles}>
+      <button
+        style={zoomButtonStyles}
+        disabled={current === min}
+        onClick={() => onZoom(-1)}
+      >
+        Zoom In
+      </button>
+      <button
+        style={zoomButtonStyles}
+        disabled={current === max}
+        onClick={() => onZoom(1)}
+      >
+        Zoom Out
+      </button>
+    </div>
+  );
 };
-
-

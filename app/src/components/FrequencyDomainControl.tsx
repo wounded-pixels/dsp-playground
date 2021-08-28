@@ -1,216 +1,230 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './FrequencyDomainControl.scss';
-import {clamp, snap} from '../util/math-hacks';
+import { clamp, snap } from '../util/math-hacks';
 
 type Props = {
-    amplitudes: number[];
-    frequencies: number[];
-    maxAmplitude: number;
-    onChange: (frequencyIndex: number, value: number) => void;
+  amplitudes: number[];
+  frequencies: number[];
+  maxAmplitude: number;
+  onChange: (frequencyIndex: number, value: number) => void;
 };
 
 type State = {
-    activeDragIndex: number;
+  activeDragIndex: number;
 };
 
 const width = 800;
 const height = 300;
 
 const padding = {
-    top: 15,
-    right: 0,
-    bottom: 50,
-    left: 30,
+  top: 15,
+  right: 0,
+  bottom: 50,
+  left: 30,
 };
 
 const knobAllocation = (width - padding.left - padding.right) / 20;
 const knobDimensions = {
-    width: knobAllocation * 0.6,
-    height: 10,
-    margin: knobAllocation * 0.2,
+  width: knobAllocation * 0.6,
+  height: 10,
+  margin: knobAllocation * 0.2,
 };
 
 const calculateKnobX = (index: number) => {
-    return padding.left + index * (knobDimensions.width + 2 * knobDimensions.margin);
+  return (
+    padding.left + index * (knobDimensions.width + 2 * knobDimensions.margin)
+  );
 };
 
-
 class FrequencyDomainControl extends Component<Props, State> {
-    private svgRef: any = React.createRef();
+  private svgRef: any = React.createRef();
 
-    state = {
-        activeDragIndex: -1,
-    };
+  state = {
+    activeDragIndex: -1,
+  };
 
-    calculateKnobY = (amplitudeValue: number) => {
-        const scale = (height - padding.top - padding.bottom) / (2 * this.props.maxAmplitude);
-        const minAmplitude = -this.props.maxAmplitude;
-        const rawY = (amplitudeValue - minAmplitude) * scale;
-        return height - padding.bottom - rawY;
-    };
+  calculateKnobY = (amplitudeValue: number) => {
+    const scale =
+      (height - padding.top - padding.bottom) / (2 * this.props.maxAmplitude);
+    const minAmplitude = -this.props.maxAmplitude;
+    const rawY = (amplitudeValue - minAmplitude) * scale;
+    return height - padding.bottom - rawY;
+  };
 
-    calculateAmplitudeFromY = (yValue: number) => {
-        const scale =  (2 * this.props.maxAmplitude) / (height - padding.top - padding.bottom);
-        const adjustedY = yValue - padding.top;
-        return this.props.maxAmplitude - adjustedY * scale;
+  calculateAmplitudeFromY = (yValue: number) => {
+    const scale =
+      (2 * this.props.maxAmplitude) / (height - padding.top - padding.bottom);
+    const adjustedY = yValue - padding.top;
+    return this.props.maxAmplitude - adjustedY * scale;
+  };
+
+  calculateTooltipX = (frequencyIndex: number) => {
+    const baseX = calculateKnobX(frequencyIndex);
+    const offset = frequencyIndex < 10 ? knobDimensions.width + 32 : -70;
+    return baseX + offset;
+  };
+
+  convertToPlotY = (eventY: number) => {
+    const CTM = this.svgRef.current.getScreenCTM();
+    return (eventY - CTM.f) / CTM.d;
+  };
+
+  onChange = (index: number, newY: number, evt: any) => {
+    if (this.state.activeDragIndex === index) {
+      evt.preventDefault();
+      const { maxAmplitude } = this.props;
+      const newAmplitude = snap(this.calculateAmplitudeFromY(newY), 1);
+      this.props.onChange(
+        index,
+        clamp(newAmplitude, -maxAmplitude, maxAmplitude)
+      );
     }
+  };
 
-    calculateTooltipX = (frequencyIndex: number) => {
-      const baseX = calculateKnobX(frequencyIndex);
-      const offset = frequencyIndex < 10 ? knobDimensions.width + 32 : -70;
-      return baseX + offset;
-    };
+  startDrag = (index: number, evt: any) => {
+    evt.preventDefault();
+    this.setState({ activeDragIndex: index });
+  };
 
-    convertToPlotY = (eventY: number) => {
-        const CTM = this.svgRef.current.getScreenCTM();
-        return (eventY - CTM.f) / CTM.d;
-    };
+  stopDrag = (evt: any) => {
+    evt.preventDefault();
+    this.setState({ activeDragIndex: -1 });
+  };
 
-    onChange = (index: number, newY: number, evt: any) => {
-        if (this.state.activeDragIndex === index) {
-            evt.preventDefault();
-            const {maxAmplitude} = this.props;
-            const newAmplitude = snap(this.calculateAmplitudeFromY(newY), 1);
-            this.props.onChange(index, clamp(newAmplitude, -maxAmplitude, maxAmplitude));
-        }
-    };
+  render(): JSX.Element {
+    const { amplitudes, maxAmplitude } = this.props;
+    const minFrequency = this.props.frequencies[0];
+    const maxFrequency = this.props.frequencies[19];
 
-    startDrag = (index: number, evt: any) => {
-        evt.preventDefault();
-        this.setState({activeDragIndex: index});
-    };
+    const bottomLabel = (
+      <text
+        className="bottom-label"
+        x={0.4 * width}
+        y={height - 0.35 * padding.bottom}
+      >
+        frequencies from {minFrequency} to {maxFrequency} Hz
+      </text>
+    );
 
-    stopDrag = (evt: any) => {
-        evt.preventDefault();
-        this.setState({activeDragIndex: -1});
-    }
-
-    render(): JSX.Element {
-        const {amplitudes, maxAmplitude} = this.props;
-        const minFrequency = this.props.frequencies[0];
-        const maxFrequency = this.props.frequencies[19];
-
-
-        const bottomLabel = (
+    const amplitudeLabels = [-maxAmplitude, 0, maxAmplitude].map(
+      (value: number, index: number) => {
+        return (
           <text
-            className="bottom-label"
-            x={0.4 * width}
-            y={height - 0.35 * padding.bottom}
-            >
-              frequencies from {minFrequency} to {maxFrequency} Hz
+            key={index}
+            className="amplitude-label"
+            x={8}
+            y={this.calculateKnobY(value) + 8}
+          >
+            {value}
           </text>
         );
+      }
+    );
 
-        const amplitudeLabels = [-maxAmplitude, 0, maxAmplitude].map((value: number, index: number) => {
-           return (
-             <text
-                 key={index}
-                 className="amplitude-label"
-                 x={8}
-                 y={this.calculateKnobY(value) + 8}
-             >
-                 {value}
-             </text>
-           );
-        });
+    const knobs = amplitudes.map((amplitude: number, index: number) => {
+      const onMove = (evt: React.MouseEvent) => {
+        const convertedY = this.convertToPlotY(evt.clientY);
+        this.onChange(index, convertedY, evt);
+      };
 
-        const knobs = amplitudes.map((amplitude: number, index: number) => {
-            const onMove = (evt: React.MouseEvent) => {
-                const convertedY = this.convertToPlotY(evt.clientY);
-                this.onChange(index, convertedY, evt);
-            };
+      const onTouch = (evt: React.TouchEvent) => {
+        const convertedY = this.convertToPlotY(evt.touches[0].clientY);
+        this.onChange(index, convertedY, evt);
+      };
 
-            const onTouch = (evt: React.TouchEvent) => {
-                const convertedY = this.convertToPlotY(evt.touches[0].clientY);
-                this.onChange(index, convertedY, evt);
-            };
+      return (
+        <g key={index}>
+          <rect
+            className="channel-background"
+            x={calculateKnobX(index)}
+            y={this.calculateKnobY(maxAmplitude)}
+            width={knobDimensions.width}
+            height={
+              this.calculateKnobY(-maxAmplitude) -
+              this.calculateKnobY(maxAmplitude)
+            }
+            onMouseMove={onMove}
+            onMouseDown={(evt) => this.startDrag(index, evt)}
+            onMouseUp={(evt) => this.stopDrag(evt)}
+            onTouchStart={(evt) => this.startDrag(index, evt)}
+            onTouchEnd={(evt) => this.stopDrag(evt)}
+            onTouchMove={onTouch}
+          />
+          <rect
+            className="channel"
+            x={calculateKnobX(index) + knobDimensions.width * 0.4}
+            y={this.calculateKnobY(maxAmplitude)}
+            width={0.2 * knobDimensions.width}
+            height={
+              this.calculateKnobY(-maxAmplitude) -
+              this.calculateKnobY(maxAmplitude)
+            }
+            onMouseMove={onMove}
+            onMouseDown={(evt) => this.startDrag(index, evt)}
+            onMouseUp={(evt) => this.stopDrag(evt)}
+            onTouchStart={(evt) => this.startDrag(index, evt)}
+            onTouchEnd={(evt) => this.stopDrag(evt)}
+            onTouchMove={onTouch}
+          />
+          <rect
+            className="knob"
+            x={calculateKnobX(index)}
+            y={this.calculateKnobY(amplitude) - knobDimensions.height / 2}
+            width={knobDimensions.width}
+            height={knobDimensions.height}
+            onMouseMove={onMove}
+            onMouseDown={(evt) => this.startDrag(index, evt)}
+            onMouseUp={(evt) => this.stopDrag(evt)}
+            onTouchStart={(evt) => this.startDrag(index, evt)}
+            onTouchEnd={(evt) => this.stopDrag(evt)}
+            onTouchMove={onTouch}
+          />
+        </g>
+      );
+    });
 
-            return (
-                <g key={index}>
-                    <rect
-                        className="channel-background"
-                        x={calculateKnobX(index)}
-                        y={this.calculateKnobY(maxAmplitude)}
-                        width={knobDimensions.width}
-                        height={this.calculateKnobY(-maxAmplitude) - this.calculateKnobY(maxAmplitude)}
-                        onMouseMove={onMove}
-                        onMouseDown={(evt) => this.startDrag(index, evt)}
-                        onMouseUp = {(evt) => this.stopDrag(evt)}
-                        onTouchStart = {(evt) => this.startDrag(index, evt)}
-                        onTouchEnd = {(evt) => this.stopDrag(evt)}
-                        onTouchMove={onTouch}
-                    />
-                    <rect
-                        className="channel"
-                        x={calculateKnobX(index) + knobDimensions.width*0.4}
-                        y={this.calculateKnobY(maxAmplitude)}
-                        width={0.2 * knobDimensions.width}
-                        height={this.calculateKnobY(-maxAmplitude) - this.calculateKnobY(maxAmplitude)}
-                        onMouseMove={onMove}
-                        onMouseDown={(evt) => this.startDrag(index, evt)}
-                        onMouseUp = {(evt) => this.stopDrag(evt)}
-                        onTouchStart = {(evt) => this.startDrag(index, evt)}
-                        onTouchEnd = {(evt) => this.stopDrag(evt)}
-                        onTouchMove={onTouch}
-                    />
-                    <rect
-                        className="knob"
-                        x={calculateKnobX(index)}
-                        y={this.calculateKnobY(amplitude) - knobDimensions.height /2 }
-                        width={knobDimensions.width}
-                        height={knobDimensions.height}
-                        onMouseMove={onMove}
-                        onMouseDown={(evt) => this.startDrag(index, evt)}
-                        onMouseUp = {(evt) => this.stopDrag(evt)}
-                        onTouchStart = {(evt) => this.startDrag(index, evt)}
-                        onTouchEnd = {(evt) => this.stopDrag(evt)}
-                        onTouchMove={onTouch}
-                    />
-                </g>
-            );
-        });
+    const viewBox = `0 0 ${width} ${height}`;
+    const { activeDragIndex } = this.state;
 
-        const viewBox = `0 0 ${width} ${height}`;
-        const {activeDragIndex} = this.state;
+    const activeChangeDescription =
+      activeDragIndex >= 0 ? (
+        <g>
+          <rect
+            className="active-change-description"
+            x={this.calculateTooltipX(activeDragIndex)}
+            y={this.calculateKnobY(this.props.amplitudes[activeDragIndex])}
+            width={60}
+            height={50}
+          />
+          <text
+            x={this.calculateTooltipX(activeDragIndex) + 10}
+            y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 20}
+            className="active-change-description"
+          >
+            {this.props.frequencies[activeDragIndex]} Hz
+          </text>
+          <text
+            x={this.calculateTooltipX(activeDragIndex) + 10}
+            y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 40}
+            className="active-change-description"
+          >
+            {this.props.amplitudes[activeDragIndex]}
+          </text>
+        </g>
+      ) : null;
 
-        const activeChangeDescription = activeDragIndex >= 0 ? (
-            <g>
-                <rect
-                    className="active-change-description"
-                    x={this.calculateTooltipX(activeDragIndex)}
-                    y={this.calculateKnobY(this.props.amplitudes[activeDragIndex])}
-                    width={60}
-                    height={50}
-                    />
-                <text
-                    x={this.calculateTooltipX(activeDragIndex) + 10}
-                    y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 20}
-                    className="active-change-description">
-                    {this.props.frequencies[activeDragIndex]} Hz
-                </text>
-                <text
-                    x={this.calculateTooltipX(activeDragIndex) + 10}
-                    y={this.calculateKnobY(this.props.amplitudes[activeDragIndex]) + 40}
-                    className="active-change-description">
-                    {this.props.amplitudes[activeDragIndex]}
-                </text>
-            </g>
-        ) : null;
-
-        return (
-            <div className="FrequencyDomainControl">
-                <svg
-                    ref={this.svgRef}
-                    viewBox={viewBox}>
-                    {bottomLabel}
-                    {amplitudeLabels}
-                    {knobs}
-                    {activeChangeDescription}
-                </svg>
-            </div>
-        );
-    };
+    return (
+      <div className="FrequencyDomainControl">
+        <svg ref={this.svgRef} viewBox={viewBox}>
+          {bottomLabel}
+          {amplitudeLabels}
+          {knobs}
+          {activeChangeDescription}
+        </svg>
+      </div>
+    );
+  }
 }
 
 export default FrequencyDomainControl;

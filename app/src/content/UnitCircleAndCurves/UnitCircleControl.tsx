@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './UnitCircleControl.scss';
-import {snap} from 'util/math-hacks';
+import { snap } from 'util/math-hacks';
 
 type Props = {
-    onChange: (piRatio: number) => void;
-    piRatio: number;
-    revealLevel: number;
+  onChange: (piRatio: number) => void;
+  piRatio: number;
+  revealLevel: number;
 };
 
 type State = {
@@ -24,223 +24,224 @@ const adjustedSvgHeight = sideLength - 2 * padding;
 const adjustedSvgWidth = sideLength - 2 * padding;
 
 class UnitCircleControl extends Component<Props, State> {
-    private svgRef: any = React.createRef();
+  private svgRef: any = React.createRef();
 
-    state = {
-        activeDrag: false,
-    };
+  state = {
+    activeDrag: false,
+  };
 
-    calculateSvgX(domainX: number): number {
-        return padding + (domainX - domainMinimum) * adjustedSvgWidth / domainWidth;
-    };
+  calculateSvgX(domainX: number): number {
+    return (
+      padding + ((domainX - domainMinimum) * adjustedSvgWidth) / domainWidth
+    );
+  }
 
-    calculateDomainX(eventX: number): number {
-        const CTM = this.svgRef.current.getScreenCTM();
-        const svgX = (eventX - CTM.e) / CTM.a;
-        const adjustedSvgX = svgX - padding;
-        return domainMinimum + adjustedSvgX * domainWidth / adjustedSvgWidth;
-    };
+  calculateDomainX(eventX: number): number {
+    const CTM = this.svgRef.current.getScreenCTM();
+    const svgX = (eventX - CTM.e) / CTM.a;
+    const adjustedSvgX = svgX - padding;
+    return domainMinimum + (adjustedSvgX * domainWidth) / adjustedSvgWidth;
+  }
 
-    calculateSvgY(rangeY: number): number {
-        const rawSvgY = (rangeY - rangeMinimum) * adjustedSvgHeight / domainHeight;
-        return padding + adjustedSvgHeight - rawSvgY;
-    };
+  calculateSvgY(rangeY: number): number {
+    const rawSvgY =
+      ((rangeY - rangeMinimum) * adjustedSvgHeight) / domainHeight;
+    return padding + adjustedSvgHeight - rawSvgY;
+  }
 
-    calculateDomainY(eventY: number): number {
-        const CTM = this.svgRef.current.getScreenCTM();
-        const svgY = (eventY - CTM.f) / CTM.d;
-        const svgUp = adjustedSvgHeight - svgY;
-        return rangeMinimum + svgUp * domainHeight / adjustedSvgHeight;
-    };
+  calculateDomainY(eventY: number): number {
+    const CTM = this.svgRef.current.getScreenCTM();
+    const svgY = (eventY - CTM.f) / CTM.d;
+    const svgUp = adjustedSvgHeight - svgY;
+    return rangeMinimum + (svgUp * domainHeight) / adjustedSvgHeight;
+  }
 
-    onChange = (newSvgX: number, newSvgY: number, evt: any) => {
-        if (this.state.activeDrag) {
-            evt.preventDefault();
+  onChange = (newSvgX: number, newSvgY: number, evt: any) => {
+    if (this.state.activeDrag) {
+      evt.preventDefault();
 
-            const newDomainX = this.calculateDomainX(newSvgX);
-            const newDomainY = this.calculateDomainY(newSvgY);
+      const newDomainX = this.calculateDomainX(newSvgX);
+      const newDomainY = this.calculateDomainY(newSvgY);
 
-            const newAngle = Math.atan2(newDomainY, newDomainX);
-            const piRatio = snap(newAngle / Math.PI, 2);
-            this.props.onChange(piRatio);
-        }
-    };
-
-    onMove = (evt: React.MouseEvent) => {
-        this.onChange(evt.clientX, evt.clientY, evt);
-    };
-
-    onTouch = (evt: React.TouchEvent) => {
-        this.onChange(evt.touches[0].clientX, evt.touches[0].clientY, evt);
-    };
-
-    startDrag = (evt: any) => {
-        evt.preventDefault();
-        this.setState({activeDrag: true});
-    };
-
-    stopDrag = (evt: any) => {
-        evt.preventDefault();
-        this.setState({activeDrag: false});
+      const newAngle = Math.atan2(newDomainY, newDomainX);
+      const piRatio = snap(newAngle / Math.PI, 2);
+      this.props.onChange(piRatio);
     }
+  };
 
-    render(): JSX.Element {
-        const { piRatio, revealLevel } = this.props;
+  onMove = (evt: React.MouseEvent) => {
+    this.onChange(evt.clientX, evt.clientY, evt);
+  };
 
-        const viewBox = `0 0 ${sideLength} ${sideLength}`;
+  onTouch = (evt: React.TouchEvent) => {
+    this.onChange(evt.touches[0].clientX, evt.touches[0].clientY, evt);
+  };
 
-        const svgRadius = (sideLength - 2 * padding) / 2;
+  startDrag = (evt: any) => {
+    evt.preventDefault();
+    this.setState({ activeDrag: true });
+  };
 
-        const centerX = this.calculateSvgX(0);
-        const centerY = this.calculateSvgY(0);
+  stopDrag = (evt: any) => {
+    evt.preventDefault();
+    this.setState({ activeDrag: false });
+  };
 
-        const largeArc = piRatio <= 1 ? 0 : 1;
-        const positiveSweep = 0;
-        const xArcRadius = this.calculateSvgX(1) - this.calculateSvgX(0);
-        const yArcRadius = this.calculateSvgY(1) - this.calculateSvgY(0);
+  render(): JSX.Element {
+    const { piRatio, revealLevel } = this.props;
 
-        const horizontalLineEnd = this.calculateSvgX(Math.cos(piRatio * Math.PI));
-        const verticalLineEnd = this.calculateSvgY(Math.sin(piRatio * Math.PI));
+    const viewBox = `0 0 ${sideLength} ${sideLength}`;
 
-        const offsetRadius = 1.08;
-        const angleLabelDomainX = offsetRadius * Math.cos(piRatio * Math.PI / 2);
-        const angleLabelRangeY  = offsetRadius * Math.sin(piRatio * Math.PI / 2);
-        const textAnchor = angleLabelDomainX > 0 ? 'start' : 'end';
+    const svgRadius = (sideLength - 2 * padding) / 2;
 
-        const plotTitle = (
-            <text
-                className="plot-title"
-                x={this.calculateSvgX(0)}
-                y="11"
-            >
-                Unit Circle
-            </text>
-        );
+    const centerX = this.calculateSvgX(0);
+    const centerY = this.calculateSvgY(0);
 
-        const angleLabel = (
-            <text
-                className="angle-label"
-                x={this.calculateSvgX(angleLabelDomainX)}
-                y={this.calculateSvgY(angleLabelRangeY)}
-                textAnchor={textAnchor}
-            >
-                {piRatio}&#960;
-            </text>
-        );
+    const largeArc = piRatio <= 1 ? 0 : 1;
+    const positiveSweep = 0;
+    const xArcRadius = this.calculateSvgX(1) - this.calculateSvgX(0);
+    const yArcRadius = this.calculateSvgY(1) - this.calculateSvgY(0);
 
-        const backgroundCircle = (
-            <circle
-                className="background-circle"
-                cx={centerX}
-                cy={centerY}
-                r={svgRadius}
-            />
-        );
+    const horizontalLineEnd = this.calculateSvgX(Math.cos(piRatio * Math.PI));
+    const verticalLineEnd = this.calculateSvgY(Math.sin(piRatio * Math.PI));
 
-        const horizontalLine = (
-            <path
-              className="horizontal-line"
-              d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${centerY}`}
-          />
-        );
+    const offsetRadius = 1.08;
+    const angleLabelDomainX = offsetRadius * Math.cos((piRatio * Math.PI) / 2);
+    const angleLabelRangeY = offsetRadius * Math.sin((piRatio * Math.PI) / 2);
+    const textAnchor = angleLabelDomainX > 0 ? 'start' : 'end';
 
-        const verticalLine = (
-            <path
-                className="vertical-line"
-                d={`M ${horizontalLineEnd} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
-            />
-        );
+    const plotTitle = (
+      <text className="plot-title" x={this.calculateSvgX(0)} y="11">
+        Unit Circle
+      </text>
+    );
 
-        const radiusLine = (
-            <path
-                className="radius-line"
-                d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
-            />
-        );
+    const angleLabel = (
+      <text
+        className="angle-label"
+        x={this.calculateSvgX(angleLabelDomainX)}
+        y={this.calculateSvgY(angleLabelRangeY)}
+        textAnchor={textAnchor}
+      >
+        {piRatio}&#960;
+      </text>
+    );
 
-        const verticalLineRangeY = Math.sin(piRatio * Math.PI);
-        const horizontalDomainX = Math.cos(piRatio * Math.PI);
-        const verticalLineLabel =
-            Math.abs(verticalLineRangeY) > 0.1 ? (
-                <text
-                    className="vertical-line-label"
-                    textAnchor={horizontalDomainX > 0 ? 'end' : 'start'}
-                    x={horizontalLineEnd + (horizontalDomainX > 0 ? -5 : 5) }
-                    y={(centerY + verticalLineEnd) /2}
-                >
-                    {verticalLineRangeY.toFixed(2)}
-                </text>
-            ) : null;
+    const backgroundCircle = (
+      <circle
+        className="background-circle"
+        cx={centerX}
+        cy={centerY}
+        r={svgRadius}
+      />
+    );
 
-        const horizontalLineLabel =
-            Math.abs(horizontalDomainX) > 0.1 ? (
-                <text
-                    className="horizontal-line-label"
-                    x={(horizontalLineEnd + centerX) / 2 }
-                    y={centerY + (verticalLineRangeY > 0 ? 8 : -6) }
-                >
-                    {horizontalDomainX.toFixed(2)}
-                </text>
-            ) : null;
+    const horizontalLine = (
+      <path
+        className="horizontal-line"
+        d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${centerY}`}
+      />
+    );
 
-        const foregroundArc = (
-            <path
-                className="arc"
-                d={`M ${this.calculateSvgX(1)} ${this.calculateSvgY(0)} A ${xArcRadius},${yArcRadius} 0 ${largeArc} ${positiveSweep} ${horizontalLineEnd} ${verticalLineEnd}`}
-                />
-        );
+    const verticalLine = (
+      <path
+        className="vertical-line"
+        d={`M ${horizontalLineEnd} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
+      />
+    );
 
-        const activeChangeDescription = null;
+    const radiusLine = (
+      <path
+        className="radius-line"
+        d={`M ${centerX} ${centerY} L ${horizontalLineEnd} ${verticalLineEnd}`}
+      />
+    );
 
-        const knob = (
-            <circle
-                className="knob"
-                cx={horizontalLineEnd}
-                cy={verticalLineEnd}
-                r={2}
-                onMouseMove={this.onMove}
-                onMouseDown={this.startDrag}
-                onMouseUp = {this.stopDrag}
-                onTouchStart = {this.startDrag}
-                onTouchEnd = {this.stopDrag}
-                onTouchMove={this.onTouch}
-            />
-        );
+    const verticalLineRangeY = Math.sin(piRatio * Math.PI);
+    const horizontalDomainX = Math.cos(piRatio * Math.PI);
+    const verticalLineLabel =
+      Math.abs(verticalLineRangeY) > 0.1 ? (
+        <text
+          className="vertical-line-label"
+          textAnchor={horizontalDomainX > 0 ? 'end' : 'start'}
+          x={horizontalLineEnd + (horizontalDomainX > 0 ? -5 : 5)}
+          y={(centerY + verticalLineEnd) / 2}
+        >
+          {verticalLineRangeY.toFixed(2)}
+        </text>
+      ) : null;
 
-        const triangle = revealLevel >= 1 ?
-            (
-                <React.Fragment>
-                {horizontalLine}
-                {verticalLine}
-                {verticalLineLabel}
-                {horizontalLineLabel}
-                </React.Fragment>
-            ) : null;
+    const horizontalLineLabel =
+      Math.abs(horizontalDomainX) > 0.1 ? (
+        <text
+          className="horizontal-line-label"
+          x={(horizontalLineEnd + centerX) / 2}
+          y={centerY + (verticalLineRangeY > 0 ? 8 : -6)}
+        >
+          {horizontalDomainX.toFixed(2)}
+        </text>
+      ) : null;
 
-        return (
-            <div className="UnitCircleControl">
-                <svg
-                    ref={this.svgRef}
-                    viewBox={viewBox}
-                    onMouseMove={this.onMove}
-                    onMouseDown={this.startDrag}
-                    onMouseUp = {this.stopDrag}
-                    onTouchStart = {this.startDrag}
-                    onTouchEnd = {this.stopDrag}
-                    onTouchMove={this.onTouch}
-                >
-                    {plotTitle}
-                    {backgroundCircle}
-                    {radiusLine}
-                    {triangle}
-                    {foregroundArc}
-                    {angleLabel}
-                    {knob}
-                    {activeChangeDescription}
-                </svg>
-            </div>
-        );
-    };
+    const foregroundArc = (
+      <path
+        className="arc"
+        d={`M ${this.calculateSvgX(1)} ${this.calculateSvgY(
+          0
+        )} A ${xArcRadius},${yArcRadius} 0 ${largeArc} ${positiveSweep} ${horizontalLineEnd} ${verticalLineEnd}`}
+      />
+    );
+
+    const activeChangeDescription = null;
+
+    const knob = (
+      <circle
+        className="knob"
+        cx={horizontalLineEnd}
+        cy={verticalLineEnd}
+        r={2}
+        onMouseMove={this.onMove}
+        onMouseDown={this.startDrag}
+        onMouseUp={this.stopDrag}
+        onTouchStart={this.startDrag}
+        onTouchEnd={this.stopDrag}
+        onTouchMove={this.onTouch}
+      />
+    );
+
+    const triangle =
+      revealLevel >= 1 ? (
+        <React.Fragment>
+          {horizontalLine}
+          {verticalLine}
+          {verticalLineLabel}
+          {horizontalLineLabel}
+        </React.Fragment>
+      ) : null;
+
+    return (
+      <div className="UnitCircleControl">
+        <svg
+          ref={this.svgRef}
+          viewBox={viewBox}
+          onMouseMove={this.onMove}
+          onMouseDown={this.startDrag}
+          onMouseUp={this.stopDrag}
+          onTouchStart={this.startDrag}
+          onTouchEnd={this.stopDrag}
+          onTouchMove={this.onTouch}
+        >
+          {plotTitle}
+          {backgroundCircle}
+          {radiusLine}
+          {triangle}
+          {foregroundArc}
+          {angleLabel}
+          {knob}
+          {activeChangeDescription}
+        </svg>
+      </div>
+    );
+  }
 }
 
-export default UnitCircleControl
+export default UnitCircleControl;

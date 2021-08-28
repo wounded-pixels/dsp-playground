@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './AnnotatedCurveControl.scss';
-import {clamp, snap} from 'util/math-hacks';
+import { clamp, snap } from 'util/math-hacks';
 
 type Props = {
-    yFunction: (angleValue: number) => number;
-    onChange: (piRatio: number) => void;
-    piRatio: number;
+  yFunction: (angleValue: number) => number;
+  onChange: (piRatio: number) => void;
+  piRatio: number;
 };
 
 type State = {
-    activeDrag: boolean;
+  activeDrag: boolean;
 };
 
 const svgHeight = 300;
 const svgWidth = 750;
 const padding = {
-    top: 40,
-    right: 0,
-    bottom: 40,
-    left: 20,
+  top: 40,
+  right: 0,
+  bottom: 40,
+  left: 20,
 };
 
 const domainMinimum = 0;
@@ -32,180 +32,179 @@ const adjustedSvgHeight = svgHeight - padding.top - padding.bottom;
 const adjustedSvgWidth = svgWidth - padding.left - padding.right;
 
 class AnnotatedCurveControl extends Component<Props, State> {
-    private svgRef: any = React.createRef();
+  private svgRef: any = React.createRef();
 
-    state = {
-        activeDrag: false,
-    };
+  state = {
+    activeDrag: false,
+  };
 
-    calculateSvgX(domainX: number): number {
-        return padding.left + (domainX - domainMinimum) * adjustedSvgWidth / domainWidth;
-    };
+  calculateSvgX(domainX: number): number {
+    return (
+      padding.left +
+      ((domainX - domainMinimum) * adjustedSvgWidth) / domainWidth
+    );
+  }
 
-    calculateDomainX(eventX: number): number {
-        const CTM = this.svgRef.current.getScreenCTM();
-        const svgX = (eventX - CTM.e) / CTM.a;
-        const adjustedSvgX = svgX - padding.left;
-        return domainMinimum + adjustedSvgX * domainWidth / adjustedSvgWidth;
-    };
+  calculateDomainX(eventX: number): number {
+    const CTM = this.svgRef.current.getScreenCTM();
+    const svgX = (eventX - CTM.e) / CTM.a;
+    const adjustedSvgX = svgX - padding.left;
+    return domainMinimum + (adjustedSvgX * domainWidth) / adjustedSvgWidth;
+  }
 
-    calculateSvgY(rangeY: number): number {
-        const rawSvgY = (rangeY - rangeMinimum) * adjustedSvgHeight / rangeHeight;
-        return padding.top + adjustedSvgHeight - rawSvgY;
-    };
+  calculateSvgY(rangeY: number): number {
+    const rawSvgY = ((rangeY - rangeMinimum) * adjustedSvgHeight) / rangeHeight;
+    return padding.top + adjustedSvgHeight - rawSvgY;
+  }
 
-    calculateRangeY(eventY: number): number {
-        const CTM = this.svgRef.current.getScreenCTM();
-        const svgY = (eventY - CTM.f) / CTM.d;
-        const svgUp = adjustedSvgHeight - svgY;
-        return rangeMinimum + svgUp * rangeHeight / adjustedSvgHeight;
-    };
+  calculateRangeY(eventY: number): number {
+    const CTM = this.svgRef.current.getScreenCTM();
+    const svgY = (eventY - CTM.f) / CTM.d;
+    const svgUp = adjustedSvgHeight - svgY;
+    return rangeMinimum + (svgUp * rangeHeight) / adjustedSvgHeight;
+  }
 
-    onChange = (newSvgX: number, newSvgY: number, evt: any) => {
-        if (this.state.activeDrag) {
-            evt.preventDefault();
+  onChange = (newSvgX: number, newSvgY: number, evt: any) => {
+    if (this.state.activeDrag) {
+      evt.preventDefault();
 
-            const newAngle = clamp(this.calculateDomainX(newSvgX), 0, 2 * Math.PI);
-            const piRatio = snap(newAngle / Math.PI, 2);
-            this.props.onChange(piRatio);
-        }
-    };
+      const newAngle = clamp(this.calculateDomainX(newSvgX), 0, 2 * Math.PI);
+      const piRatio = snap(newAngle / Math.PI, 2);
+      this.props.onChange(piRatio);
+    }
+  };
 
-    onMove = (evt: React.MouseEvent) => {
-        this.onChange(evt.clientX, evt.clientY, evt);
-    };
+  onMove = (evt: React.MouseEvent) => {
+    this.onChange(evt.clientX, evt.clientY, evt);
+  };
 
-    onTouch = (evt: React.TouchEvent) => {
-        this.onChange(evt.touches[0].clientX, evt.touches[0].clientY, evt);
-    };
+  onTouch = (evt: React.TouchEvent) => {
+    this.onChange(evt.touches[0].clientX, evt.touches[0].clientY, evt);
+  };
 
-    startDrag = (evt: any) => {
-        evt.preventDefault();
-        this.setState({activeDrag: true});
-    };
+  startDrag = (evt: any) => {
+    evt.preventDefault();
+    this.setState({ activeDrag: true });
+  };
 
-    stopDrag = (evt: any) => {
-        evt.preventDefault();
-        this.setState({activeDrag: false});
+  stopDrag = (evt: any) => {
+    evt.preventDefault();
+    this.setState({ activeDrag: false });
+  };
+
+  render(): JSX.Element {
+    const { yFunction, piRatio } = this.props;
+    const title = yFunction === Math.sin ? 'Sine' : 'Cosine';
+
+    const viewBox = `0 0 ${svgWidth} ${svgHeight}`;
+
+    const horizontalLineBegin = this.calculateSvgX(0);
+    const horizontalLineEnd = this.calculateSvgX(piRatio * Math.PI);
+    const verticalLineStart = this.calculateSvgY(0);
+    const verticalLineEnd = this.calculateSvgY(yFunction(piRatio * Math.PI));
+
+    const verticalStrokeColor = yFunction === Math.sin ? 'orange' : 'blue';
+
+    const step = 0.1;
+    let curvePath = `M ${this.calculateSvgX(0)} ${this.calculateSvgY(
+      yFunction(0)
+    )} `;
+    for (let angle = step; angle <= 2 * Math.PI + step; angle += step) {
+      curvePath += `L ${this.calculateSvgX(angle)} ${this.calculateSvgY(
+        yFunction(angle)
+      )} `;
     }
 
-    render(): JSX.Element {
-        const { yFunction, piRatio } = this.props;
-        const title = yFunction === Math.sin ? 'Sine' : 'Cosine';
+    const curve = <path className="curve" d={curvePath} />;
 
-        const viewBox = `0 0 ${svgWidth} ${svgHeight}`;
+    const plotTitle = (
+      <text className="plot-title" x={this.calculateSvgX(Math.PI)} y="13">
+        {title}
+      </text>
+    );
 
-        const horizontalLineBegin = this.calculateSvgX(0);
-        const horizontalLineEnd = this.calculateSvgX(piRatio * Math.PI);
-        const verticalLineStart = this.calculateSvgY(0);
-        const verticalLineEnd = this.calculateSvgY(yFunction(piRatio * Math.PI));
+    const angleLabelDomainX = clamp((piRatio * Math.PI) / 2, 0.1, Math.PI);
+    const angleLabelVerticalOffset =
+      yFunction(angleLabelDomainX) < 0 ? -15 : 25;
+    const angleLabel = (
+      <text
+        className="angle-label"
+        x={this.calculateSvgX(angleLabelDomainX)}
+        y={this.calculateSvgY(0) + angleLabelVerticalOffset}
+      >
+        {piRatio}&#960;
+      </text>
+    );
 
-        const verticalStrokeColor = yFunction === Math.sin ? 'orange' : 'blue';
+    const horizontalLine = (
+      <path
+        className="horizontal-line"
+        d={`M ${horizontalLineBegin} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineStart}`}
+      />
+    );
 
-        const step = 0.1;
-        let curvePath = `M ${this.calculateSvgX(0)} ${this.calculateSvgY(yFunction(0))} `;
-        for (let angle = step; angle <= 2 * Math.PI + step; angle += step) {
-           curvePath += `L ${this.calculateSvgX(angle)} ${this.calculateSvgY(yFunction(angle))} `;
-        }
+    const verticalLine = (
+      <path
+        className="vertical-line"
+        stroke={verticalStrokeColor}
+        d={`M ${horizontalLineEnd} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineEnd}`}
+      />
+    );
 
-        const curve = (
-          <path
-          className="curve"
-          d={curvePath}
-          />
-        );
+    const verticalLineValue = yFunction(piRatio * Math.PI);
+    const verticalLineLabel =
+      Math.abs(verticalLineValue) > 0.1 ? (
+        <text
+          className="vertical-line-label"
+          fill={verticalStrokeColor}
+          textAnchor={piRatio < 1.7 ? 'start' : 'end'}
+          x={horizontalLineEnd + (piRatio < 1.7 ? 8 : -8)}
+          y={(verticalLineStart + verticalLineEnd) / 2}
+        >
+          {verticalLineValue.toFixed(2)}
+        </text>
+      ) : null;
+    const activeChangeDescription = null;
 
-        const plotTitle = (
-            <text
-                className="plot-title"
-                x={this.calculateSvgX(Math.PI)}
-                y="13"
-            >
-                {title}
-            </text>
-        );
+    const knob = (
+      <circle
+        className="knob"
+        cx={horizontalLineEnd}
+        cy={verticalLineEnd}
+        r={4}
+        onMouseMove={this.onMove}
+        onMouseDown={this.startDrag}
+        onMouseUp={this.stopDrag}
+        onTouchStart={this.startDrag}
+        onTouchEnd={this.stopDrag}
+        onTouchMove={this.onTouch}
+      />
+    );
 
-        const angleLabelDomainX = clamp(piRatio * Math.PI / 2, 0.1, Math.PI);
-        const angleLabelVerticalOffset = yFunction(angleLabelDomainX) < 0 ? -15 : 25;
-        const angleLabel = (
-            <text
-                className="angle-label"
-                x={this.calculateSvgX(angleLabelDomainX)}
-                y={this.calculateSvgY(0) + angleLabelVerticalOffset}
-                >
-                {piRatio}&#960;
-            </text>
-        );
-
-        const horizontalLine = (
-            <path
-                className="horizontal-line"
-                d={`M ${horizontalLineBegin} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineStart}`}
-            />
-        );
-
-        const verticalLine = (
-            <path
-                className="vertical-line"
-                stroke={verticalStrokeColor}
-                d={`M ${horizontalLineEnd} ${verticalLineStart} L ${horizontalLineEnd} ${verticalLineEnd}`}
-            />
-        );
-
-        const verticalLineValue = yFunction(piRatio * Math.PI);
-        const verticalLineLabel =
-            Math.abs(verticalLineValue) > 0.1 ? (
-                <text
-                className="vertical-line-label"
-                fill={verticalStrokeColor}
-                textAnchor={piRatio < 1.7 ? 'start' : 'end'}
-                x={horizontalLineEnd + (piRatio < 1.7 ? 8 : -8) }
-                y={(verticalLineStart + verticalLineEnd) /2}
-            >
-                {verticalLineValue.toFixed(2)}
-            </text>
-            ) : null;
-        const activeChangeDescription = null;
-
-        const knob = (
-            <circle
-                className="knob"
-                cx={horizontalLineEnd}
-                cy={verticalLineEnd}
-                r={4}
-                onMouseMove={this.onMove}
-                onMouseDown={this.startDrag}
-                onMouseUp = {this.stopDrag}
-                onTouchStart = {this.startDrag}
-                onTouchEnd = {this.stopDrag}
-                onTouchMove={this.onTouch}
-            />
-        );
-
-        return (
-            <div className="AnnotatedCurveControl">
-                <svg
-                    ref={this.svgRef}
-                    viewBox={viewBox}
-                    onMouseMove={this.onMove}
-                    onMouseDown={this.startDrag}
-                    onMouseUp = {this.stopDrag}
-                    onTouchStart = {this.startDrag}
-                    onTouchEnd = {this.stopDrag}
-                    onTouchMove={this.onTouch}
-                >
-                    {plotTitle}
-                    {horizontalLine}
-                    {verticalLine}
-                    {curve}
-                    {angleLabel}
-                    {verticalLineLabel}
-                    {knob}
-                    {activeChangeDescription}
-                </svg>
-            </div>
-        );
-    };
+    return (
+      <div className="AnnotatedCurveControl">
+        <svg
+          ref={this.svgRef}
+          viewBox={viewBox}
+          onMouseMove={this.onMove}
+          onMouseDown={this.startDrag}
+          onMouseUp={this.stopDrag}
+          onTouchStart={this.startDrag}
+          onTouchEnd={this.stopDrag}
+          onTouchMove={this.onTouch}
+        >
+          {plotTitle}
+          {horizontalLine}
+          {verticalLine}
+          {curve}
+          {angleLabel}
+          {verticalLineLabel}
+          {knob}
+          {activeChangeDescription}
+        </svg>
+      </div>
+    );
+  }
 }
 
 export default AnnotatedCurveControl;
