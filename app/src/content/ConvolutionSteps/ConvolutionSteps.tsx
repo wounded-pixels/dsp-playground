@@ -37,17 +37,18 @@ const PLOT_AMPLITUDE = 10;
 const TICK_INTERVAL = 25;
 
 const shortSignal = [-2, -1, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, -1, -2, -3, -3, -3];
-const longLength = 1000;
-const longSignal = createSignal(longLength, [{frequency: 1, amplitude: 5}, {frequency: 10, amplitude: 1}], 4);
-const lowWithNoiseSignal = addSignals(createSignal(longLength, [{frequency:1, amplitude: 3}], 4), createNoise(longLength, 0, 1.0));
-const lowBackgroundSignal = createSignal(longLength, [{frequency: 1, amplitude: 1}, {frequency: 10, amplitude: 3}], 4);
+const longSignalLength = 1000;
+const longSignal = createSignal(longSignalLength, [{frequency: 1, amplitude: 5}, {frequency: 10, amplitude: 1}], 4);
+const lowWithNoiseSignal = addSignals(createSignal(longSignalLength, [{frequency:1, amplitude: 3}], 4), createNoise(longSignalLength, 0, 1.0));
+const lowBackgroundSignal = createSignal(longSignalLength, [{frequency: 1, amplitude: 1}, {frequency: 10, amplitude: 3}], 4);
 
+const longKernelLength = 100;
 const sampleKernel = [-1, 1, 1];
 const flipKernel = [-1];
 const derivativeKernel = [1, -1];
-const delayKernel = [0, 0, 0, 1];
+const delayKernel = new Array(longKernelLength).fill(0);
+delayKernel.push(1);
 
-const longKernelLength = 100;
 const rawLowPassKernel = normalize(multiplySignals(createLowPassKernel(0.02, longKernelLength), createBlackmanWindow(longKernelLength)));
 const lowPassKernel = addZeroes(rawLowPassKernel);
 const highPassKernel = addZeroes(spectralInvert(rawLowPassKernel));
