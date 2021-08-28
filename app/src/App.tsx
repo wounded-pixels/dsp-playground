@@ -5,6 +5,8 @@ import {
     Route,
 } from 'react-router-dom';
 
+import preval from 'preval.macro'
+
 import About from 'content/About';
 import SimpleAddition from 'content/SimpleAddition';
 
@@ -34,6 +36,7 @@ class App extends Component<Props, State> {
 
 
     render(): JSX.Element {
+        const buildStamp = preval`module.exports = new Date().toLocaleString();`;
         return (
             <div className="App">
                 <HashRouter basename="/">
@@ -68,7 +71,7 @@ class App extends Component<Props, State> {
                         </Route>
                     </Switch>
 
-                    <TopNav {...navProps} centerText="&copy; 2021 - WoundedPixels.com build date 05-15-21" />
+                    <TopNav {...navProps} centerText={`© 2021 - WoundedPixels.com  Last build at: ${buildStamp}`} />
                 </HashRouter>
             </div>
         );
