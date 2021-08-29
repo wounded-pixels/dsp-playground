@@ -301,37 +301,38 @@ class StepsPlot extends Component<Props> {
         this.calculateSvgX(iIndex - kernelAmplitudes.length + 1 + jIndex)) /
       2;
     const crossCenterY =
-      (this.calculateSvgSignalY(signalAmplitudes[iIndex - jIndex]) +
-        this.calculateSvgKernelY(kernelAmplitudes[jIndex])) /
-      2;
-    const multiplicationSign =
-      showDecorations &&
-      iIndex - jIndex >= 0 &&
-      iIndex - jIndex < signalAmplitudes.length ? (
-        <Fragment>
-          <rect
-            className="multiplication-sign-background"
-            x={crossCenterX - crossBackgroundRadius}
-            y={crossCenterY - crossBackgroundRadius}
-            width={2 * crossBackgroundRadius}
-            height={2 * crossBackgroundRadius}
-          />
-          <line
-            className="multiplication-sign"
-            x1={crossCenterX - crossRadius}
-            y1={crossCenterY - crossRadius}
-            x2={crossCenterX + crossRadius}
-            y2={crossCenterY + crossRadius}
-          />
-          <line
-            className="multiplication-sign"
-            x1={crossCenterX - crossRadius}
-            y1={crossCenterY + crossRadius}
-            x2={crossCenterX + crossRadius}
-            y2={crossCenterY - crossRadius}
-          />
-        </Fragment>
-      ) : null;
+      iIndex - jIndex > 0
+        ? (this.calculateSvgSignalY(signalAmplitudes[iIndex - jIndex]) +
+            this.calculateSvgKernelY(kernelAmplitudes[jIndex])) /
+          2
+        : (this.calculateSvgSignalY(signalAmplitudes[0]) +
+            this.calculateSvgKernelY(kernelAmplitudes[jIndex])) /
+          2;
+    const multiplicationSign = showDecorations ? (
+      <Fragment>
+        <rect
+          className="multiplication-sign-background"
+          x={crossCenterX - crossBackgroundRadius}
+          y={crossCenterY - crossBackgroundRadius}
+          width={2 * crossBackgroundRadius}
+          height={2 * crossBackgroundRadius}
+        />
+        <line
+          className="multiplication-sign"
+          x1={crossCenterX - crossRadius}
+          y1={crossCenterY - crossRadius}
+          x2={crossCenterX + crossRadius}
+          y2={crossCenterY + crossRadius}
+        />
+        <line
+          className="multiplication-sign"
+          x1={crossCenterX - crossRadius}
+          y1={crossCenterY + crossRadius}
+          x2={crossCenterX + crossRadius}
+          y2={crossCenterY - crossRadius}
+        />
+      </Fragment>
+    ) : null;
 
     const linesToPlus = kernelAmplitudes.map((value, index) => {
       const signalIndex = iIndex - index;

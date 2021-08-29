@@ -155,6 +155,26 @@ class ConvolutionSteps extends Component<Props, State> {
     }
   };
 
+  onSelectEdgyBehavior = (rawKey: string) => {
+    const key = rawKey + 'Kernel';
+    const kernelAmplitudes = exampleKernels[key]
+      ? exampleKernels[key]
+      : delayKernel;
+    const signalAmplitudes =
+      kernelAmplitudes.length > 0.25 * this.state.signalAmplitudes.length
+        ? longSignal
+        : shortSignal;
+
+    const iIndex = Math.floor(kernelAmplitudes.length / 2);
+    const jIndex = Math.floor(kernelAmplitudes.length / 2);
+    this.setState({
+      iIndex,
+      jIndex,
+      signalAmplitudes,
+      kernelAmplitudes,
+    });
+  };
+
   incrementIndex = () => {
     const { iIndex, jIndex, kernelAmplitudes, signalAmplitudes } = this.state;
     if (
@@ -303,6 +323,11 @@ class ConvolutionSteps extends Component<Props, State> {
         </div>
       ) : null;
 
+    const nextButton =
+      kernelAmplitudes.length < 30 ? (
+        <button onClick={this.incrementIndex}>Next</button>
+      ) : null;
+
     return (
       <Topic className="ConvolutionSteps">
         <ScrollToTopOnMount />
@@ -332,13 +357,14 @@ class ConvolutionSteps extends Component<Props, State> {
           />
         </Visualization>
         <Row>
-          <button onClick={this.incrementIndex}>Next</button>
+          {nextButton}
           <button onClick={this.togglePlay}>
             {this.state.playing ? 'Stop' : 'Play'}
           </button>
           <button onClick={this.incrementToEnd}>End</button>
           &nbsp;
           {resultSummary}
+          &nbsp;
         </Row>
         <Row>
           <div className="commentary">{commentary}</div>
@@ -393,6 +419,27 @@ class ConvolutionSteps extends Component<Props, State> {
           </ScenarioLink>{' '}
           do the opposite task as they allow high frequency signals to pass
           through to the output signal.
+        </Context>
+        <Context>
+          <h3>Edgy Behaviour</h3>
+          Things get a little odd as the kernel slides over the leading edge of
+          the signal. Values at the left of the kernel have a matching value in
+          the signal to multiply with. But later values of the kernel are left
+          out of the dance. You can see this pretty well if we start with the
+          kernel part way into the signal for the
+          <ScenarioLink index="sample" onClick={this.onSelectEdgyBehavior}>
+            sample
+          </ScenarioLink>
+          kernel. The third value of the kernel does not have a corresponding
+          value in the signal to multiply with.
+          <p />
+          The effect is also noticeable in the much longer
+          <ScenarioLink index="delay" onClick={this.onSelectEdgyBehavior}>
+            delay
+          </ScenarioLink>
+          kernel. There is a one at the very end of the kernel that does not get
+          a matching signal value until the kernel slides completely onto the
+          signal.
         </Context>
       </Topic>
     );
