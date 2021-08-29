@@ -161,9 +161,7 @@ class ConvolutionSteps extends Component<Props, State> {
       ? exampleKernels[key]
       : delayKernel;
     const signalAmplitudes =
-      kernelAmplitudes.length > 0.25 * this.state.signalAmplitudes.length
-        ? longSignal
-        : shortSignal;
+      kernelAmplitudes.length > sampleKernel.length ? longSignal : shortSignal;
 
     const iIndex = Math.floor(kernelAmplitudes.length / 2);
     const jIndex = Math.floor(kernelAmplitudes.length / 2);
